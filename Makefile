@@ -1,4 +1,4 @@
-# **************************************************************************** #
+#**************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
@@ -6,7 +6,7 @@
 #    By: fgata-va <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/09/29 12:43:45 by fgata-va          #+#    #+#              #
-#    Updated: 2020/09/29 13:41:02 by fgata-va         ###   ########.fr        #
+#    Updated: 2020/10/02 13:11:38 by fgata-va         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ NAME = cube3d
 
 LIBFT = -L lib/libftprintf/ -lft
 
-MLX = -L lib/mlx/ -lmlx -framework OpenGL -framework Appkit
+MLX = -L . -lmlx -framework OpenGL -framework Appkit
 
 INCLUDE = -I lib/GNL/ -I lib/libftprintf/ -I lib/mlx/
 
@@ -31,6 +31,7 @@ lib:
 
 mlx:
 	@$(MAKE) -C lib/mlx all
+	mv lib/mlx/libmlx.dylib .
 
 all: $(NAME)
 
@@ -38,8 +39,9 @@ $(NAME):
 	$(CC) $(CFLAGS) $(INCLUDE) $(SRC) $(GNL) $(LIBFT) $(MLX) -o $(NAME)
 
 clean:
-	@rm $(NAME)
 	@make -C lib/libftprintf fclean
-	@make -C lib/mlx fclean
+	@make -C lib/mlx clean
+	@rm -rf libmlx.dylib
+	@rm $(NAME)
 
 re: fclean all
