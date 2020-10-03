@@ -26,7 +26,7 @@ MLX = -L . -lmlx -framework OpenGL -framework Appkit
 
 INCLUDE = -I lib/GNL/ -I lib/libftprintf/ -I lib/mlx/
 
-lib:
+libft:
 	@$(MAKE) -C lib/libftprintf all
 
 mlx:
