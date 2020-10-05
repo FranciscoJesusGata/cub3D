@@ -12,29 +12,31 @@
 
 #include "cube3d.h"
 
-void		ft_newline(char ***file, char *line, int i)
+void		*ft_resize(void *p, size_t oldlen, size_t newlen)
 {
-	char	**tmp;
-	int	j;
+	void	*new;
+	size_t	len;
 
-	tmp = (char **)malloc(i * sizeof(char *));
-	if (i == 1)
-	{
-		*tmp = line;
-		*file = tmp;
-	}
+	new = malloc(newlen);
+	if(oldlen < newlen)
+		len = oldlen;
 	else
-	{
-		j = 0;
-		while (j < i - 1)
-		{
-			tmp[j] = *file[j]; 
-			j++;
-		}
-		tmp[j] = line;
-		free(*file);
-		*file = tmp;
-	}
+		len = newlen;
+	if (p && new)
+		ft_memcpy(new, p, len);
+	if (new)
+		free(p);
+	return (new);
+}
+
+char		**ft_newline(char **file, char *line, size_t size)
+{
+	char *new_matrix;
+
+	new_matrix = ft_resize(file, size, (sizeof(char *) + size));
+	((char **)new_matrix)[size] = line;
+	line = NULL;
+	return ((char **)new_matrix);
 }
 
 char		**ft_read_map(int fd)
@@ -46,8 +48,8 @@ char		**ft_read_map(int fd)
 	i = 0;
 	while((get_next_line(fd, &line)) == 1)
 	{
+		file = ft_newline(file, line, (i * sizeof(char *)));
 		i++;
-		ft_newline(&file, line, i);
 	}
 	return(file);
 }
