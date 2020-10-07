@@ -6,7 +6,7 @@
 #    By: fgata-va <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/09/29 12:43:45 by fgata-va          #+#    #+#              #
-#    Updated: 2020/10/06 10:39:41 by fgata-va         ###   ########.fr        #
+#    Updated: 2020/10/07 09:58:08 by fgata-va         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,9 +16,9 @@ CFLAGS += -Wall -Werror -Wextra -I . -g
 
 GNL = lib/GNL/get_next_line.c lib/GNL/get_next_line_utils.c
 
-SRC = cube3d.c
+SRC = cub3d.c
 
-NAME = cube3d
+NAME = cub3d
 
 LIBFT = -L lib/libftprintf -lftprintf
 

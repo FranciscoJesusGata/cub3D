@@ -6,11 +6,11 @@
 /*   By: fgata-va <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 11:40:34 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/10/06 10:24:06 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/10/07 13:17:27 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cube3d.h"
+#include "cub3d.h"
 
 void		*ft_resize(void *p, size_t oldlen, size_t newlen)
 {
@@ -31,8 +31,7 @@ char		**ft_newline(char **file, char *line, size_t size)
 	char **new_matrix;
 
 	new_matrix = ft_resize(file, size * sizeof(char *), (size + 1) * sizeof(char *));
-	new_matrix[size] = ft_strdup(line);
-	free(line);
+	new_matrix[size] = line;
 	return (new_matrix);
 }
 
@@ -49,37 +48,42 @@ void	*ft_read_map(int fd)
 		file = ft_newline(file, line, i);
 		i++;
 	}
-	free(line);
+	file = ft_newline(file, line, i);
+	i++;
 	file[i] = NULL;
 	return(file);
 }
 
-int			cube3d(char *path)
+int			ft_validate(char **file)
+{
+	int		i;
+
+	i = 0;
+	while (file[i])
+	{
+		if (file[i][0] == 'R')
+			ft_check_resol();
+		else if (file[i][0] == 'N')
+	}
+	return (0);
+}
+
+int			cub3d(char *path, int save)
 {
 	int		fd;
 	char	**file;
-	int		i;
+	t_map	*map;
+
 
 	file = NULL;
 	if(!(fd = open(path, O_RDONLY)))
 	{
 		write(1, "Error\n", 6);
+		strerror(errno);
 		return(1);
 	}
 	file = ft_read_map(fd);
-	i = 0;
-	while (file[i])
-	{
-		ft_printf("%s\n", file[i]);
-		free(file[i]);
-		i++;
-	}
-	free(file[i]);
-	free(file);
+	ft_validate(file);
 	return (0);
 }
 
-int			main(void)
-{
-	return(cube3d("mapa.txt"));
-}
