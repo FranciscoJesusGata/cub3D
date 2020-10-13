@@ -6,7 +6,7 @@
 /*   By: fgata-va <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 11:40:34 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/10/07 13:17:27 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/10/13 11:46:38 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,16 +54,25 @@ void	*ft_read_map(int fd)
 	return(file);
 }
 
-int			ft_validate(char **file)
+int			ft_validate(char **file, t_map *map)
 {
 	int		i;
+	int		valid;
 
 	i = 0;
+	valid = 1;
 	while (file[i])
 	{
 		if (file[i][0] == 'R')
-			ft_check_resol();
-		else if (file[i][0] == 'N')
+			valid = ft_check_resol(file[i], map);
+		else if (file[i][0] == 'N' && ft_strnstr(file[i], "NO", 2))
+			valid = ft_check_texture(file[i], map);
+		if (!valid)
+		{
+			ft_error("Invalid map");
+			return (valid);
+		}
+		i++;
 	}
 	return (0);
 }
@@ -83,7 +92,7 @@ int			cub3d(char *path, int save)
 		return(1);
 	}
 	file = ft_read_map(fd);
-	ft_validate(file);
+	ft_validate(file, map);
 	return (0);
 }
 
