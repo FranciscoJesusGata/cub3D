@@ -6,7 +6,7 @@
 /*   By: fgata-va <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/13 10:11:43 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/10/13 11:55:24 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/10/14 12:16:46 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,24 @@ int		ft_check_resol(char *line ,t_map *map)
 
 int		ft_check_texture(char *line, t_map *map)
 {
-	
+	int	i;
+	int	len;
+	int	fd;
+	char	*path;
+
+	i = 2;
+	len = 0;
+	while(ft_strchr("\t\v\f\r ", line[i]))
+		i++;
+	while (!(ft_strchr("\t\v\f\r ", line[i])))
+		len++;
+	path = ft_substr(line, i, len);
+	if((fd = open(path, O_RDONLY)) == -1)
+	{
+		ft_printf("Texture file doesn't exists");
+		return(0);
+	}
+	else
+		map->n_texture = path;
 	return(1);
 }
