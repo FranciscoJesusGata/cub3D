@@ -6,7 +6,7 @@
 /*   By: fgata-va <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 09:49:20 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/10/07 12:33:22 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/10/16 12:36:34 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ Cub3d takes 1 or 2 arguments: \"/path/to/map.cub\" and --save\n");
 	}
 	else
 	{
-		if(!(ft_strnstr(argv[1], ".cub", ft_strlen(argv[1]))))
+		if(!(ft_check_extension(argv[1], ".cub")))
 		{
 			ft_error("Bad file extension. Cub3d only takes \".cub\" files\n");
 			return(1);

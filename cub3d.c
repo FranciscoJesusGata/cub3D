@@ -6,7 +6,7 @@
 /*   By: fgata-va <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 11:40:34 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/10/13 11:46:38 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/10/19 13:37:55 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,12 @@ int			ft_validate(char **file, t_map *map)
 	valid = 1;
 	while (file[i])
 	{
-		if (file[i][0] == 'R')
+		if (file[i][0] == 'R' && ft_strnstr(file[i], "R", ft_strlen(file[i])))
 			valid = ft_check_resol(file[i], map);
-		else if (file[i][0] == 'N' && ft_strnstr(file[i], "NO", 2))
+		else if (ft_strchr("NSWE",file[i][0]))
 			valid = ft_check_texture(file[i], map);
+		else if (file[i][0] == 'F' && ft_strnstr(file[i], "F", ft_strlen(file[i])))
+			ft_check_floor(file[i], map);
 		if (!valid)
 		{
 			ft_error("Invalid map");
@@ -85,13 +87,14 @@ int			cub3d(char *path, int save)
 
 
 	file = NULL;
-	if(!(fd = open(path, O_RDONLY)))
+	if(!(fd = open(path, O_RDONLY)) || !(map = malloc(sizeof(t_map))))
 	{
 		write(1, "Error\n", 6);
 		strerror(errno);
 		return(1);
 	}
 	file = ft_read_map(fd);
+	close(fd);
 	ft_validate(file, map);
 	return (0);
 }

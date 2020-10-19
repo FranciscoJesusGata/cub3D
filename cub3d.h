@@ -6,7 +6,7 @@
 /*   By: fgata-va <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 10:13:53 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/10/14 12:18:45 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/10/19 13:35:07 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct	s_map{
 	char	*s_texture;
 	char	*w_texture;
 	char	*e_texture;
+	char	*sprite;
 	int		floor[3];
 	void	*mlx_ptr;
 	void	*window;
@@ -37,5 +38,6 @@ int				cub3d(char *path, int save);
 int				ft_check_resol(char *line ,t_map *map);
 void			ft_error(const char *msg);
 int				ft_check_texture(char *line, t_map *map);
+int				ft_check_extension(char *check, char *expected);
 
 #endif
