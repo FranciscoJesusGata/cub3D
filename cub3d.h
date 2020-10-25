@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cube3d.h                                           :+:      :+:    :+:   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fgata-va <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 10:13:53 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/10/19 13:35:07 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/10/25 12:26:41 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,6 @@ int				ft_check_resol(char *line ,t_map *map);
 void			ft_error(const char *msg);
 int				ft_check_texture(char *line, t_map *map);
 int				ft_check_extension(char *check, char *expected);
+int				ft_check_floor(char *line, t_map *map);
 
 #endif

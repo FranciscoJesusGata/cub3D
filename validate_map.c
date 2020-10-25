@@ -6,7 +6,7 @@
 /*   By: fgata-va <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/13 10:11:43 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/10/19 13:41:33 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/10/25 20:10:32 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,44 @@ int			ft_check_texture(char *line, t_map *map)
 
 int			ft_check_floor(char *line, t_map *map)
 {
+	int	j;
+	int	i;
+	int	num;
+	char **args;
+	
+	i = 0;
+	if(!(args = ft_split(line, ',')))
+		return (0);
+	while(args[i])
+	{
+		while (args[i][j])
+		{
+			j++;
+			num = 0;
+			if (ft_strchr("\t\v\f\r ", line[i]))
+			{
+				while(ft_strchr("\t\v\f\r ,", line[i]))
+					i++;
+			}
+			else if (ft_isdigit(line[i]))
+			{
+				args++;
+				while(ft_isdigit(line[i]))
+				{
+					num *= 10;
+					num += (line[i] - '0');
+					i++;
+				}
+				if (args > 2 || num > 255)
+					return (0);
+				else
+					map->floor[args] = num;
+			}
+			else
+				return (0);
+		}
+		i++;
+	}
 	return (1);
 }
 
