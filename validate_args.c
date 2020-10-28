@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validate_args.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgata-va <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 11:26:26 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/10/26 11:26:31 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/10/28 12:39:10 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,12 @@ int			ft_check_resol(char *line ,t_map *map)
 		if(ft_isdigit(line[i]) && j < 2)
 		{
 			map->resolution[j] = ft_atoi(line + i);
+			while (ft_isdigit(line[i]))
+				i++;
+			i--;
 			j++;
 		}
-		else if ((ft_isdigit(line[i])&& j >= 2) || 
+		else if ((ft_isdigit(line[i]) && j >= 2) || 
 				!(ft_strchr("\t\v\f\r ", line[i])))
 			return (0);
 		i++;
@@ -70,19 +73,6 @@ int			ft_check_texture(char *line, t_map *map)
 	return(1);
 }
 
-void		ft_free_matrix(void **matrix)
-{
-	int		i;
-
-	i = 0;
-	while(matrix[i])
-	{
-		free(matrix[i]);
-		i++;
-	}
-	free(matrix);
-}
-
 int			ft_check_floor(char *line, t_map *map)
 {
 	int	j;
@@ -97,34 +87,28 @@ int			ft_check_floor(char *line, t_map *map)
 	while(args[i])
 	{
 		fnd = 0;
+		j = 0;
 		while (args[i][j])
 		{
 			j++;
 			num = 0;
-			if (ft_strchr("\t\v\f\r ", line[i]))
+			if (ft_isdigit(args[i][j]) && fnd == 0)
 			{
-				while(ft_strchr("\t\v\f\r ", line[i]))
-					j++;
-			}
-			else if (ft_isdigit(line[i]) && fnd == 0)
-			{
-				args++;
 				fnd = 1;
-				while(ft_isdigit(line[i]))
+				while(ft_isdigit(args[i][j]))
 				{
 					num *= 10;
-					num += (line[i] - '0');
-					i++;
+					num += (args[i][j] - '0');
+					j++;
 				}
 				if (i > 2 || num > 255)
 				{
 					ft_free_matrix((void **)args);
 					return (0);
 				}
-				else
-					map->floor[i] = num;
+				map->floor[i] = num;
 			}
-			else
+			else if (!(ft_strchr("\t\v\f\r ", args[i][j])))
 			{
 				ft_free_matrix((void **)args);
 				return (0);
@@ -132,24 +116,6 @@ int			ft_check_floor(char *line, t_map *map)
 		}
 		i++;
 	}
-	return (1);
-}
-
-int			ft_check_extension(char *check, char *expected)
-{
-	int		i;
-	char	*extension;
-
-	i = 0;
-	if (!check)
-		return (0);
-	while (check[i] && check[i] != '.')
-		i++;
-	if (check[i] == '\0')
-		return (0);
-	extension = check + i;
-	if (!(ft_strnstr(extension, expected, ft_strlen(expected))))
-		return (0);
 	return (1);
 }
 

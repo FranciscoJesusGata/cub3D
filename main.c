@@ -6,18 +6,11 @@
 /*   By: fgata-va <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 09:49:20 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/10/16 12:36:34 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/10/28 11:45:57 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-void	ft_error(const char *msg)
-{
-	ft_printf("Error\n");
-	if (msg)
-		ft_printf(msg);
-}
 
 int		main(int argc, char **argv)
 {
