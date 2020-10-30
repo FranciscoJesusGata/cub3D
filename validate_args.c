@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 11:26:26 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/10/28 12:39:10 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/10/30 12:18:11 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,14 @@ int			ft_check_resol(char *line ,t_map *map)
 	}
 	if (j < 2)
 		return (0);
-	return (1);
+	j = 0;
+	while (j < 2)
+	{
+		if (map->resolution[j] > map->max_r[j])
+			map->resolution[j] = map->max_r[j];
+		j++;
+	}
+		return (1);
 }
 
 int			ft_check_texture(char *line, t_map *map)

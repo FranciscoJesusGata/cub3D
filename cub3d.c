@@ -6,7 +6,7 @@
 /*   By: fgata-va <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 11:40:34 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/10/25 12:18:31 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/10/30 12:55:42 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ int			cub3d(char *path, int save)
 	int		fd;
 	char	**file;
 	t_map	*map;
+	int		max_x;
+	int		max_y;
 
 
 	file = NULL;
@@ -93,6 +95,10 @@ int			cub3d(char *path, int save)
 		strerror(errno);
 		return(1);
 	}
+	map->mlx_ptr = mlx_init();
+	mlx_get_screen_size(map->mlx_ptr, &max_x, &max_y);
+	map->max_r[0] = max_x;
+	map->max_r[1] = max_y;
 	file = ft_read_map(fd);
 	close(fd);
 	ft_validate(file, map);

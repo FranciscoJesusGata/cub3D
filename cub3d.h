@@ -6,7 +6,7 @@
 /*   By: fgata-va <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 10:13:53 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/10/28 11:02:12 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/10/30 12:12:01 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct	s_map{
 	void	*window;
 	int		max_y;
 	int		valid;
+	int		max_r[2];
 }				t_map;
 
 int				cub3d(char *path, int save);
