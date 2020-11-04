@@ -6,15 +6,15 @@
 /*   By: fgata-va <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 11:40:34 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/10/30 12:55:42 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/11/04 12:02:40 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void		*ft_resize(void *p, size_t oldlen, size_t newlen)
+void			*ft_resize(void *p, size_t oldlen, size_t newlen)
 {
-	void	*new;
+	void		*new;
 
 	if (!p)
 		return (malloc(newlen));
@@ -26,20 +26,20 @@ void		*ft_resize(void *p, size_t oldlen, size_t newlen)
 	return(new);
 }
 
-char		**ft_newline(char **file, char *line, size_t size)
+char			**ft_newline(char **file, char *line, size_t size)
 {
-	char **new_matrix;
+	char		**new_matrix;
 
 	new_matrix = ft_resize(file, size * sizeof(char *), (size + 1) * sizeof(char *));
 	new_matrix[size] = line;
 	return (new_matrix);
 }
 
-void	*ft_read_map(int fd)
+void			*ft_read_map(int fd)
 {
-	char	*line;
-	int		i;
-	char	**file;
+	char		*line;
+	int			i;
+	char		**file;
 
 	file = NULL;
 	i = 0;
@@ -54,54 +54,55 @@ void	*ft_read_map(int fd)
 	return(file);
 }
 
-int			ft_validate(char **file, t_map *map)
+int				ft_validate(char **file, t_map *map, t_textures *tex)
 {
-	int		i;
-	int		valid;
+	int			i;
+	int			j;
 
 	i = 0;
-	valid = 1;
 	while (file[i])
 	{
 		if (file[i][0] == 'R' && ft_strnstr(file[i], "R", ft_strlen(file[i])))
-			valid = ft_check_resol(file[i], map);
+			map->flags[0] += ft_check_resol(file[i], map);
 		else if (ft_strchr("NSWE",file[i][0]))
-			valid = ft_check_texture(file[i], map);
-		else if (file[i][0] == 'F' && ft_strnstr(file[i], "F", ft_strlen(file[i])))
-			ft_check_floor(file[i], map);
-		if (!valid)
+			ft_check_texture(file[i], map, tex);
+		else if ((file[i][0] == 'F' && ft_strnstr(file[i], "F", ft_strlen(file[i]))) ||
+				(file[i][0] == 'C' && ft_strnstr(file[i], "C", ft_strlen(file[i]))))
+			ft_check_floor_ceiling(file[i], map);
+		if (!(ft_check_flags(map)) || !(ft_map_validation(file, map)))
 		{
-			ft_error("Invalid map");
-			break ;
+			ft_error("Invalid arguments");
+			return (0);
 		}
 		i++;
 	}
-	return (valid);
+	return (1);
 }
 
-int			cub3d(char *path, int save)
+int				cub3d(char *path, int save)
 {
-	int		fd;
-	char	**file;
-	t_map	*map;
-	int		max_x;
-	int		max_y;
-
+	int			fd;
+	char		**file;
+	t_map		*map;
+	t_textures	*textures;
 
 	file = NULL;
-	if(!(fd = open(path, O_RDONLY)) || !(map = malloc(sizeof(t_map))))
+	if(!(fd = open(path, O_RDONLY)) || !(map = malloc(sizeof(t_map)))
+		|| !(textures = malloc(sizeof(t_textures))))
 	{
 		write(1, "Error\n", 6);
 		strerror(errno);
 		return(1);
 	}
-	map->mlx_ptr = mlx_init();
-	mlx_get_screen_size(map->mlx_ptr, &max_x, &max_y);
-	map->max_r[0] = max_x;
-	map->max_r[1] = max_y;
+	ft_init_map(map);
+	ft_init_tex(textures);
 	file = ft_read_map(fd);
 	close(fd);
-	ft_validate(file, map);
-	return (0);
+	if(!(ft_validate(file, map, textures)))
+	{
+		ft_destroy_everything();
+		return (0);
+	}
+	return (1);
 }
 

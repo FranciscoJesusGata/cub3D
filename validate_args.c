@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 11:26:26 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/10/30 12:18:11 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/11/04 12:03:16 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,82 +46,115 @@ int			ft_check_resol(char *line ,t_map *map)
 		return (1);
 }
 
-int			ft_check_texture(char *line, t_map *map)
+void		ft_tex_flag(char *line, t_map *map, t_textures *tex, char *path)
 {
-	int		i;
-	int		len;
+	if (line[0] == 'N' && ft_strnstr(line, "NO", ft_strlen(line)))
+	{
+		tex->n_texture = path;
+		map->flags[1] += 1;
+	}
+	else if (line[0] == 'S' && ft_strnstr(line, "SO", ft_strlen(line)))
+	{
+		tex->s_texture = path;
+		map->flags[2] += 1;
+	}
+	else if (line[0] == 'W' && ft_strnstr(line, "WE", ft_strlen(line)))
+	{
+		tex->w_texture = path;
+		map->flags[3] += 1;
+	}
+	else if (line[0] == 'E' && ft_strnstr(line, "EA", ft_strlen(line)))
+	{
+		tex->e_texture = path;
+		map->flags[4] += 1;
+	}
+	else if (line[0] == 'S' && ft_strnstr(line, "S", ft_strlen(line)))
+	{
+		tex->sprite = path;
+		map->flags[5] += 1;
+	}
+}
+
+void			ft_check_texture(char *line, t_map *map, t_textures *tex)
+{
 	int		fd;
 	char	*path;
 
-	i = 2;
-	len = 0;
-	while(ft_strchr("\t\v\f\r ", line[i]))
-		i++;
-	while (!(ft_strchr("\t\v\f\r ", line[i])))
-		len++;
-	path = ft_substr(line, i, len);
-	if(((fd = open(path, O_RDONLY)) == -1) && (!(ft_check_extension(path, ".xpm"))))
+	path = ft_strtrim(line, "\t\v\f\r NSWEAO");
+	if(!path || ((fd = open(path, O_RDONLY)) == -1) || 
+		!ft_check_extension(path, ".xpm") ||
+		!ft_check_extension(path, ".png"))
 	{
-		ft_printf("Texture file doesn't exists or format not valid");
+		ft_error("Texture file doesn't exists or format not valid");
 		free(path);
-		return(0);
+		return ;
 	}
 	close(fd);
-	if (line[0] == 'N' && ft_strnstr(line, "NO", ft_strlen(line)))
-		map->n_texture = path;
-	else if (line[0] == 'S' && ft_strnstr(line, "SO", ft_strlen(line)))
-		map->s_texture = path;
-	else if (line[0] == 'W' && ft_strnstr(line, "WE", ft_strlen(line)))
-		map->w_texture = path;
-	else if (line[0] == 'E' && ft_strnstr(line, "EA", ft_strlen(line)))
-		map->e_texture = path;
-	else if (line[0] == 'S' && ft_strnstr(line, "S", ft_strlen(line)))
-		map->sprite = path;
-	return(1);
+	ft_tex_flag(line, map, tex, path);
 }
 
-int			ft_check_floor(char *line, t_map *map)
+int				*ft_save_rgb(char **args, t_map *map)
 {
-	int	j;
-	int	i;
-	int	num;
-	int	fnd;
-	char **args;
-	
+	int			i;
+	int			j;
+	char		*nbr;
+	int			*nums;
+
 	i = 0;
-	if(!(args = ft_split((line + 1), ',')))
-		return (0);
+	if(!(nums = malloc(sizeof(int) * 3)))
+		return (NULL);
 	while(args[i])
 	{
-		fnd = 0;
-		j = 0;
-		while (args[i][j])
+		if(!(nbr = ft_strtrim(args[i], "\t\v\f\r ")))
+			return (NULL);
+		nums[i] = ft_atoi(nbr);
+		if (nums[i] > 255 || nums[i] < 0 || !(ft_isnumber(nbr)))
 		{
-			j++;
-			num = 0;
-			if (ft_isdigit(args[i][j]) && fnd == 0)
-			{
-				fnd = 1;
-				while(ft_isdigit(args[i][j]))
-				{
-					num *= 10;
-					num += (args[i][j] - '0');
-					j++;
-				}
-				if (i > 2 || num > 255)
-				{
-					ft_free_matrix((void **)args);
-					return (0);
-				}
-				map->floor[i] = num;
-			}
-			else if (!(ft_strchr("\t\v\f\r ", args[i][j])))
-			{
-				ft_free_matrix((void **)args);
-				return (0);
-			}
+			free(nums);
+			free(nbr);
+			return (NULL);
 		}
+		free(nbr);
 		i++;
+	}
+	return (nums);
+}
+
+void			ft_check_floor_ceiling(char *line, t_map *map)
+{
+	char		**args;
+	int			*nums;
+	int			i;
+
+	if(!(args = ft_split((line + 1), ',')) ||
+		!(nums = ft_save_rgb(args, map)))
+		return ;
+	i = 0;
+	while(i > 3)
+	{
+		if (line [0] == 'F')
+			map->floor[i] = nums[i];
+		else
+			map->ceiling[i] = nums[i];
+		i++;
+	}
+	if (line [0] == 'F')
+			map->flags[6] += 1;
+	else
+			map->flags[7] += 1;
+	free(nums);
+	ft_free_matrix((void **)args);
+}
+
+int		ft_check_flags(t_map *map)
+{
+	int	i;
+
+	i = 0;
+	while (i < 8)
+	{
+		if (map->flags[i] != 1)
+			return (0);
 	}
 	return (1);
 }
