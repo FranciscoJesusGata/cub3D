@@ -6,7 +6,7 @@
 /*   By: fgata-va <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 10:13:53 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/11/04 12:03:12 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/11/06 11:53:18 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ typedef struct	s_map{
 	void	*mlx_ptr;
 	void	*window;
 	int		max_y;
-	int		flags[8];
-	char	*ft_get_path(char *line);
 }				t_map;
 
 typedef struct s_textures
@@ -43,15 +41,28 @@ typedef struct s_textures
 	char	*sprite;
 }				t_textures;
 
-int				cub3d(char *path, int save);
+typedef struct s_cub_flags
+{
+	int		has_resol;
+	int		has_n_tex;
+	int		has_w_tex;
+	int		has_e_tex;
+	int		has_s_tex;
+	int		has_sprite;
+	int		has_floor;
+	int		has_clng;
+}				t_cub_flags;
+
+int				cub3d(char *path);
 void			ft_init_map(t_map *map);
 void			ft_init_tex(t_textures *tex);
+void			ft_init_flags(t_cub_flags *flags);
 int				ft_check_resol(char *line ,t_map *map);
 void			ft_error(const char *msg);
-void			ft_check_texture(char *line, t_map *map, t_textures *tex);
+void			ft_check_texture(char *line, t_textures *tex, t_cub_flags *flags);
 int				ft_check_extension(char *check, char *expected);
-void			ft_check_floor_ceiling(char *line, t_map *map);
-int				ft_check_flags(t_map *map);
+void			ft_check_floor_ceiling(char *line, t_map *map, t_cub_flags *flags);
+int				ft_check_flags(t_cub_flags flags);
 void			ft_free_matrix(void **matrix);
 int				ft_isnumber(char *s);
 

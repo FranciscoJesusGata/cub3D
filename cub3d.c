@@ -6,7 +6,7 @@
 /*   By: fgata-va <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 11:40:34 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/11/04 12:02:40 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/11/06 12:46:13 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,50 +57,53 @@ void			*ft_read_map(int fd)
 int				ft_validate(char **file, t_map *map, t_textures *tex)
 {
 	int			i;
-	int			j;
+	t_cub_flags	flags;
+	char *line;
 
 	i = 0;
+	ft_init_flags(&flags);
 	while (file[i])
 	{
-		if (file[i][0] == 'R' && ft_strnstr(file[i], "R", ft_strlen(file[i])))
-			map->flags[0] += ft_check_resol(file[i], map);
-		else if (ft_strchr("NSWE",file[i][0]))
-			ft_check_texture(file[i], map, tex);
-		else if ((file[i][0] == 'F' && ft_strnstr(file[i], "F", ft_strlen(file[i]))) ||
-				(file[i][0] == 'C' && ft_strnstr(file[i], "C", ft_strlen(file[i]))))
-			ft_check_floor_ceiling(file[i], map);
-		if (!(ft_check_flags(map)) || !(ft_map_validation(file, map)))
-		{
-			ft_error("Invalid arguments");
-			return (0);
-		}
+		line = ft_strtrim(file[i], "\t\v\f\r ");
+		if (line[0] == 'R' && ft_strnstr(line, "R", ft_strlen(line)))
+			flags.has_resol += ft_check_resol(line, map);
+		else if (ft_strchr("NSWE",ft_strlen(line)))
+			ft_check_texture(line, tex, &flags);
+		else if ((line[0] == 'F' && ft_strnstr(line, "F", ft_strlen(line))) ||
+				(line[0] == 'C' && ft_strnstr(line, "C", ft_strlen(line))))
+			ft_check_floor_ceiling(line, map, &flags);
+		free(line);
 		i++;
+	}
+	if (!(ft_check_flags(flags)) /*|| !(ft_map_validation(file, map))*/)
+	{
+		ft_error("Invalid arguments");
+		return (0);
 	}
 	return (1);
 }
 
-int				cub3d(char *path, int save)
+int				cub3d(char *path)
 {
 	int			fd;
 	char		**file;
-	t_map		*map;
-	t_textures	*textures;
+	t_map		map;
+	t_textures	textures;
 
 	file = NULL;
-	if(!(fd = open(path, O_RDONLY)) || !(map = malloc(sizeof(t_map)))
-		|| !(textures = malloc(sizeof(t_textures))))
+	if(!(fd = open(path, O_RDONLY)))
 	{
 		write(1, "Error\n", 6);
 		strerror(errno);
 		return(1);
 	}
-	ft_init_map(map);
-	ft_init_tex(textures);
+	ft_init_map(&map);
+	ft_init_tex(&textures);
 	file = ft_read_map(fd);
 	close(fd);
-	if(!(ft_validate(file, map, textures)))
+	if(!(ft_validate(file, &map, &textures)))
 	{
-		ft_destroy_everything();
+		//ft_destroy_everything();
 		return (0);
 	}
 	return (1);

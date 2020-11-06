@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 11:26:26 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/11/04 12:03:16 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/11/06 13:04:22 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,57 +46,56 @@ int			ft_check_resol(char *line ,t_map *map)
 		return (1);
 }
 
-void		ft_tex_flag(char *line, t_map *map, t_textures *tex, char *path)
+void		ft_tex_flag(char *line, t_cub_flags *flags, t_textures *tex, char *path)
 {
 	if (line[0] == 'N' && ft_strnstr(line, "NO", ft_strlen(line)))
 	{
 		tex->n_texture = path;
-		map->flags[1] += 1;
+		flags->has_n_tex += 1;
 	}
 	else if (line[0] == 'S' && ft_strnstr(line, "SO", ft_strlen(line)))
 	{
 		tex->s_texture = path;
-		map->flags[2] += 1;
+		flags->has_s_tex += 1;
 	}
 	else if (line[0] == 'W' && ft_strnstr(line, "WE", ft_strlen(line)))
 	{
 		tex->w_texture = path;
-		map->flags[3] += 1;
+		flags->has_w_tex += 1;
 	}
 	else if (line[0] == 'E' && ft_strnstr(line, "EA", ft_strlen(line)))
 	{
 		tex->e_texture = path;
-		map->flags[4] += 1;
+		flags->has_e_tex += 1;
 	}
 	else if (line[0] == 'S' && ft_strnstr(line, "S", ft_strlen(line)))
 	{
 		tex->sprite = path;
-		map->flags[5] += 1;
+		flags->has_s_tex += 1;
 	}
 }
 
-void			ft_check_texture(char *line, t_map *map, t_textures *tex)
+void			ft_check_texture(char *line, t_textures *tex, t_cub_flags *flags)
 {
 	int		fd;
 	char	*path;
 
 	path = ft_strtrim(line, "\t\v\f\r NSWEAO");
 	if(!path || ((fd = open(path, O_RDONLY)) == -1) || 
-		!ft_check_extension(path, ".xpm") ||
-		!ft_check_extension(path, ".png"))
+		(!ft_check_extension(path, ".xpm") &&
+		!ft_check_extension(path, ".png")))
 	{
 		ft_error("Texture file doesn't exists or format not valid");
 		free(path);
 		return ;
 	}
 	close(fd);
-	ft_tex_flag(line, map, tex, path);
+	ft_tex_flag(line, flags, tex, path);
 }
 
-int				*ft_save_rgb(char **args, t_map *map)
+int				*ft_save_rgb(char **args)
 {
 	int			i;
-	int			j;
 	char		*nbr;
 	int			*nums;
 
@@ -120,17 +119,17 @@ int				*ft_save_rgb(char **args, t_map *map)
 	return (nums);
 }
 
-void			ft_check_floor_ceiling(char *line, t_map *map)
+void			ft_check_floor_ceiling(char *line, t_map *map, t_cub_flags *flags)
 {
 	char		**args;
 	int			*nums;
 	int			i;
 
 	if(!(args = ft_split((line + 1), ',')) ||
-		!(nums = ft_save_rgb(args, map)))
+		!(nums = ft_save_rgb(args)))
 		return ;
 	i = 0;
-	while(i > 3)
+	while(i < 3)
 	{
 		if (line [0] == 'F')
 			map->floor[i] = nums[i];
@@ -139,23 +138,19 @@ void			ft_check_floor_ceiling(char *line, t_map *map)
 		i++;
 	}
 	if (line [0] == 'F')
-			map->flags[6] += 1;
+			flags->has_floor += 1;
 	else
-			map->flags[7] += 1;
+			flags->has_clng += 1;
 	free(nums);
 	ft_free_matrix((void **)args);
 }
 
-int		ft_check_flags(t_map *map)
+int		ft_check_flags(t_cub_flags flags)
 {
-	int	i;
-
-	i = 0;
-	while (i < 8)
-	{
-		if (map->flags[i] != 1)
-			return (0);
-	}
+	if (flags.has_resol != 1 || flags.has_n_tex != 1 || flags.has_w_tex != 1 ||
+		flags.has_e_tex != 1 || flags.has_s_tex != 1 || flags.has_sprite != 1 ||
+		flags.has_floor != 1 || flags.has_clng != 1)
+		return (0);
 	return (1);
 }
 
