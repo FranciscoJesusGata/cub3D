@@ -6,7 +6,7 @@
 /*   By: fgata-va <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 10:13:53 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/11/06 11:53:18 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/11/10 12:27:55 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ typedef struct	s_map{
 	void	*mlx_ptr;
 	void	*window;
 	int		max_y;
+	int		player_x;
+	int		player_y;
 }				t_map;
 
 typedef struct s_textures
@@ -65,5 +67,6 @@ void			ft_check_floor_ceiling(char *line, t_map *map, t_cub_flags *flags);
 int				ft_check_flags(t_cub_flags flags);
 void			ft_free_matrix(void **matrix);
 int				ft_isnumber(char *s);
+void			*ft_matrix_cpy(void *input, int size);
 
 #endif

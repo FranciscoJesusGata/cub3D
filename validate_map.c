@@ -6,7 +6,7 @@
 /*   By: fgata-va <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 11:26:02 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/11/09 18:25:13 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/11/10 12:31:23 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,29 @@ int			ft_check_player(char **map)
 	return (1);
 }
 
+void			ft_player_pos(char **map, int *x, int *y)
+{
+	int		i;
+	int		j;
 
-int		ft_check_elements(t_map *data, t_cub_flags *flags)
+	i = 0;
+	while (map[i])
+	{
+		j = 0;
+		while (map[i][j])
+		{
+			if (ft_strchr("NSWE", map[i][j]))
+			{
+				*x = j;
+				*y = i;
+			}
+			j++;
+		}
+		i++;
+	}
+}
+
+int		ft_check_elements(t_map *data)
 {
 	int		i;
 	int		j;
@@ -49,7 +70,6 @@ int		ft_check_elements(t_map *data, t_cub_flags *flags)
 
 	i = 0;
 	map = data->map_matrix;
-	flags->valid_map = 1;
 	while(map[i])
 	{
 		j = 0;
@@ -63,6 +83,7 @@ int		ft_check_elements(t_map *data, t_cub_flags *flags)
 	}
 	if (ft_check_player(map))
 		return (0);
+	return (1);
 }
 
 
@@ -74,21 +95,30 @@ int		map_validator(char **map, int x, int y, t_map *data)
 	if (map[y][x] != 1 && map[y][x] != 3 && valid == 1)
 	{
 		if (x == ft_strlen(map[y]) || y == data->max_y || x == 0 || y == 0)
-		{
 			return (0);
-		}
 		map[y][x] = 3;
-		valid =map_validator(map, x + 1, y, data);
+		valid = map_validator(map, x + 1, y, data);
 		if (x < ft_strlen(map[y - 1]))
 			valid = map_validator(map, x, y - 1, data);
 		valid = map_validator(map, x - 1, y, data);
 		if (x < ft_strlen(map[y + 1]))
-			valid =map_validator(map, x, y + 1, data);
+			valid = map_validator(map, x, y + 1, data);
 	}
 	return (valid);
 }
 
-void		ft_valid_map(t_map *data, t_cub_flags *flags)
+int		ft_valid_map(t_map *data)
 {
-	
+	int	valid;
+	char **map_cpy;
+
+	map_cpy = (char **)ft_matrix_cpy(data->map_matrix, data->max_y);
+	valid = ft_check_elements(data);
+	if (valid)
+	{
+		ft_player_pos(data->map_matrix, &(data->player_x), &(data->player_y));
+		valid = map_validator(map_cpy, data->player_x, data->player_y, data);
+	}
+	ft_free_matrix((void **)map_cpy);
+	return (valid);
 }
