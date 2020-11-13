@@ -33,6 +33,7 @@ int		ft_isnumber(char *s)
 	{
 		if (!(ft_isdigit(s[i])))
 			return (0);
+		i++;
 	}
 	return (1);
 }
