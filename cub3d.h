@@ -6,7 +6,7 @@
 /*   By: fgata-va <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 10:13:53 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/11/10 12:27:55 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/11/13 12:12:29 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct	s_map{
 	int		max_y;
 	int		player_x;
 	int		player_y;
+	int		save;
 }				t_map;
 
 typedef struct s_textures
@@ -55,7 +56,7 @@ typedef struct s_cub_flags
 	int		has_clng;
 }				t_cub_flags;
 
-int				cub3d(char *path);
+int				cub3d(char *path, int save);
 void			ft_init_map(t_map *map);
 void			ft_init_tex(t_textures *tex);
 void			ft_init_flags(t_cub_flags *flags);
@@ -68,5 +69,10 @@ int				ft_check_flags(t_cub_flags flags);
 void			ft_free_matrix(void **matrix);
 int				ft_isnumber(char *s);
 void			*ft_matrix_cpy(void *input, int size);
+char			**ft_newline(char **file, char *line, size_t size);
+void			ft_save_map(t_map *data, char **file, int *i);
+int				ft_ismap(char *line);
+int				ft_valid_map(t_map *data);
+void	ft_print_map(char **map, int lines);
 
 #endif

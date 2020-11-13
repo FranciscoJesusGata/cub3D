@@ -6,7 +6,7 @@
 /*   By: fgata-va <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 11:40:34 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/11/06 12:46:13 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/11/13 12:12:49 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,11 @@ int				ft_validate(char **file, t_map *map, t_textures *tex)
 {
 	int			i;
 	t_cub_flags	flags;
-	char *line;
+	char		*line;
+	int			valid;
 
 	i = 0;
+	valid = 1;
 	ft_init_flags(&flags);
 	while (file[i])
 	{
@@ -72,18 +74,22 @@ int				ft_validate(char **file, t_map *map, t_textures *tex)
 		else if ((line[0] == 'F' && ft_strnstr(line, "F", ft_strlen(line))) ||
 				(line[0] == 'C' && ft_strnstr(line, "C", ft_strlen(line))))
 			ft_check_floor_ceiling(line, map, &flags);
-		free(line);
+		else if (ft_ismap(line))
+			ft_save_map(map, file, &i);
+		else
+			break ;
 		i++;
 	}
-	if (!(ft_check_flags(flags)) /*|| !(ft_map_validation(file, map))*/)
+	if (!(ft_check_flags(flags)) || !(ft_valid_map(map)))
 	{
 		ft_error("Invalid arguments");
-		return (0);
+		valid = 0;
 	}
-	return (1);
+	ft_free_matrix((void **)file);
+	return (valid);
 }
 
-int				cub3d(char *path)
+int				cub3d(char *path, int save)
 {
 	int			fd;
 	char		**file;
@@ -98,6 +104,7 @@ int				cub3d(char *path)
 		return(1);
 	}
 	ft_init_map(&map);
+	map.save = save;
 	ft_init_tex(&textures);
 	file = ft_read_map(fd);
 	close(fd);
@@ -106,6 +113,15 @@ int				cub3d(char *path)
 		//ft_destroy_everything();
 		return (0);
 	}
+	ft_printf("R  %d, %d\n", map.resolution[0], map.resolution[1]);
+	ft_printf("F  %d, %d, %d\n", map.floor[0], map.floor[1], map.floor[2]);
+	ft_printf("C  %d, %d, %d\n", map.ceiling[0], map.ceiling[1], map.ceiling[2]);
+	ft_printf("NO %s\n", textures.n_texture);
+	ft_printf("SO %s\n", textures.s_texture);
+	ft_printf("WE %s\n", textures.w_texture);
+	ft_printf("EA %s\n", textures.e_texture);
+	ft_printf("S  %s\n\n", textures.sprite);
+	ft_print_map(map.map_matrix, map.max_y);
 	return (1);
 }
 

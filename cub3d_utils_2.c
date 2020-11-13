@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 11:34:02 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/11/10 12:17:31 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/11/13 11:25:01 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,16 @@ int		ft_isnumber(char *s)
 			return (0);
 	}
 	return (1);
+}
+
+void	ft_print_map(char **map, int lines)
+{
+	int	i;
+
+	i = 0;
+	while(i < lines)
+	{
+		ft_printf("%s\n", map[i]);
+		i++;
+	}
 }

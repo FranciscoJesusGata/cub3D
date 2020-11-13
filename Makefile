@@ -6,7 +6,7 @@
 #    By: fgata-va <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/09/29 12:43:45 by fgata-va          #+#    #+#              #
-#    Updated: 2020/10/07 09:58:08 by fgata-va         ###   ########.fr        #
+#    Updated: 2020/11/13 12:31:44 by fgata-va         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CFLAGS += -Wall -Werror -Wextra -I . -g
 
 GNL = lib/GNL/get_next_line.c lib/GNL/get_next_line_utils.c
 
-SRC = cub3d.c
+SRC = cub3d.c cub3d_utils.c cub3d_utils_2.c validate_args.c validate_map.c ft_save_map.c main.c
 
 NAME = cub3d
 
@@ -43,6 +43,6 @@ clean:
 	@make -C lib/libftprintf fclean
 	@make -C lib/mlx clean
 	@rm -rf libmlx.dylib
-	@rm $(NAME)
+	@rm -rf $(NAME) $(NAME).dSYM
 
-re: fclean all
+re: clean all
