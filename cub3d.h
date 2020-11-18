@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgata-va <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 10:13:53 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/11/13 12:12:29 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/11/16 12:20:04 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct	s_map{
 	int		player_x;
 	int		player_y;
 	int		save;
+	int		lines;
 }				t_map;
 
 typedef struct s_textures
@@ -66,13 +67,13 @@ void			ft_check_texture(char *line, t_textures *tex, t_cub_flags *flags);
 int				ft_check_extension(char *check, char *expected);
 void			ft_check_floor_ceiling(char *line, t_map *map, t_cub_flags *flags);
 int				ft_check_flags(t_cub_flags flags);
-void			ft_free_matrix(void **matrix);
+void			ft_free_matrix(void **matrix, int lines);
 int				ft_isnumber(char *s);
 void			*ft_matrix_cpy(void *input, int size);
 char			**ft_newline(char **file, char *line, size_t size);
 void			ft_save_map(t_map *data, char **file, int *i);
 int				ft_ismap(char *line);
 int				ft_valid_map(t_map *data);
-void	ft_print_map(char **map, int lines);
+void			ft_print_map(char **map, int lines);
 
 #endif

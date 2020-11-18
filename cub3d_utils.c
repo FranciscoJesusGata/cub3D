@@ -6,18 +6,18 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/28 10:55:24 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/11/06 13:08:19 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/11/16 11:52:39 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void		ft_free_matrix(void **matrix)
+void		ft_free_matrix(void **matrix, int lines)
 {
 	int		i;
 
 	i = 0;
-	while(matrix[i])
+	while(i < lines)
 	{
 		free(matrix[i]);
 		i++;

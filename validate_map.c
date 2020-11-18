@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validate_map.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgata-va <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 11:26:02 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/11/13 12:13:52 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/11/16 12:22:20 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,6 @@ int		ft_valid_map(t_map *data)
 		ft_player_pos(data->map_matrix, &(data->player_x), &(data->player_y));
 		valid = map_validator(map_cpy, data->player_x, data->player_y, data);
 	}
-	ft_free_matrix((void **)map_cpy);
+	ft_free_matrix((void **)map_cpy, data->max_y);
 	return (valid);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgata-va <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 11:40:34 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/11/13 12:12:49 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/11/16 13:05:44 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char			**ft_newline(char **file, char *line, size_t size)
 	return (new_matrix);
 }
 
-void			*ft_read_map(int fd)
+void			*ft_read_map(int fd, int *lines)
 {
 	char		*line;
 	int			i;
@@ -50,7 +50,7 @@ void			*ft_read_map(int fd)
 	}
 	file = ft_newline(file, line, i);
 	i++;
-	file[i] = NULL;
+	*lines = i;
 	return(file);
 }
 
@@ -64,20 +64,23 @@ int				ft_validate(char **file, t_map *map, t_textures *tex)
 	i = 0;
 	valid = 1;
 	ft_init_flags(&flags);
-	while (file[i])
+	while (i < map->lines)
 	{
 		line = ft_strtrim(file[i], "\t\v\f\r ");
-		if (line[0] == 'R' && ft_strnstr(line, "R", ft_strlen(line)))
-			flags.has_resol += ft_check_resol(line, map);
-		else if (ft_strchr("NSWE",ft_strlen(line)))
-			ft_check_texture(line, tex, &flags);
-		else if ((line[0] == 'F' && ft_strnstr(line, "F", ft_strlen(line))) ||
-				(line[0] == 'C' && ft_strnstr(line, "C", ft_strlen(line))))
-			ft_check_floor_ceiling(line, map, &flags);
-		else if (ft_ismap(line))
-			ft_save_map(map, file, &i);
-		else
-			break ;
+		if(strlen(line) > 0)
+		{
+			if (line[0] == 'R' && ft_strnstr(line, "R", ft_strlen(line)))
+				flags.has_resol += ft_check_resol(line, map);
+			else if (ft_strchr("NSWE", line[0]))
+				ft_check_texture(line, tex, &flags);
+			else if ((line[0] == 'F' && ft_strnstr(line, "F", ft_strlen(line))) ||
+					(line[0] == 'C' && ft_strnstr(line, "C", ft_strlen(line))))
+				ft_check_floor_ceiling(line, map, &flags);
+			else if (ft_ismap(line))
+				ft_save_map(map, file, &i);
+			else
+				break ;
+		}
 		i++;
 	}
 	if (!(ft_check_flags(flags)) || !(ft_valid_map(map)))
@@ -85,7 +88,7 @@ int				ft_validate(char **file, t_map *map, t_textures *tex)
 		ft_error("Invalid arguments");
 		valid = 0;
 	}
-	ft_free_matrix((void **)file);
+	ft_free_matrix((void **)file, map->lines);
 	return (valid);
 }
 
@@ -106,7 +109,7 @@ int				cub3d(char *path, int save)
 	ft_init_map(&map);
 	map.save = save;
 	ft_init_tex(&textures);
-	file = ft_read_map(fd);
+	file = ft_read_map(fd, &map.lines);
 	close(fd);
 	if(!(ft_validate(file, &map, &textures)))
 	{

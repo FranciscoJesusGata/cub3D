@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 11:26:26 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/11/11 11:54:51 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/11/17 12:06:11 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,33 +46,25 @@ int			ft_check_resol(char *line ,t_map *map)
 		return (1);
 }
 
+void		ft_save_tex (int *flag, char **tex, char *path)
+{
+	if (*flag == 0)
+		*tex = path;
+	*flag += 1;
+}
+
 void		ft_tex_flag(char *line, t_cub_flags *flags, t_textures *tex, char *path)
 {
 	if (line[0] == 'N' && ft_strnstr(line, "NO", ft_strlen(line)))
-	{
-		tex->n_texture = path;
-		flags->has_n_tex += 1;
-	}
+		ft_save_tex (&(flags->has_n_tex), &(tex->n_texture), path);
 	else if (line[0] == 'S' && ft_strnstr(line, "SO", ft_strlen(line)))
-	{
-		tex->s_texture = path;
-		flags->has_s_tex += 1;
-	}
+		ft_save_tex (&(flags->has_s_tex), &(tex->s_texture), path);
 	else if (line[0] == 'W' && ft_strnstr(line, "WE", ft_strlen(line)))
-	{
-		tex->w_texture = path;
-		flags->has_w_tex += 1;
-	}
+		ft_save_tex (&(flags->has_w_tex), &(tex->w_texture), path);
 	else if (line[0] == 'E' && ft_strnstr(line, "EA", ft_strlen(line)))
-	{
-		tex->e_texture = path;
-		flags->has_e_tex += 1;
-	}
+		ft_save_tex (&(flags->has_e_tex), &(tex->e_texture), path);
 	else if (line[0] == 'S' && ft_strnstr(line, "S", ft_strlen(line)))
-	{
-		tex->sprite = path;
-		flags->has_s_tex += 1;
-	}
+		ft_save_tex (&(flags->has_sprite), &(tex->sprite), path);
 }
 
 void			ft_check_texture(char *line, t_textures *tex, t_cub_flags *flags)
@@ -142,7 +134,7 @@ void			ft_check_floor_ceiling(char *line, t_map *map, t_cub_flags *flags)
 	else
 			flags->has_clng += 1;
 	free(nums);
-	ft_free_matrix((void **)args);
+	ft_free_matrix((void **)args, 3);
 }
 
 int		ft_check_flags(t_cub_flags flags)

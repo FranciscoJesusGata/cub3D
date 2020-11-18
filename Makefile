@@ -31,7 +31,7 @@ libft:
 
 mlx:
 	@$(MAKE) -C lib/mlx all
-	mv lib/mlx/libmlx.dylib .
+	cp lib/mlx/libmlx.dylib .
 
 $(NAME): libft mlx
 	$(CC) $(CFLAGS) $(SRC) $(GNL) $(LIBFT) $(MLX) -o $(NAME)

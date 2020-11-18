@@ -3,24 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_utils_2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgata-va <fgata-va@student.42madrid>       +#+  +:+       +#+        */
+/*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 11:34:02 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/11/13 11:25:01 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/11/17 13:34:21 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void		*ft_matrix_cpy(void *input, int size)
+char	*ft_matrix_cpy(char **input, int lines)
 {
-	void	*cpy;
+	void	**cpy;
+	int		i;
 
-	if(!input || size == 0)
-		return (ft_calloc(1, 1));
-	if(!(cpy = malloc(size)))
+	if(!input || lines == 0 || !(cpy = malloc(lines * sizeof(char *))))
 		return (NULL);
-	ft_memcpy(cpy, input, size);
+	i = 0;
+	while (i < lines)
+	{
+		cpy[i] = ft_strdup(input[i]);
+		i++;
+	}
 	return (cpy);
 }
 
@@ -31,7 +35,7 @@ int		ft_isnumber(char *s)
 	i = 0;
 	while (s[i])
 	{
-		if (!(ft_isdigit(s[i])))
+		if (ft_isdigit(s[i]) == 0)
 			return (0);
 		i++;
 	}
