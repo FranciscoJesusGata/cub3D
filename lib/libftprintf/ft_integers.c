@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/26 11:58:10 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/02/17 14:39:12 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/11/20 12:33:49 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,12 @@ void		ft_prnt_int(va_list ap, t_flags *data)
 {
 	long long int	prnt;
 	int				dgts;
+	char			*tmp;
 
 	prnt = va_arg(ap, int);
-	dgts = ft_strlen(ft_itoa(prnt));
+	tmp = ft_itoa(prnt);
+	dgts = ft_strlen(tmp);
+	free(tmp);
 	if (prnt < 0 && prnt > -2147483648)
 	{
 		data->negative = 1;

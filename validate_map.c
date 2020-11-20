@@ -6,13 +6,13 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 11:26:02 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/11/16 12:22:20 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/11/20 13:43:01 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int			ft_check_player(char **map)
+int			ft_check_player(char **map, int lines)
 {
 	int		i;
 	int		j;
@@ -20,7 +20,7 @@ int			ft_check_player(char **map)
 
 	fnd = 0;
 	i = 0;
-	while (map[i])
+	while (i < lines)
 	{
 		j = 0;
 		while (map[i][j])
@@ -40,13 +40,13 @@ int			ft_check_player(char **map)
 	return (1);
 }
 
-void			ft_player_pos(char **map, int *x, int *y)
+void			ft_player_pos(char **map, int *x, int *y, int lines)
 {
 	int		i;
 	int		j;
 
 	i = 0;
-	while (map[i])
+	while (i < lines)
 	{
 		j = 0;
 		while (map[i][j])
@@ -70,7 +70,7 @@ int		ft_check_elements(t_map *data)
 
 	i = 0;
 	map = data->map_matrix;
-	while(map[i])
+	while(i < data->max_y)
 	{
 		j = 0;
 		while (map[i][j])
@@ -81,7 +81,7 @@ int		ft_check_elements(t_map *data)
 		}
 		i++;
 	}
-	if (ft_check_player(map))
+	if (!ft_check_player(map, data->max_y))
 		return (0);
 	return (1);
 }
@@ -112,11 +112,11 @@ int		ft_valid_map(t_map *data)
 	int	valid;
 	char **map_cpy;
 
-	map_cpy = (char **)ft_matrix_cpy(data->map_matrix, data->max_y);
+	map_cpy = ft_mtxdup(data->map_matrix, data->max_y);
 	valid = ft_check_elements(data);
 	if (valid)
 	{
-		ft_player_pos(data->map_matrix, &(data->player_x), &(data->player_y));
+		ft_player_pos(data->map_matrix, &(data->player_x), &(data->player_y), data->max_y);
 		valid = map_validator(map_cpy, data->player_x, data->player_y, data);
 	}
 	ft_free_matrix((void **)map_cpy, data->max_y);

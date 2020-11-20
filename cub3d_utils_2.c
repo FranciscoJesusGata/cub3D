@@ -6,15 +6,15 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 11:34:02 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/11/17 13:34:21 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/11/19 09:44:18 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-char	*ft_matrix_cpy(char **input, int lines)
+char	**ft_mtxdup(char **input, int lines)
 {
-	void	**cpy;
+	char	**cpy;
 	int		i;
 
 	if(!input || lines == 0 || !(cpy = malloc(lines * sizeof(char *))))

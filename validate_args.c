@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 11:26:26 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/11/17 12:06:11 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/11/20 14:05:53 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int			ft_check_resol(char *line ,t_map *map)
 			map->resolution[j] = map->max_r[j];
 		j++;
 	}
-		return (1);
+	return (1);
 }
 
 void		ft_save_tex (int *flag, char **tex, char *path)
@@ -106,6 +106,7 @@ int				*ft_save_rgb(char **args)
 			return (NULL);
 		}
 		free(nbr);
+		free(args[i]);
 		i++;
 	}
 	return (nums);
@@ -134,7 +135,6 @@ void			ft_check_floor_ceiling(char *line, t_map *map, t_cub_flags *flags)
 	else
 			flags->has_clng += 1;
 	free(nums);
-	ft_free_matrix((void **)args, 3);
 }
 
 int		ft_check_flags(t_cub_flags flags)

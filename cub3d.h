@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 10:13:53 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/11/16 12:20:04 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/11/20 11:26:13 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void			ft_check_floor_ceiling(char *line, t_map *map, t_cub_flags *flags);
 int				ft_check_flags(t_cub_flags flags);
 void			ft_free_matrix(void **matrix, int lines);
 int				ft_isnumber(char *s);
-void			*ft_matrix_cpy(void *input, int size);
+char			**ft_mtxdup(char **input, int lines);
 char			**ft_newline(char **file, char *line, size_t size);
 void			ft_save_map(t_map *data, char **file, int *i);
 int				ft_ismap(char *line);

@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/28 10:55:24 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/11/16 11:52:39 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/11/20 11:07:56 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,14 @@ void	ft_init_map(t_map *map)
 	}
 	map->resolution[0] = 0;
 	map->resolution[1] = 0;
-	i = 0;
+	map->player_x = 0;
+	map->player_y = 0;
 	map->mlx_ptr = mlx_init();
 	mlx_get_screen_size(map->mlx_ptr, &(map->max_r[0]), &(map->max_r[1]));
 	map->window = NULL;
 	map->max_y = 0;
+	map->save = 0;
+	map->lines = 0;
 }
 
 void ft_init_flags(t_cub_flags *flags)

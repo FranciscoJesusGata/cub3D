@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 11:40:34 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/11/16 13:05:44 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/11/20 14:06:03 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ void			*ft_resize(void *p, size_t oldlen, size_t newlen)
 	void		*new;
 
 	if (!p)
-		return (malloc(newlen));
+		return (ft_calloc(newlen, 1));
 	if(newlen <= oldlen)
 		return (p);
-	new = malloc(newlen);
+	new = ft_calloc(newlen, 1);
 	ft_memcpy(new, p, newlen);
 	free(p);
 	return(new);
@@ -79,8 +79,12 @@ int				ft_validate(char **file, t_map *map, t_textures *tex)
 			else if (ft_ismap(line))
 				ft_save_map(map, file, &i);
 			else
+			{
+				free(line);
 				break ;
+			}
 		}
+		free(line);
 		i++;
 	}
 	if (!(ft_check_flags(flags)) || !(ft_valid_map(map)))
@@ -88,7 +92,6 @@ int				ft_validate(char **file, t_map *map, t_textures *tex)
 		ft_error("Invalid arguments");
 		valid = 0;
 	}
-	ft_free_matrix((void **)file, map->lines);
 	return (valid);
 }
 
@@ -113,8 +116,7 @@ int				cub3d(char *path, int save)
 	close(fd);
 	if(!(ft_validate(file, &map, &textures)))
 	{
-		//ft_destroy_everything();
-		return (0);
+		ft_printf("esta mal\n");
 	}
 	ft_printf("R  %d, %d\n", map.resolution[0], map.resolution[1]);
 	ft_printf("F  %d, %d, %d\n", map.floor[0], map.floor[1], map.floor[2]);
@@ -125,6 +127,14 @@ int				cub3d(char *path, int save)
 	ft_printf("EA %s\n", textures.e_texture);
 	ft_printf("S  %s\n\n", textures.sprite);
 	ft_print_map(map.map_matrix, map.max_y);
+	ft_free_matrix((void **)file, map.lines);
+	free(map.map_matrix);
+	free(map.mlx_ptr);
+	free(textures.n_texture);
+	free(textures.s_texture);
+	free(textures.w_texture);
+	free(textures.e_texture);
+	free(textures.sprite);
 	return (1);
 }
 

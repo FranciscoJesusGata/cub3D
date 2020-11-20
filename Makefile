@@ -6,7 +6,7 @@
 #    By: fgata-va <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/09/29 12:43:45 by fgata-va          #+#    #+#              #
-#    Updated: 2020/11/13 12:31:44 by fgata-va         ###   ########.fr        #
+#    Updated: 2020/11/19 14:13:13 by fgata-va         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ libft:
 	@$(MAKE) -C lib/libftprintf all
 
 mlx:
-	@$(MAKE) -C lib/mlx all
+	@$(MAKE) -C lib/mlx
 	cp lib/mlx/libmlx.dylib .
 
 $(NAME): libft mlx
