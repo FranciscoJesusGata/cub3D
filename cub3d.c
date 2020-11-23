@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 11:40:34 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/11/20 14:06:03 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/11/23 11:04:39 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int				ft_validate(char **file, t_map *map, t_textures *tex)
 	int			valid;
 
 	i = 0;
-	valid = 1;
+	valid = 0;
 	ft_init_flags(&flags);
 	while (i < map->lines)
 	{
@@ -81,7 +81,7 @@ int				ft_validate(char **file, t_map *map, t_textures *tex)
 			else
 			{
 				free(line);
-				break ;
+				return (0);
 			}
 		}
 		free(line);
@@ -90,7 +90,7 @@ int				ft_validate(char **file, t_map *map, t_textures *tex)
 	if (!(ft_check_flags(flags)) || !(ft_valid_map(map)))
 	{
 		ft_error("Invalid arguments");
-		valid = 0;
+		valid = 1;
 	}
 	return (valid);
 }
@@ -101,6 +101,7 @@ int				cub3d(char *path, int save)
 	char		**file;
 	t_map		map;
 	t_textures	textures;
+	int			valid;
 
 	file = NULL;
 	if(!(fd = open(path, O_RDONLY)))
@@ -114,27 +115,10 @@ int				cub3d(char *path, int save)
 	ft_init_tex(&textures);
 	file = ft_read_map(fd, &map.lines);
 	close(fd);
-	if(!(ft_validate(file, &map, &textures)))
-	{
-		ft_printf("esta mal\n");
-	}
-	ft_printf("R  %d, %d\n", map.resolution[0], map.resolution[1]);
-	ft_printf("F  %d, %d, %d\n", map.floor[0], map.floor[1], map.floor[2]);
-	ft_printf("C  %d, %d, %d\n", map.ceiling[0], map.ceiling[1], map.ceiling[2]);
-	ft_printf("NO %s\n", textures.n_texture);
-	ft_printf("SO %s\n", textures.s_texture);
-	ft_printf("WE %s\n", textures.w_texture);
-	ft_printf("EA %s\n", textures.e_texture);
-	ft_printf("S  %s\n\n", textures.sprite);
-	ft_print_map(map.map_matrix, map.max_y);
-	ft_free_matrix((void **)file, map.lines);
-	free(map.map_matrix);
-	free(map.mlx_ptr);
-	free(textures.n_texture);
-	free(textures.s_texture);
-	free(textures.w_texture);
-	free(textures.e_texture);
-	free(textures.sprite);
-	return (1);
+	if((valid = ft_validate(file, &map, &textures)) == 0)
+		ft_printf("Error\n");
+	ft_print_data(&map,&textures);
+	ft_destroy_everything(&map, &textures, (void **)file);
+	return (valid);
 }
 

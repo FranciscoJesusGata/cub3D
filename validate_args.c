@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 11:26:26 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/11/20 14:05:53 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/11/23 09:42:45 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ int				*ft_save_rgb(char **args)
 		free(args[i]);
 		i++;
 	}
+	free(args);
 	return (nums);
 }
 

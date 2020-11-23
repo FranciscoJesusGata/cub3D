@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 11:34:02 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/11/19 09:44:18 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/11/23 10:18:16 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,29 @@ void	ft_print_map(char **map, int lines)
 		ft_printf("%s\n", map[i]);
 		i++;
 	}
+}
+
+void	ft_destroy_everything(t_map *map, t_textures *tex, void **file)
+{
+	ft_free_matrix(file, map->lines);
+	free(map->map_matrix);
+	free(map->mlx_ptr);
+	free(tex->n_texture);
+	free(tex->s_texture);
+	free(tex->w_texture);
+	free(tex->e_texture);
+	free(tex->sprite);
+}
+
+void	ft_print_data(t_map *data, t_textures *tex)
+{
+	ft_printf("R  %d, %d\n", data->resolution[0], data->resolution[1]);
+	ft_printf("F  %d, %d, %d\n", data->floor[0], data->floor[1], data->floor[2]);
+	ft_printf("C  %d, %d, %d\n", data->ceiling[0], data->ceiling[1], data->ceiling[2]);
+	ft_printf("NO %s\n", tex->n_texture);
+	ft_printf("SO %s\n", tex->s_texture);
+	ft_printf("WE %s\n", tex->w_texture);
+	ft_printf("EA %s\n", tex->e_texture);
+	ft_printf("S  %s\n\n", tex->sprite);
+	ft_print_map(data->map_matrix, data->max_y);
 }

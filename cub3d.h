@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 10:13:53 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/11/20 11:26:13 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/11/23 10:18:29 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,7 @@ void			ft_save_map(t_map *data, char **file, int *i);
 int				ft_ismap(char *line);
 int				ft_valid_map(t_map *data);
 void			ft_print_map(char **map, int lines);
+void			ft_destroy_everything(t_map *map, t_textures *tex, void **file);
+void			ft_print_data(t_map *data, t_textures *tex);
 
 #endif
