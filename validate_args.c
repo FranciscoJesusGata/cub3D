@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 11:26:26 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/11/23 09:42:45 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/11/23 11:31:10 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void			ft_check_texture(char *line, t_textures *tex, t_cub_flags *flags)
 		(!ft_check_extension(path, ".xpm") &&
 		!ft_check_extension(path, ".png")))
 	{
-		ft_error("Texture file doesn't exists or format not valid");
+		ft_printf("Texture file doesn't exists or format not valid\n");
 		free(path);
 		return ;
 	}

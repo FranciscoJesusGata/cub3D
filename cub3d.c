@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 11:40:34 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/11/23 11:04:39 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/11/23 11:30:28 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int				ft_validate(char **file, t_map *map, t_textures *tex)
 			else
 			{
 				free(line);
-				return (0);
+				return (1);
 			}
 		}
 		free(line);
@@ -104,7 +104,7 @@ int				cub3d(char *path, int save)
 	int			valid;
 
 	file = NULL;
-	if(!(fd = open(path, O_RDONLY)))
+	if((fd = open(path, O_RDONLY)) == -1)
 	{
 		write(1, "Error\n", 6);
 		strerror(errno);
@@ -116,8 +116,7 @@ int				cub3d(char *path, int save)
 	file = ft_read_map(fd, &map.lines);
 	close(fd);
 	if((valid = ft_validate(file, &map, &textures)) == 0)
-		ft_printf("Error\n");
-	ft_print_data(&map,&textures);
+		ft_print_data(&map,&textures);
 	ft_destroy_everything(&map, &textures, (void **)file);
 	return (valid);
 }

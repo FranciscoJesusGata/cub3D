@@ -6,7 +6,7 @@
 #    By: fgata-va <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/09/29 12:43:45 by fgata-va          #+#    #+#              #
-#    Updated: 2020/11/19 14:13:13 by fgata-va         ###   ########.fr        #
+#    Updated: 2020/11/23 11:21:02 by fgata-va         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,12 +26,15 @@ MLX = -L . -lmlx -framework OpenGL -framework Appkit
 
 all: $(NAME)
 
-libft:
+libft: git_submodules
 	@$(MAKE) -C lib/libftprintf all
 
 mlx:
 	@$(MAKE) -C lib/mlx
 	cp lib/mlx/libmlx.dylib .
+
+git_submodules:
+	git submodule init
 
 $(NAME): libft mlx
 	$(CC) $(CFLAGS) $(SRC) $(GNL) $(LIBFT) $(MLX) -o $(NAME)

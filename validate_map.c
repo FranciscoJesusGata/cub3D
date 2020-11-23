@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 11:26:02 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/11/20 13:43:01 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/11/23 12:21:06 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,22 +89,9 @@ int		ft_check_elements(t_map *data)
 
 int		map_validator(char **map, int x, int y, t_map *data)
 {
-	int	valid;
-
-	valid = 1;
-	if (map[y][x] != 1 && map[y][x] != 3 && valid == 1)
-	{
-		if (x == (int)ft_strlen(map[y]) || y == data->max_y || x == 0 || y == 0)
-			return (0);
-		map[y][x] = 3;
-		valid = map_validator(map, x + 1, y, data);
-		if (x < (int)ft_strlen(map[y - 1]))
-			valid = map_validator(map, x, y - 1, data);
-		valid = map_validator(map, x - 1, y, data);
-		if (x < (int)ft_strlen(map[y + 1]))
-			valid = map_validator(map, x, y + 1, data);
-	}
-	return (valid);
+	if (map[y][x] == 0 && (x == ft_strlen(x)))
+		return (1);
+	return (0);
 }
 
 int		ft_valid_map(t_map *data)
