@@ -1,3 +1,6 @@
 [submodule "lib/libftprintf"]
 	path = lib/libftprintf
 	url = git@github.com:FranciscoJesusGata/ft_printf.git
+[submodule "lib/mlx_linux"]
+	path = lib/mlx_linux
+	url = https://github.com/42Paris/minilibx-linux.git

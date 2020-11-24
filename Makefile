@@ -6,7 +6,7 @@
 #    By: fgata-va <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/09/29 12:43:45 by fgata-va          #+#    #+#              #
-#    Updated: 2020/11/23 11:21:02 by fgata-va         ###   ########.fr        #
+#    Updated: 2020/11/24 21:59:56 by fgata-va         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,19 +22,33 @@ NAME = cub3d
 
 LIBFT = -L lib/libftprintf -lftprintf
 
-MLX = -L . -lmlx -framework OpenGL -framework Appkit
+UNAME := $(shell uname)
+
+ifeq ($(UNAME), Darwin)
+  MLX := -L . -lmlx -framework OpenGL -framework Appkit
+endif
+ifeq ($(UNAME), Linux)
+  MLX := -L lib/mlx_linux -lmlx -lXext -lX11
+endif
 
 all: $(NAME)
 
-libft: git_submodules
+libft:
 	@$(MAKE) -C lib/libftprintf all
 
+ifeq ($(UNAME), Darwin)
 mlx:
 	@$(MAKE) -C lib/mlx
 	cp lib/mlx/libmlx.dylib .
+endif
+ifeq ($(UNAME), Linux)
+mlx:
+	@$(MAKE) -C lib/mlx_linux
+endif
 
 git_submodules:
 	git submodule init
+	git submodule foreach git pull origin master
 
 $(NAME): libft mlx
 	$(CC) $(CFLAGS) $(SRC) $(GNL) $(LIBFT) $(MLX) -o $(NAME)
@@ -45,6 +59,7 @@ test: libft
 clean:
 	@make -C lib/libftprintf fclean
 	@make -C lib/mlx clean
+	@make -C lib/mlx_linux clean
 	@rm -rf libmlx.dylib
 	@rm -rf $(NAME) $(NAME).dSYM
 
