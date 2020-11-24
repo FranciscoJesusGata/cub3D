@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 10:13:53 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/11/23 10:18:29 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/11/24 10:25:41 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct	s_map{
 	int		player_y;
 	int		save;
 	int		lines;
+	int		valid_map;
 }				t_map;
 
 typedef struct s_textures

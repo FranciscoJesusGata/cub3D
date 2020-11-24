@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 11:26:02 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/11/23 12:21:06 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/11/24 13:37:05 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,11 +87,23 @@ int		ft_check_elements(t_map *data)
 }
 
 
-int		map_validator(char **map, int x, int y, t_map *data)
+void		map_validator(char ***mapa, int x, int y, t_map *data)
 {
-	if (map[y][x] == 0 && (x == ft_strlen(x)))
-		return (1);
-	return (0);
+	char **map;
+
+	map = *mapa;
+	if (x <= 0 || y <= 0 || y >= data->max_y || x >= (int)ft_strlen(map[y]) || map[y][x] == '1' || map[y][x] == '3' || data->valid_map == 0)
+	{
+		/*if (map[x][y] && (map[y][x] == '1' || map[y][x] == '3'))
+			data->valid_map = 0;*/
+		return ;
+	}
+	map[y][x] = '3';
+	ft_printf("x: %d, y: %d\n", x, y);
+	map_validator(mapa, x - 1, y, data);
+	map_validator(mapa, x, y - 1, data);
+	map_validator(mapa, x + 1, y, data);
+	map_validator(mapa, x, y + 1, data);
 }
 
 int		ft_valid_map(t_map *data)
@@ -104,7 +116,10 @@ int		ft_valid_map(t_map *data)
 	if (valid)
 	{
 		ft_player_pos(data->map_matrix, &(data->player_x), &(data->player_y), data->max_y);
-		valid = map_validator(map_cpy, data->player_x, data->player_y, data);
+		map_validator(&map_cpy, data->player_x, data->player_y, data);
+		ft_print_map(map_cpy,data->max_y);
+		ft_printf("\nValid: %d\n", data->valid_map);
+		valid = data->valid_map;
 	}
 	ft_free_matrix((void **)map_cpy, data->max_y);
 	return (valid);
