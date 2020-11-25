@@ -40,7 +40,7 @@ int			ft_check_player(char **map, int lines)
 	return (1);
 }
 
-void			ft_player_pos(char **map, int *x, int *y, int lines)
+int			ft_player_pos(char **map, int *x, int *y, int lines)
 {
 	int		i;
 	int		j;
@@ -53,6 +53,8 @@ void			ft_player_pos(char **map, int *x, int *y, int lines)
 		{
 			if (ft_strchr("NSWE", map[i][j]))
 			{
+				if (j == 0 || i == 0 || i == lines || j == (int)ft_strlen(map[i]))
+					return (0);
 				*x = j;
 				*y = i;
 			}
@@ -60,6 +62,7 @@ void			ft_player_pos(char **map, int *x, int *y, int lines)
 		}
 		i++;
 	}
+	return (1);
 }
 
 int		ft_check_elements(t_map *data)
@@ -93,7 +96,7 @@ void		map_validator(char ***mapa, int x, int y, t_map *data)
 	int		max_x;
 
 	map = *mapa;
-	if (x < 0 || y < 0 || y >= data->max_y || x >= (max_x = (int)(ft_strlen(map[y]) - 1)) || map[y][x] == '1' || map[y][x] == '3' || data->valid_map == 0)
+	if (data->valid_map == 0 || x < 0 || y < 0 || y >= data->max_y || x >= (max_x = (int)(ft_strlen(map[y]) - 1)) || map[y][x] == '1' || map[y][x] == '3')
 		return ;
 	if (x == 0 || y == 0 || y == (data->max_y - 1) || x == (max_x - 1))
 		data->valid_map = 0;
@@ -117,7 +120,7 @@ int		ft_valid_map(t_map *data)
 	valid = ft_check_elements(data);
 	if (valid)
 	{
-		ft_player_pos(data->map_matrix, &(data->player_x), &(data->player_y), data->max_y);
+		data->valid_map = ft_player_pos(data->map_matrix, &(data->player_x), &(data->player_y), data->max_y);
 		map_validator(&map_cpy, data->player_x, data->player_y, data);
 		ft_print_map(map_cpy, data->max_y);
 		valid = data->valid_map;

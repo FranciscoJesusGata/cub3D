@@ -47,6 +47,6 @@ Cub3d takes 1 or 2 arguments: \"/path/to/map.cub\" and --save\n");
 				save = 1;
 			}
 		cub3d(argv[1], save);
-		system("leaks cub3D");
+		//system("leaks cub3D");
 	}
 }
