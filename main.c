@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 09:49:20 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/11/23 10:19:24 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/11/25 13:56:35 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,6 @@ Cub3d takes 1 or 2 arguments: \"/path/to/map.cub\" and --save\n");
 				save = 1;
 			}
 		cub3d(argv[1], save);
-		//system("leaks cub3d");
+		system("leaks cub3D");
 	}
 }

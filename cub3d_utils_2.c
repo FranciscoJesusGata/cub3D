@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 11:34:02 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/11/23 10:18:16 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/11/25 13:53:06 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,19 @@ void	ft_print_map(char **map, int lines)
 void	ft_destroy_everything(t_map *map, t_textures *tex, void **file)
 {
 	ft_free_matrix(file, map->lines);
-	free(map->map_matrix);
 	free(map->mlx_ptr);
-	free(tex->n_texture);
-	free(tex->s_texture);
-	free(tex->w_texture);
-	free(tex->e_texture);
-	free(tex->sprite);
+	if (map->map_matrix != NULL)
+		free(map->map_matrix);
+	if (tex->n_texture)
+		free(tex->n_texture);
+	if (tex->s_texture)
+		free(tex->s_texture);
+	if (tex->w_texture)
+		free(tex->w_texture);
+	if (tex->e_texture)
+		free(tex->e_texture);
+	if (tex->sprite)
+		free(tex->sprite);
 }
 
 void	ft_print_data(t_map *data, t_textures *tex)

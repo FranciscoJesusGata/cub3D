@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/28 10:55:24 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/11/24 10:26:04 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/11/25 10:50:58 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void	ft_init_map(t_map *map)
 	map->save = 0;
 	map->lines = 0;
 	map->valid_map = 1;
+	map->map_matrix = NULL;
 }
 
 void ft_init_flags(t_cub_flags *flags)

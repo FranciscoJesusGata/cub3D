@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 11:40:34 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/11/25 09:41:58 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/11/25 13:58:39 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int				ft_validate(char **file, t_map *map, t_textures *tex)
 	int			valid;
 
 	i = 0;
-	valid = 0;
+	valid = 1;
 	ft_init_flags(&flags);
 	while (i < map->lines)
 	{
@@ -80,17 +80,14 @@ int				ft_validate(char **file, t_map *map, t_textures *tex)
 			else
 			{
 				free(line);
-				return (1);
+				return (0);
 			}
 		}
 		free(line);
 		i++;
 	}
 	if (!(ft_check_flags(flags)) || !(ft_valid_map(map)))
-	{
-		ft_error("Invalid arguments");
-		valid = 1;
-	}
+		valid = 0;
 	return (valid);
 }
 
@@ -103,6 +100,7 @@ int				cub3d(char *path, int save)
 	int			valid;
 
 	file = NULL;
+	valid = 1;
 	if((fd = open(path, O_RDONLY)) == -1)
 	{
 		write(1, "Error\n", 6);
@@ -114,7 +112,9 @@ int				cub3d(char *path, int save)
 	ft_init_tex(&textures);
 	file = ft_read_map(fd, &map.lines);
 	close(fd);
-	if((valid = ft_validate(file, &map, &textures)) == 0)
+	if ((valid = ft_validate(file, &map, &textures)) == 0)
+		ft_error("Invalid arguments");
+	else
 		ft_print_data(&map,&textures);
 	ft_destroy_everything(&map, &textures, (void **)file);
 	return (valid);

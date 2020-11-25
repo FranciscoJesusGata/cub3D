@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 11:26:02 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/11/25 09:52:51 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/11/25 13:54:39 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,11 +98,14 @@ void		map_validator(char ***mapa, int x, int y, t_map *data)
 	if (x == 0 || y == 0 || y == (data->max_y - 1) || x == (max_x - 1))
 		data->valid_map = 0;
 	map[y][x] = '3';
-	ft_printf("x: %d, y: %d, max_x: %d\n", x, y, max_x);
 	map_validator(mapa, x - 1, y, data);
-	map_validator(mapa, x, y - 1, data);
 	map_validator(mapa, x + 1, y, data);
+	map_validator(mapa, x, y - 1, data);
 	map_validator(mapa, x, y + 1, data);
+	map_validator(mapa, x + 1, y + 1, data);
+	map_validator(mapa, x - 1, y + 1, data);
+	map_validator(mapa, x + 1, y - 1, data);
+	map_validator(mapa, x - 1, y - 1, data);
 }
 
 int		ft_valid_map(t_map *data)
@@ -116,9 +119,7 @@ int		ft_valid_map(t_map *data)
 	{
 		ft_player_pos(data->map_matrix, &(data->player_x), &(data->player_y), data->max_y);
 		map_validator(&map_cpy, data->player_x, data->player_y, data);
-		ft_printf("\nMax lines number: %d\n", data->max_y - 1);
-		ft_print_map(map_cpy,data->max_y);
-		ft_printf("\nValid: %d\n", data->valid_map);
+		ft_print_map(map_cpy, data->max_y);
 		valid = data->valid_map;
 	}
 	ft_free_matrix((void **)map_cpy, data->max_y);

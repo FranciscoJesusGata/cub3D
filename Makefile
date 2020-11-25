@@ -18,7 +18,7 @@ GNL = lib/GNL/get_next_line.c lib/GNL/get_next_line_utils.c
 
 SRC = cub3d.c cub3d_utils.c cub3d_utils_2.c validate_args.c validate_map.c ft_save_map.c main.c
 
-NAME = cub3d
+NAME = cub3D
 
 LIBFT = -L lib/libftprintf -lftprintf
 
