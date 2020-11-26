@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 11:40:34 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/11/25 20:18:17 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/11/26 12:46:20 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int				ft_validate(char **file, t_map *map, t_textures *tex)
 	ft_init_flags(&flags);
 	while (i < map->lines)
 	{
-		line = ft_strtrim(file[i], "\t\v\f\r ");
+		line = ft_strtrim(file[i], "\t ");
 		if(strlen(line) > 0)
 		{
 			if (line[0] == 'R' && ft_strnstr(line, "R", ft_strlen(line)))

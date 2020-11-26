@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 11:26:26 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/11/23 11:31:10 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/11/26 10:07:20 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,11 @@ void			ft_check_floor_ceiling(char *line, t_map *map, t_cub_flags *flags)
 		else
 			map->ceiling[i] = nums[i];
 		i++;
+	}
+	if (i < 3)
+	{
+		free(nums);
+		return ;
 	}
 	if (line [0] == 'F')
 			flags->has_floor += 1;
