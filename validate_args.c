@@ -110,6 +110,11 @@ int				*ft_save_rgb(char **args)
 		i++;
 	}
 	free(args);
+	if (i != 3)
+	{
+		free(nums);
+		return (NULL);
+	}
 	return (nums);
 }
 
@@ -130,11 +135,6 @@ void			ft_check_floor_ceiling(char *line, t_map *map, t_cub_flags *flags)
 		else
 			map->ceiling[i] = nums[i];
 		i++;
-	}
-	if (i < 3)
-	{
-		free(nums);
-		return ;
 	}
 	if (line [0] == 'F')
 			flags->has_floor += 1;

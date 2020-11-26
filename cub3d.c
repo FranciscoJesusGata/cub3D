@@ -66,7 +66,10 @@ int				ft_validate(char **file, t_map *map, t_textures *tex)
 	ft_init_flags(&flags);
 	while (i < map->lines)
 	{
-		line = ft_strtrim(file[i], "\t ");
+		if (ft_strlen(file[i]) > 1)
+			line = ft_strtrim(file[i], "\r\v\f\t ");
+		else
+			line = ft_strdup(file[i]);
 		if(strlen(line) > 0)
 		{
 			if (line[0] == 'R' && ft_strnstr(line, "R", ft_strlen(line)))
