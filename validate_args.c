@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 11:26:26 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/11/26 10:07:20 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/11/27 13:04:11 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ int			ft_check_resol(char *line ,t_map *map)
 	{
 		if (map->resolution[j] > map->max_r[j])
 			map->resolution[j] = map->max_r[j];
+		else if (map->resolution[j] <= 0)
+			return (0);
 		j++;
 	}
 	return (1);
@@ -53,18 +55,25 @@ void		ft_save_tex (int *flag, char **tex, char *path)
 	*flag += 1;
 }
 
-void		ft_tex_flag(char *line, t_cub_flags *flags, t_textures *tex, char *path)
+int		ft_tex_flag(char *line, t_cub_flags *flags, t_textures *tex, char *path)
 {
-	if (line[0] == 'N' && ft_strnstr(line, "NO", ft_strlen(line)))
+	if (line[0] == 'N' && (ft_strncmp(line, "NO", 2) == 0))
 		ft_save_tex (&(flags->has_n_tex), &(tex->n_texture), path);
-	else if (line[0] == 'S' && ft_strnstr(line, "SO", ft_strlen(line)))
+	else if (line[0] == 'S' && (ft_strncmp(line, "SO", 2) == 0))
 		ft_save_tex (&(flags->has_s_tex), &(tex->s_texture), path);
-	else if (line[0] == 'W' && ft_strnstr(line, "WE", ft_strlen(line)))
+	else if (line[0] == 'W' && (ft_strncmp(line, "WE", 2) == 0))
 		ft_save_tex (&(flags->has_w_tex), &(tex->w_texture), path);
-	else if (line[0] == 'E' && ft_strnstr(line, "EA", ft_strlen(line)))
+	else if (line[0] == 'E' && (ft_strncmp(line, "EA", 2) == 0))
 		ft_save_tex (&(flags->has_e_tex), &(tex->e_texture), path);
-	else if (line[0] == 'S' && ft_strnstr(line, "S", ft_strlen(line)))
+	else if (line[0] == 'S' && (ft_strncmp(line, "SO", 1) == 0))
 		ft_save_tex (&(flags->has_sprite), &(tex->sprite), path);
+	else
+	{
+		free(path);
+		return (0);
+	}
+	return (1);
+	
 }
 
 void			ft_check_texture(char *line, t_textures *tex, t_cub_flags *flags)
@@ -82,7 +91,11 @@ void			ft_check_texture(char *line, t_textures *tex, t_cub_flags *flags)
 		return ;
 	}
 	close(fd);
-	ft_tex_flag(line, flags, tex, path);
+	if (ft_tex_flag(line, flags, tex, path) == 0)
+	{
+		ft_error("Texture file doesn't exists or format not valid\n");
+		exit(1);
+	}
 }
 
 int				*ft_save_rgb(char **args)
@@ -124,8 +137,9 @@ void			ft_check_floor_ceiling(char *line, t_map *map, t_cub_flags *flags)
 	int			*nums;
 	int			i;
 
-	if(!(args = ft_split((line + 1), ',')) ||
-		!(nums = ft_save_rgb(args)))
+	if((ft_count_chars(line, ',') != 2) ||
+	!(args = ft_split((line + 1), ',')) ||
+	!(nums = ft_save_rgb(args)))
 		return ;
 	i = 0;
 	while(i < 3)

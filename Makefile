@@ -16,7 +16,7 @@ CFLAGS += -Wall -Werror -Wextra -I . -g
 
 GNL = lib/GNL/get_next_line.c lib/GNL/get_next_line_utils.c
 
-SRC = cub3d.c cub3d_utils.c cub3d_utils_2.c validate_args.c validate_map.c ft_save_map.c main.c
+SRC = cub3d.c cub3d_utils.c cub3d_utils_2.c cub3d_utils_3.c validate_args.c validate_map.c ft_save_map.c main.c
 
 NAME = cub3D
 
