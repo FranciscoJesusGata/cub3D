@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 11:26:26 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/11/27 13:04:11 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/11/29 16:58:44 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,15 +57,15 @@ void		ft_save_tex (int *flag, char **tex, char *path)
 
 int		ft_tex_flag(char *line, t_cub_flags *flags, t_textures *tex, char *path)
 {
-	if (line[0] == 'N' && (ft_strncmp(line, "NO", 2) == 0))
+	if (line[0] == 'N' && (ft_strncmp(line, "NO ", 3) == 0))
 		ft_save_tex (&(flags->has_n_tex), &(tex->n_texture), path);
-	else if (line[0] == 'S' && (ft_strncmp(line, "SO", 2) == 0))
+	else if (line[0] == 'S' && (ft_strncmp(line, "SO ", 3) == 0))
 		ft_save_tex (&(flags->has_s_tex), &(tex->s_texture), path);
-	else if (line[0] == 'W' && (ft_strncmp(line, "WE", 2) == 0))
+	else if (line[0] == 'W' && (ft_strncmp(line, "WE ", 3) == 0))
 		ft_save_tex (&(flags->has_w_tex), &(tex->w_texture), path);
-	else if (line[0] == 'E' && (ft_strncmp(line, "EA", 2) == 0))
+	else if (line[0] == 'E' && (ft_strncmp(line, "EA ", 3) == 0))
 		ft_save_tex (&(flags->has_e_tex), &(tex->e_texture), path);
-	else if (line[0] == 'S' && (ft_strncmp(line, "SO", 1) == 0))
+	else if (line[0] == 'S' && (ft_strncmp(line, "S ", 2) == 0))
 		ft_save_tex (&(flags->has_sprite), &(tex->sprite), path);
 	else
 	{
