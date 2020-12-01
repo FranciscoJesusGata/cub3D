@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 11:26:02 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/11/30 10:12:08 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/12/01 10:58:39 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int			ft_check_player(char **map, int lines)
 	return (1);
 }
 
-void			ft_player_pos(t_map *data)
+void		ft_player_pos(t_map *data)
 {
 	int		i;
 	int		j;
@@ -72,7 +72,7 @@ void		ft_check_elements(t_map *data)
 
 	i = 0;
 	map = data->map_matrix;
-	while(i < data->max_y)
+	while (i < data->max_y)
 	{
 		j = 0;
 		while (map[i][j])
@@ -87,7 +87,6 @@ void		ft_check_elements(t_map *data)
 		data->valid_map = 0;
 }
 
-
 void		map_validator(char ***mapa, int x, int y, t_map *data)
 {
 	char	**map;
@@ -97,7 +96,8 @@ void		map_validator(char ***mapa, int x, int y, t_map *data)
 	max_x = 0;
 	if (y < data->max_y && y >= 0)
 		max_x = (int)(ft_strlen(map[y]) - 1);
-	if (data->valid_map == 0 || x < 0 || y < 0 || y > data->max_y || x > max_x || map[y][x] == '1' || map[y][x] == '3')
+	if (data->valid_map == 0 || x < 0 || y < 0 || y > data->max_y ||
+		x > max_x || map[y][x] == '1' || map[y][x] == '3')
 	{
 		if ((y >= 0 && y < data->max_y) && x > max_x && map[y][max_x] == '1')
 			data->valid_map = 0;
@@ -116,9 +116,9 @@ void		map_validator(char ***mapa, int x, int y, t_map *data)
 	map_validator(mapa, x - 1, y - 1, data);
 }
 
-int		ft_valid_map(t_map *data)
+int			ft_valid_map(t_map *data)
 {
-	char **map_cpy;
+	char	**map_cpy;
 
 	map_cpy = ft_mtxdup(data->map_matrix, data->max_y);
 	ft_check_elements(data);

@@ -6,83 +6,46 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 11:26:26 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/11/29 16:58:44 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/12/01 09:58:10 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int			ft_check_resol(char *line ,t_map *map)
-{
-	int		i;
-	int		j;
-
-	i = 1;
-	j = 0;
-	while(line[i])
-	{
-		if(ft_isdigit(line[i]) && j < 2)
-		{
-			map->resolution[j] = ft_atoi(line + i);
-			while (ft_isdigit(line[i]))
-				i++;
-			i--;
-			j++;
-		}
-		else if ((ft_isdigit(line[i]) && j >= 2) || 
-				!(ft_strchr("\t\v\f\r ", line[i])))
-			return (0);
-		i++;
-	}
-	if (j < 2)
-		return (0);
-	j = 0;
-	while (j < 2)
-	{
-		if (map->resolution[j] > map->max_r[j])
-			map->resolution[j] = map->max_r[j];
-		else if (map->resolution[j] <= 0)
-			return (0);
-		j++;
-	}
-	return (1);
-}
-
-void		ft_save_tex (int *flag, char **tex, char *path)
+void		ft_save_tex(int *flag, char **tex, char *path)
 {
 	if (*flag == 0)
 		*tex = path;
 	*flag += 1;
 }
 
-int		ft_tex_flag(char *line, t_cub_flags *flags, t_textures *tex, char *path)
+int			ft_tex_flag(char *line, t_cflags *flags, t_tex *tex, char *path)
 {
-	if (line[0] == 'N' && (ft_strncmp(line, "NO ", 3) == 0))
-		ft_save_tex (&(flags->has_n_tex), &(tex->n_texture), path);
-	else if (line[0] == 'S' && (ft_strncmp(line, "SO ", 3) == 0))
-		ft_save_tex (&(flags->has_s_tex), &(tex->s_texture), path);
-	else if (line[0] == 'W' && (ft_strncmp(line, "WE ", 3) == 0))
-		ft_save_tex (&(flags->has_w_tex), &(tex->w_texture), path);
-	else if (line[0] == 'E' && (ft_strncmp(line, "EA ", 3) == 0))
-		ft_save_tex (&(flags->has_e_tex), &(tex->e_texture), path);
-	else if (line[0] == 'S' && (ft_strncmp(line, "S ", 2) == 0))
-		ft_save_tex (&(flags->has_sprite), &(tex->sprite), path);
+	if (ft_strncmp(line, "NO ", 3) == 0)
+		ft_save_tex(&(flags->has_n_tex), &(tex->n_texture), path);
+	else if (ft_strncmp(line, "SO ", 3) == 0)
+		ft_save_tex(&(flags->has_s_tex), &(tex->s_texture), path);
+	else if (ft_strncmp(line, "WE ", 3) == 0)
+		ft_save_tex(&(flags->has_w_tex), &(tex->w_texture), path);
+	else if (ft_strncmp(line, "EA ", 3) == 0)
+		ft_save_tex(&(flags->has_e_tex), &(tex->e_texture), path);
+	else if (ft_strncmp(line, "S ", 2) == 0)
+		ft_save_tex(&(flags->has_sprite), &(tex->sprite), path);
 	else
 	{
 		free(path);
 		return (0);
 	}
 	return (1);
-	
 }
 
-void			ft_check_texture(char *line, t_textures *tex, t_cub_flags *flags)
+void		ft_check_texture(char *line, t_tex *tex, t_cflags *flags)
 {
 	int		fd;
 	char	*path;
 
 	path = ft_strtrim(line, "\t\v\f\r NSWEAO");
-	if(!path || ((fd = open(path, O_RDONLY)) == -1) || 
+	if (!path || ((fd = open(path, O_RDONLY)) == -1) ||
 		(!ft_check_extension(path, ".xpm") &&
 		!ft_check_extension(path, ".png")))
 	{
@@ -98,66 +61,33 @@ void			ft_check_texture(char *line, t_textures *tex, t_cub_flags *flags)
 	}
 }
 
-int				*ft_save_rgb(char **args)
+void		ft_check_floor_ceiling(char *line, t_map *map, t_cflags *flags)
 {
-	int			i;
-	char		*nbr;
-	int			*nums;
+	char	**args;
+	int		*nums;
+	int		i;
 
-	i = 0;
-	if(!(nums = malloc(sizeof(int) * 3)))
-		return (NULL);
-	while(args[i])
-	{
-		if(!(nbr = ft_strtrim(args[i], "\t\v\f\r ")))
-			return (NULL);
-		nums[i] = ft_atoi(nbr);
-		if (nums[i] > 255 || nums[i] < 0 || !(ft_isnumber(nbr)))
-		{
-			free(nums);
-			free(nbr);
-			return (NULL);
-		}
-		free(nbr);
-		free(args[i]);
-		i++;
-	}
-	free(args);
-	if (i != 3)
-	{
-		free(nums);
-		return (NULL);
-	}
-	return (nums);
-}
-
-void			ft_check_floor_ceiling(char *line, t_map *map, t_cub_flags *flags)
-{
-	char		**args;
-	int			*nums;
-	int			i;
-
-	if((ft_count_chars(line, ',') != 2) ||
+	if ((ft_count_chars(line, ',') != 2) ||
 	!(args = ft_split((line + 1), ',')) ||
 	!(nums = ft_save_rgb(args)))
 		return ;
 	i = 0;
-	while(i < 3)
+	while (i < 3)
 	{
-		if (line [0] == 'F')
+		if (line[0] == 'F')
 			map->floor[i] = nums[i];
 		else
 			map->ceiling[i] = nums[i];
 		i++;
 	}
-	if (line [0] == 'F')
-			flags->has_floor += 1;
+	if (line[0] == 'F')
+		flags->has_floor += 1;
 	else
-			flags->has_clng += 1;
+		flags->has_clng += 1;
 	free(nums);
 }
 
-int		ft_check_flags(t_cub_flags flags)
+int			ft_check_flags(t_cflags flags)
 {
 	if (flags.has_resol != 1 || flags.has_n_tex != 1 || flags.has_w_tex != 1 ||
 		flags.has_e_tex != 1 || flags.has_s_tex != 1 || flags.has_sprite != 1 ||
@@ -165,4 +95,3 @@ int		ft_check_flags(t_cub_flags flags)
 		return (0);
 	return (1);
 }
-

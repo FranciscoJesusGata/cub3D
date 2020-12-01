@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 10:13:53 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/11/27 10:45:11 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/12/01 11:01:55 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,11 @@
 # include <fcntl.h>
 # include <stdio.h>
 # include <errno.h>
+# ifdef LEAKS
+#  define LEAKS_CHECK 1
+# else
+#  define LEAKS_CHECK 0
+# endif
 
 typedef struct	s_map{
 	int		resolution[2];
@@ -37,16 +42,16 @@ typedef struct	s_map{
 	int		valid_map;
 }				t_map;
 
-typedef struct s_textures
+typedef struct	s_tex
 {
 	char	*n_texture;
 	char	*s_texture;
 	char	*w_texture;
 	char	*e_texture;
 	char	*sprite;
-}				t_textures;
+}				t_tex;
 
-typedef struct s_cub_flags
+typedef struct	s_cub_flags
 {
 	int		has_resol;
 	int		has_n_tex;
@@ -56,18 +61,19 @@ typedef struct s_cub_flags
 	int		has_sprite;
 	int		has_floor;
 	int		has_clng;
-}				t_cub_flags;
+}				t_cflags;
 
 int				cub3d(char *path, int save);
 void			ft_init_map(t_map *map);
-void			ft_init_tex(t_textures *tex);
-void			ft_init_flags(t_cub_flags *flags);
-int				ft_check_resol(char *line ,t_map *map);
+void			ft_init_tex(t_tex *tex);
+void			ft_init_flags(t_cflags *flags);
+int				ft_save_resol(char *line, t_map *map);
 void			ft_error(const char *msg);
-void			ft_check_texture(char *line, t_textures *tex, t_cub_flags *flags);
+void			ft_check_texture(char *line, t_tex *tex, t_cflags *flags);
 int				ft_check_extension(char *check, char *expected);
-void			ft_check_floor_ceiling(char *line, t_map *map, t_cub_flags *flags);
-int				ft_check_flags(t_cub_flags flags);
+void			ft_check_floor_ceiling(char *line, t_map *map, t_cflags *flags);
+int				*ft_save_rgb(char **args);
+int				ft_check_flags(t_cflags flags);
 void			ft_free_matrix(void **matrix, int lines);
 int				ft_isnumber(char *s);
 char			**ft_mtxdup(char **input, int lines);
@@ -76,8 +82,8 @@ void			ft_save_map(t_map *data, char **file, int *i);
 int				ft_ismap(char *line);
 int				ft_valid_map(t_map *data);
 void			ft_print_map(char **map, int lines);
-void			ft_destroy_everything(t_map *map, t_textures *tex, void **file);
-void			ft_print_data(t_map *data, t_textures *tex);
+void			ft_destroy_everything(t_map *map, t_tex *tex, void **file);
+void			ft_print_data(t_map *data, t_tex *tex);
 int				ft_count_chars(const char *s, char c);
 
 #endif

@@ -6,24 +6,11 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/28 10:55:24 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/11/25 10:50:58 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/11/30 12:16:18 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-void		ft_free_matrix(void **matrix, int lines)
-{
-	int		i;
-
-	i = 0;
-	while(i < lines)
-	{
-		free(matrix[i]);
-		i++;
-	}
-	free(matrix);
-}
 
 int			ft_check_extension(char *check, char *expected)
 {
@@ -43,19 +30,19 @@ int			ft_check_extension(char *check, char *expected)
 	return (1);
 }
 
-void	ft_error(const char *msg)
+void		ft_error(const char *msg)
 {
 	ft_printf("Error\n");
 	if (msg)
-		ft_printf("%s\n",msg);
+		ft_printf("%s\n", msg);
 }
 
-void	ft_init_map(t_map *map)
+void		ft_init_map(t_map *map)
 {
-	int	i;
+	int		i;
 
 	i = 0;
-	while(i < 3)
+	while (i < 3)
 	{
 		map->floor[i] = 0;
 		map->ceiling[i] = 0;
@@ -75,7 +62,7 @@ void	ft_init_map(t_map *map)
 	map->map_matrix = NULL;
 }
 
-void ft_init_flags(t_cub_flags *flags)
+void		ft_init_flags(t_cflags *flags)
 {
 	flags->has_resol = 0;
 	flags->has_n_tex = 0;
@@ -87,7 +74,7 @@ void ft_init_flags(t_cub_flags *flags)
 	flags->has_clng = 0;
 }
 
-void	ft_init_tex(t_textures *tex)
+void		ft_init_tex(t_tex *tex)
 {
 	tex->n_texture = NULL;
 	tex->s_texture = NULL;
@@ -95,4 +82,3 @@ void	ft_init_tex(t_textures *tex)
 	tex->e_texture = NULL;
 	tex->sprite = NULL;
 }
-
