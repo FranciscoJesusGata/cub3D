@@ -1,5 +1,0 @@
-Esto es un test
-No es un mapa válido
-Pero quiero ver si el programa
-Funciona o se va al carajo
-Ojalá funcione guay ¿sabes?
