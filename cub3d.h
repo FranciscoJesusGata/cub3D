@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 10:13:53 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/12/01 11:01:55 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/12/01 12:59:06 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,5 +85,6 @@ void			ft_print_map(char **map, int lines);
 void			ft_destroy_everything(t_map *map, t_tex *tex, void **file);
 void			ft_print_data(t_map *data, t_tex *tex);
 int				ft_count_chars(const char *s, char c);
+void			ft_start_screen(t_map *data, t_tex *tex);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 11:40:34 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/12/01 11:02:30 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/12/01 12:58:50 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ int				cub3d(char *path, int save)
 	if ((valid = ft_validate(file, &map, &textures)) == 0)
 		ft_error("Invalid arguments");
 	else
-		ft_print_data(&map, &textures);
+		ft_start_screen(&map, &textures);
 	ft_destroy_everything(&map, &textures, (void **)file);
 	return (valid);
 }
