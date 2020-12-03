@@ -1,5 +1,6 @@
 #include "lib/mlx_linux/mlx.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 typedef struct	s_data {
 void	*img;
@@ -48,7 +49,24 @@ void			ft_print_square(t_vars *vars, int side, t_data *img, int color, int width
 int		ft_print_key(int keycode, t_vars *vars)
 {
 	printf("Key %d pressed\n", keycode);
+	if (keycode == 53)
+	{
+		mlx_destroy_window(vars->mlx, vars->win);
+		exit(0);
+	}
 	return (0);
+}
+
+int		ft_mouse_pos(int x, int y, t_vars *vars)
+{
+	if (x >= 0 && x <= 1000 && y >= 0 && y <= 800)
+		printf("Mouse is in x = %d, y = %d\n", x, y);
+	return (0);
+}
+
+int		ft_window_closed(void)
+{
+	exit(0);
 }
 
 int			main(void)
@@ -62,5 +80,7 @@ int			main(void)
 	vars.win = mlx_new_window(vars.mlx, 1000, 800, "Hello world!");
 	ft_print_square(&vars, 500, &img, 0x00FF0000, 1000, 800);
 	mlx_key_hook(vars.win, ft_print_key, &vars);
+	mlx_hook(vars.win, 6, (1L<<6), ft_mouse_pos, &vars);
+	mlx_hook(vars.win, 17, 0L, ft_window_closed, 0);
 	mlx_loop(vars.mlx);
 }
