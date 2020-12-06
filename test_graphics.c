@@ -1,6 +1,25 @@
 #include "lib/mlx_linux/mlx.h"
 #include <stdio.h>
 #include <stdlib.h>
+#ifdef __APPLE__
+# define W_KEY 13
+# define S_KEY 1
+# define A_KEY 0
+# define D_KEY 2
+# define ESC 53
+#elif __linux__
+# define W_KEY 119
+# define S_KEY 115
+# define A_KEY 97
+# define D_KEY 100
+# define ESC 65307
+#endif
+
+/* w = 13
+	** a = 0
+	** s = 1
+	** d = 2
+	*/
 
 typedef struct	s_data {
 void	*img;
@@ -68,13 +87,13 @@ void		ft_print_circle(t_vars *vars, int color, int a, int b)
 	img->img = mlx_new_image(vars->mlx, 1000, 800);
 	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel, &img->line_length,
 		&img->endian);
-	y = b - r;
-	while (y >= b - r && y <= d)
+	y = b;
+	while (y >= b && y <= b + d)
 	{
-		x = a - r;
-		while (x >= a - r && x <= d)
+		x = a;
+		while (x >= a && x <= a + d)
 		{
-			if (square(x - a) + square(y - r) <= (r * r))
+			if (square(x - a - r) + square(y - b - r) <= (r * r))
 				my_mlx_pixel_put(img, x, y, color);
 			x++;
 		}
@@ -86,40 +105,35 @@ void		ft_move(t_vars *vars)
 {
 	mlx_destroy_image(vars->mlx, vars->img->img);
 	ft_print_circle(vars, 0x000000FF, vars->img->x, vars->img->y);
-	printf("circle is in %d,%d\n",vars->img->x,vars->img->y);
-	mlx_put_image_to_window(vars->mlx, vars->win, vars->img->img, vars->img->x,vars->img->y);
+	printf("Circle is in %d,%d\n",vars->img->x + 10,vars->img->y + 10);
+	mlx_put_image_to_window(vars->mlx, vars->win, vars->img->img, 0, 0);
 }
 
 int			ft_control_key(int keycode, t_vars *vars)
 {
 	printf("Key %d pressed\n", keycode);
-	if (keycode == 53)
+	if (keycode == ESC)
 	{
 		mlx_destroy_window(vars->mlx, vars->win);
 		exit(0);
 	}
-	/* w = 13
-	** a = 0
-	** s = 1
-	** d = 2
-	*/
-	else if (keycode == 13 && vars->img->y > 0)
+	else if (keycode == W_KEY && vars->img->y > 0)
 	{
 		vars->img->y -= 10;
 		ft_move(vars);
 		
 	}
-	else if (keycode == 1 && vars->img->y < 800)
+	else if (keycode == S_KEY && vars->img->y < (800 - 20))
 	{
 		vars->img->y += 10;
 		ft_move(vars);
 	}
-	else if (keycode == 0 && vars->img->x > 0)
+	else if (keycode == A_KEY && vars->img->x > 0)
 	{
 		vars->img->x -= 10;
 		ft_move(vars);
 	}
-	else if (keycode == 2 && vars->img->x < 800)
+	else if (keycode == D_KEY && vars->img->x < (1000 - 20))
 	{
 		vars->img->x += 10;
 		ft_move(vars);
@@ -147,14 +161,14 @@ int			main(void)
 	t_vars	vars;
 
 	vars.mlx = mlx_init();
-	vars.win = mlx_new_window(vars.mlx, 1000, 800, "Hello world!");
+	vars.win = mlx_new_window(vars.mlx, 1000, 800, "The modafukin circle");
 	img.x = (1000 / 2) - 10;
 	img.y = (800 / 2) - 10;
 	vars.img = &img;
 	//ft_print_square(&vars, 500, &img, 0x00FF0000, 1000, 800);
 	ft_print_circle(&vars, 0x000000FF, img.x, img.y);
 	mlx_put_image_to_window(vars.mlx, vars.win, img.img, 0, 0);
-	mlx_hook(vars.win, 6, (1L<<6), ft_mouse_pos, &vars);
+	//mlx_hook(vars.win, 6, (1L<<6), ft_mouse_pos, &vars);
 	mlx_hook(vars.win, 17, 0L, ft_window_closed, 0);
 	mlx_key_hook(vars.win, ft_control_key, &vars);
 	mlx_loop(vars.mlx);
