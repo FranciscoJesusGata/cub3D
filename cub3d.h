@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 10:13:53 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/12/01 12:59:06 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/12/09 11:52:52 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <fcntl.h>
 # include <stdio.h>
 # include <errno.h>
+# include <math.h>
 # ifdef LEAKS
 #  define LEAKS_CHECK 1
 # else
@@ -62,6 +63,16 @@ typedef struct	s_cub_flags
 	int		has_floor;
 	int		has_clng;
 }				t_cflags;
+
+typedef struct	s_img {
+void	*img;
+char	*addr;
+int		bpp;
+int		line_length;
+int		endian;
+int		x;
+int		y;
+}				t_img;
 
 int				cub3d(char *path, int save);
 void			ft_init_map(t_map *map);
