@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 10:13:53 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/12/09 11:52:52 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/12/10 11:29:44 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 # include "lib/mlx/mlx.h"
 # include "lib/GNL/get_next_line.h"
 # include "lib/libftprintf/ft_printf.h"
+# include "keys.h"
 # include <unistd.h>
 # include <stdlib.h>
 # include <fcntl.h>

@@ -170,6 +170,6 @@ int			main(void)
 	mlx_put_image_to_window(vars.mlx, vars.win, img.img, 0, 0);
 	//mlx_hook(vars.win, 6, (1L<<6), ft_mouse_pos, &vars);
 	mlx_hook(vars.win, 17, 0L, ft_window_closed, 0);
-	mlx_key_hook(vars.win, ft_control_key, &vars);
+	mlx_hook(vars.win, 2, (1L << 0), ft_control_key, &vars);
 	mlx_loop(vars.mlx);
 }
