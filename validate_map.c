@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 11:26:02 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/12/10 12:39:03 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/12/11 10:18:04 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ void		ft_player_pos(t_map *data)
 		{
 			if (ft_strchr("NSWE", map[i][j]))
 			{
-				data->player_x = j;
-				data->player_y = i;
+				data->player_x = i;
+				data->player_y = j;
 			}
 			j++;
 		}
@@ -125,7 +125,7 @@ int			ft_valid_map(t_map *data)
 	if (data->valid_map)
 	{
 		ft_player_pos(data);
-		map_validator(&map_cpy, data->player_x, data->player_y, data);
+		map_validator(&map_cpy, data->player_y, data->player_x, data);
 	}
 	if (data->valid_map == 0)
 		ft_print_map(map_cpy, data->max_y);

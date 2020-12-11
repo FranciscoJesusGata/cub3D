@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 10:13:53 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/12/10 11:29:44 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/12/11 10:50:57 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,10 @@ typedef struct	s_map{
 	void	*mlx_ptr;
 	void	*window;
 	int		max_y;
-	int		player_x;
-	int		player_y;
+	double	player_x;
+	double	player_y;
+	double	dir[2];
+	double	plane[2];
 	int		save;
 	int		lines;
 	int		valid_map;
