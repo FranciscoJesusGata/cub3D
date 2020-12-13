@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 10:13:53 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/12/11 10:50:57 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/12/13 19:59:58 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,16 @@
 #  define LEAKS_CHECK 0
 # endif
 
+typedef	struct s_moves
+{
+	int		forward;
+	int		backward;
+	int		right;
+	int		left;
+	int		r_rotation;
+	int		l_rotation;
+}				t_moves;
+
 typedef struct	s_map{
 	int		resolution[2];
 	int		max_r[2];
@@ -44,6 +54,7 @@ typedef struct	s_map{
 	int		save;
 	int		lines;
 	int		valid_map;
+	t_moves	*movement;
 }				t_map;
 
 typedef struct	s_tex
@@ -68,14 +79,22 @@ typedef struct	s_cub_flags
 }				t_cflags;
 
 typedef struct	s_img {
-void	*img;
-char	*addr;
-int		bpp;
-int		line_length;
-int		endian;
-int		x;
-int		y;
+	void	*img;
+	char	*addr;
+	int		bpp;
+	int		line_length;
+	int		endian;
 }				t_img;
+
+typedef struct	s_ray
+{
+	double	pos[2];
+	int		map[2];
+	double	dir[2];
+	int		step[2];
+	int		side;
+	double	perpWallDist;
+}				t_ray;
 
 int				cub3d(char *path, int save);
 void			ft_init_map(t_map *map);
@@ -100,5 +119,11 @@ void			ft_destroy_everything(t_map *map, t_tex *tex, void **file);
 void			ft_print_data(t_map *data, t_tex *tex);
 int				ft_count_chars(const char *s, char c);
 void			ft_start_screen(t_map *data, t_tex *tex);
+int				ft_raycasting(t_map *data);
+void			buffer_pixel(t_img *frame, int x, int y, int color);
+void			buffer_line(t_img *frame, int x, int start, int end, int color);
+int				rgb_to_hex(int t, int r, int g, int b);
+void			createImg(t_map *data, t_img *frame);
+void			ft_buffer(t_map *data, t_ray *ray, t_img *frame, int x);
 
 #endif

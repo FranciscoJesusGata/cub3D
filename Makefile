@@ -16,8 +16,9 @@ CFLAGS += -Wall -Werror -Wextra -I . -g
 
 GNL = lib/GNL/get_next_line.c lib/GNL/get_next_line_utils.c
 
-SRC = cub3d.c cub3d_utils.c cub3d_utils_2.c cub3d_utils_3.c validate_args.c validate_args_2.c validate_map.c ft_save_map.c main.c\
-	graphics_1.c
+SRC = cub3d.c  main.c cub3d_utils_1.c cub3d_utils_2.c cub3d_utils_3.c \
+	cub3d_utils_4.c validate_args.c validate_args_2.c validate_map.c \
+	ft_save_map.c graphics.c ft_raycasting.c buffer_graphics.c
 
 NAME = cub3D
 
@@ -52,7 +53,7 @@ git_submodules:
 	git submodule foreach git pull origin master
 
 $(NAME): libft mlx
-	$(CC) $(CFLAGS) $(SRC) $(GNL) $(LIBFT) $(MLX) -o $(NAME)
+	$(CC) $(CFLAGS) $(SRC) $(GNL) -lm $(LIBFT) $(MLX) -o $(NAME)
 
 test: libft
 	$(CC) $(CFLAGS) $(SRC) $(GNL) $(LIBFT)
