@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 16:08:27 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/12/13 21:34:52 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/12/14 13:56:48 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,29 +87,57 @@ void		ft_dda_algo(char **map, t_ray *ray)
 void		ft_move(t_map *data)
 {
 	double	moveSpeed;
-	//double	rotSpeed;
+	double	rotSpeed;
+	double	oldDirX;
+	double	oldPlaneX;
 
 	moveSpeed = 0.09;
-	//rotSpeed = 3.0;
+	rotSpeed = 0.017 * 3;
 	if (data->movement->forward == 1)
 	{
-		if (data->map_matrix[(int)(data->player_x + data->dir[0] * moveSpeed)][(int)data->player_y] == '0')
+		if (data->map_matrix[(int)(data->player_x + (data->dir[0] * moveSpeed))][(int)data->player_y] != '1')
 			data->player_x += data->dir[0] * moveSpeed;
+		if (data->map_matrix[(int)data->player_x][(int)(data->player_y + data->dir[1] * moveSpeed)] != '1')
+			data->player_y += data->dir[1] * moveSpeed;
 	}
 	if (data->movement->backward == 1)
 	{
-		if (data->map_matrix[(int)(data->player_x - data->dir[0] * moveSpeed)][(int)data->player_y] == '0')
+		if (data->map_matrix[(int)(data->player_x - data->dir[0] * moveSpeed)][(int)data->player_y] != '1')
 			data->player_x -= data->dir[0] * moveSpeed;
+		if (data->map_matrix[(int)data->player_x][(int)(data->player_y - data->dir[1] * moveSpeed)] != '1')
+			data->player_y -= data->dir[1] * moveSpeed;
 	}
 	if (data->movement->left == 1)
 	{
-		if (data->map_matrix[(int)data->player_x][(int)(data->player_y - 0.05)] == '0')
-			data->player_y -= 0.05;
+		if (data->map_matrix[(int)(data->player_x - data->dir[1] * moveSpeed)][(int)data->player_y] != '1')
+			data->player_x -= data->dir[1] * moveSpeed;
+		if (data->map_matrix[(int)data->player_x][(int)(data->player_y + data->dir[0] * moveSpeed)] != '1')
+			data->player_y += data->dir[0] * moveSpeed;
 	}
 	if (data->movement->right == 1)
 	{
-		if (data->map_matrix[(int)data->player_x][(int)(data->player_y + 0.05)] == '0')
-			data->player_y += 0.05;
+		if (data->map_matrix[(int)(data->player_x + data->dir[1] * moveSpeed)][(int)data->player_y] != '1')
+			data->player_x += data->dir[1] * moveSpeed;
+		if (data->map_matrix[(int)data->player_x][(int)(data->player_y - data->dir[0] * moveSpeed)] != '1')
+			data->player_y -= data->dir[0] * moveSpeed;
+	}
+	if (data->movement->r_rotation == 1)
+	{
+		oldDirX = data->dir[0];
+		oldPlaneX = data->plane[0];
+		data->dir[0] = oldDirX * cos(rotSpeed) - data->dir[1] * sin(rotSpeed);
+		data->dir[1] = oldDirX * sin(rotSpeed) + data->dir[1] * cos(rotSpeed);
+		data->plane[0] = oldPlaneX * cos(rotSpeed) - data->plane[1] * sin(rotSpeed);
+		data->plane[1] = oldPlaneX * sin(rotSpeed) + data->plane[1] * cos(rotSpeed);
+	}
+	if (data->movement->l_rotation == 1)
+	{
+		oldDirX = data->dir[0];
+		oldPlaneX = data->plane[0];
+		data->dir[0] = oldDirX * cos(-rotSpeed) - data->dir[1] * sin(-rotSpeed);
+		data->dir[1] = oldDirX * sin(-rotSpeed) + data->dir[1] * cos(-rotSpeed);
+		data->plane[0] = oldPlaneX * cos(-rotSpeed) - data->plane[1] * sin(-rotSpeed);
+		data->plane[1] = oldPlaneX * sin(-rotSpeed) + data->plane[1] * cos(-rotSpeed);
 	}
 }
 
@@ -117,23 +145,21 @@ int			ft_raycasting(t_map *data)
 {
 	t_ray	ray;
 	int		x;
-	t_img	frame;
 
 	x = 0;
-	createImg(data, &frame);
 	ray.pos[0] = data->player_x;
 	ray.pos[1] = data->player_y;
+	ft_move(data);
 	while (x < data->resolution[0])
 	{
 		ft_get_ray(data, &ray, x);
 		ray.map[0] = data->player_x;
 		ray.map[1] = data->player_y;
 		ft_dda_algo(data->map_matrix, &ray);
-		ft_buffer(data, &ray, &frame, x);
+		ft_buffer(data, &ray, x);
 		x++;
 	}
-	mlx_put_image_to_window(data->mlx_ptr, data->window, frame.img, 0, 0);
-	ft_move(data);
-	mlx_destroy_image(data->mlx_ptr, frame.img);
+	mlx_put_image_to_window(data->mlx_ptr, data->window, data->bg.img, 0, 0);
+	mlx_put_image_to_window(data->mlx_ptr, data->window, data->img.img, 0, 0);
 	return (0);
 }

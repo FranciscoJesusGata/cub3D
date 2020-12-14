@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 12:50:03 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/12/13 20:46:07 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/12/14 13:52:30 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,25 @@ int			ft_window_closed(void)
 	return(0);
 }
 
+void			ft_create_bg(t_map *data)
+{
+	int		i;
+	int		j;
+
+	createImg(data, &data->bg);
+	i = 0;
+	while(i < data->resolution[0])
+	{
+		j = 0;
+		while (j < data->resolution[1])
+		{
+			buffer_pixel(&data->bg, i, j, 0);
+			j++;
+		}
+		i++;
+	}
+}
+
 void		ft_init_raycast(t_map *data, t_moves *mvnt)
 {
 	data->window = mlx_new_window(data->mlx_ptr, data->resolution[0],
@@ -74,6 +93,8 @@ void		ft_init_raycast(t_map *data, t_moves *mvnt)
 	mvnt->l_rotation = 0;
 	mvnt->r_rotation = 0;
 	data->movement = mvnt;
+	ft_create_bg(data);
+	createImg(data, &data->img);
 }
 
 void		ft_start_screen(t_map *data, t_tex *tex)
