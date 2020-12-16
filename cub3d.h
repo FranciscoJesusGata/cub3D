@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 10:13:53 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/12/14 13:51:47 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/12/16 13:06:43 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ typedef struct	s_map{
 	int		valid_map;
 	t_moves	*movement;
 	t_img	img;
-	t_img	bg;
+	int		update;
 }				t_map;
 
 typedef struct	s_tex
@@ -94,6 +94,7 @@ typedef struct	s_ray
 	int		map[2];
 	double	dir[2];
 	int		step[2];
+	double	sideDist[2];
 	int		side;
 	double	perpWallDist;
 }				t_ray;
@@ -121,11 +122,13 @@ void			ft_destroy_everything(t_map *map, t_tex *tex, void **file);
 void			ft_print_data(t_map *data, t_tex *tex);
 int				ft_count_chars(const char *s, char c);
 void			ft_start_screen(t_map *data, t_tex *tex);
-int				ft_raycasting(t_map *data);
+int				main_loop(t_map *data);
+void			ft_raycasting(t_map *data);
 void			buffer_pixel(t_img *frame, int x, int y, int color);
 void			buffer_line(t_img *frame, int x, int start, int end, int color);
 int				rgb_to_hex(int t, int r, int g, int b);
 void			createImg(t_map *data, t_img *img);
+void			clearImg(t_map *data, t_img *img);
 void			ft_buffer(t_map *data, t_ray *ray, int x);
 
 #endif

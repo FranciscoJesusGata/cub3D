@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 12:50:03 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/12/14 13:52:30 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/12/16 12:50:34 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,21 +57,14 @@ int			ft_window_closed(void)
 	return(0);
 }
 
-void			ft_create_bg(t_map *data)
+void			clearImg(t_map *data, t_img *img)
 {
 	int		i;
-	int		j;
 
-	createImg(data, &data->bg);
 	i = 0;
 	while(i < data->resolution[0])
 	{
-		j = 0;
-		while (j < data->resolution[1])
-		{
-			buffer_pixel(&data->bg, i, j, 0);
-			j++;
-		}
+		buffer_line(img, i, 0, data->resolution[1] - 1, 0);
 		i++;
 	}
 }
@@ -93,7 +86,7 @@ void		ft_init_raycast(t_map *data, t_moves *mvnt)
 	mvnt->l_rotation = 0;
 	mvnt->r_rotation = 0;
 	data->movement = mvnt;
-	ft_create_bg(data);
+	data->update = 0;
 	createImg(data, &data->img);
 }
 
@@ -106,6 +99,8 @@ void		ft_start_screen(t_map *data, t_tex *tex)
 	mlx_hook(data->window, 2, (1L << 0), ft_key_press, data);
 	mlx_hook(data->window, 3, (1L << 1), ft_key_release, data);
 	mlx_hook(data->window, 17, 0L,(int (*)())exit, 0);
-	mlx_loop_hook(data->mlx_ptr, ft_raycasting, data);
+	ft_raycasting(data);
+	mlx_put_image_to_window(data->mlx_ptr, data->window, data->img.img, 0, 0);
+	mlx_loop_hook(data->mlx_ptr, &main_loop, data);
 	mlx_loop(data->mlx_ptr);
 }

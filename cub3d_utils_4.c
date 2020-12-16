@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 16:10:41 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/12/14 13:51:16 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/12/16 13:00:53 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,9 @@ void		buffer_pixel(t_img *frame, int x, int y, int color)
     *(unsigned int*)dst = color;
 }
 
-void		buffer_line(t_img *frame, int x, int start, int end, int color)
-{
-	int		i;
-
-	i = start;
-	while(i <= end)
-	{
-		buffer_pixel(frame, x, i, color);
-		i++;
-	}
-}
-
 int			rgb_to_hex(int t, int r, int g, int b)
 {
-	return(t << 24 | r << 16 | g << 8 | b);
+	return(t << 24 |r << 16 | g << 8 | b);
 }
 
 void		createImg(t_map *data, t_img *img)
