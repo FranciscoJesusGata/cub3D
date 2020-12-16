@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 10:13:53 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/12/16 13:06:43 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/12/16 18:37:56 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ int				ft_isnumber(char *s);
 char			**ft_mtxdup(char **input, int lines);
 char			**ft_newline(char **file, char *line, size_t size);
 void			ft_save_map(t_map *data, char **file, int *i);
+void			ft_set_orientation(char player, t_map *data);
 int				ft_ismap(char *line);
 int				ft_valid_map(t_map *data);
 void			ft_print_map(char **map, int lines);

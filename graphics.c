@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 12:50:03 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/12/16 12:50:34 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/12/16 18:08:01 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,6 @@ void		ft_init_raycast(t_map *data, t_moves *mvnt)
 {
 	data->window = mlx_new_window(data->mlx_ptr, data->resolution[0],
 								data->resolution[1], "Cub3D");
-	data->dir[0] = -1;
-	data->dir[1] = 0;
-	data->plane[0] = 0;
-	data->plane[1] = 0.66;
 	data->player_x += 0.5;
 	data->player_y += 0.5;
 	mvnt->forward = 0;

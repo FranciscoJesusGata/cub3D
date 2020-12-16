@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 11:26:02 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/12/11 10:18:04 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/12/16 18:09:21 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void		ft_player_pos(t_map *data)
 			{
 				data->player_x = i;
 				data->player_y = j;
+				ft_set_orientation(map[i][j], data);
 			}
 			j++;
 		}
