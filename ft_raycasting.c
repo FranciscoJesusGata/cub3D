@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 16:08:27 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/12/16 13:07:48 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/12/17 11:58:54 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,7 @@ void		ft_shoot_rays(t_ray *ray, double deltaDist[], char **map)
 		ray->perpWallDist = (ray->map[1] - ray->pos[1] + (1 - ray->step[1]) / 2) / ray->dir[1];
 }
 
-void		ft_raycasting(t_map *data)
+void		ft_raycasting(t_map *data, t_tex *tex)
 {
 	int		x;
 	int		w;
@@ -174,12 +174,12 @@ void		ft_raycasting(t_map *data)
 		ft_get_delta(&ray, &deltaDist[0], &deltaDist[1]);
 		ft_init_sideDist(&ray, deltaDist);
 		ft_shoot_rays(&ray, deltaDist, data->map_matrix);
-		ft_buffer(data, &ray, x);
+		ft_buffer(data, tex, &ray, x);
 		x++;
 	}
 }
 
-int		main_loop(t_map *data)
+int		main_loop(t_map *data, t_tex *tex)
 {
 	ft_move(data);
 	ft_rotate(data);
@@ -187,7 +187,7 @@ int		main_loop(t_map *data)
 	{
 		mlx_destroy_image(data->mlx_ptr, data->img.img);
 		createImg(data, &data->img);
-		ft_raycasting(data);
+		ft_raycasting(data, tex);
 		data->update = 0;
 		mlx_put_image_to_window(data->mlx_ptr, data->window, data->img.img, 0, 0);
 	}

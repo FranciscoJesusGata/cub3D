@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 10:13:53 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/12/16 18:37:56 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/12/17 13:23:13 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,15 +65,27 @@ typedef struct	s_map{
 	t_moves	*movement;
 	t_img	img;
 	int		update;
+	int		draw_start;
+	int		draw_end;
 }				t_map;
+
+typedef struct	s_tex_img
+{
+	t_img		img;
+	int			height;
+	int			width;
+	int		 	coords[2];
+}				t_tex_img;
+
 
 typedef struct	s_tex
 {
-	char	*n_texture;
-	char	*s_texture;
-	char	*w_texture;
-	char	*e_texture;
-	char	*sprite;
+	char		*n_texture;
+	char		*s_texture;
+	char		*w_texture;
+	char		*e_texture;
+	char		*sprite;
+	t_tex_img	textures[5];
 }				t_tex;
 
 typedef struct	s_cub_flags
@@ -123,13 +135,14 @@ void			ft_destroy_everything(t_map *map, t_tex *tex, void **file);
 void			ft_print_data(t_map *data, t_tex *tex);
 int				ft_count_chars(const char *s, char c);
 void			ft_start_screen(t_map *data, t_tex *tex);
-int				main_loop(t_map *data);
-void			ft_raycasting(t_map *data);
+int				main_loop(t_map *data, t_tex *tex);
+void			ft_raycasting(t_map *data, t_tex *tex);
 void			buffer_pixel(t_img *frame, int x, int y, int color);
-void			buffer_line(t_img *frame, int x, int start, int end, int color);
+void			buffer_line(t_map *data, t_tex_img *texture, int x, int lineHeight);
 int				rgb_to_hex(int t, int r, int g, int b);
 void			createImg(t_map *data, t_img *img);
 void			clearImg(t_map *data, t_img *img);
-void			ft_buffer(t_map *data, t_ray *ray, int x);
+void			ft_buffer(t_map *data, t_tex *tex, t_ray *ray, int x);
+unsigned int    ft_get_pixel(t_img *img, int x, int y);
 
 #endif

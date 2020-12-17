@@ -59,7 +59,7 @@ test: libft
 	$(CC) $(CFLAGS) $(SRC) $(GNL) $(LIBFT)
 
 norm:
-	norminette $(SRC) cub3d.h
+	norminette $(SRC) cub3d.h keys.h
 
 clean:
 	@make -C lib/libftprintf fclean

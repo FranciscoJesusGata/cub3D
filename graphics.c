@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 12:50:03 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/12/16 18:08:01 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/12/17 11:59:49 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,19 +57,15 @@ int			ft_window_closed(void)
 	return(0);
 }
 
-void			clearImg(t_map *data, t_img *img)
+void		loadTexture(t_map *data, t_tex_img *texture, char *path)
 {
-	int		i;
-
-	i = 0;
-	while(i < data->resolution[0])
-	{
-		buffer_line(img, i, 0, data->resolution[1] - 1, 0);
-		i++;
-	}
+	if (ft_check_extension(path, ".xpm"))
+		mlx_xpm_file_to_image(data->mlx_ptr, path, &texture->width, &texture->height);
+	else
+		mlx_png_file_to_image(data->mlx_ptr, path, &texture->width, &texture->height);
 }
 
-void		ft_init_raycast(t_map *data, t_moves *mvnt)
+void		ft_init_raycast(t_map *data, t_moves *mvnt, t_tex *tex)
 {
 	data->window = mlx_new_window(data->mlx_ptr, data->resolution[0],
 								data->resolution[1], "Cub3D");
@@ -84,6 +80,11 @@ void		ft_init_raycast(t_map *data, t_moves *mvnt)
 	data->movement = mvnt;
 	data->update = 0;
 	createImg(data, &data->img);
+	loadTexture(data, &tex->textures[0], tex->n_texture);
+	loadTexture(data, &tex->textures[1], tex->s_texture);
+	loadTexture(data, &tex->textures[2], tex->w_texture);
+	loadTexture(data, &tex->textures[3], tex->e_texture);
+	loadTexture(data, &tex->textures[4], tex->sprite);
 }
 
 void		ft_start_screen(t_map *data, t_tex *tex)
@@ -91,11 +92,11 @@ void		ft_start_screen(t_map *data, t_tex *tex)
 	t_moves	mvnt;
 
 	ft_print_data(data, tex);
-	ft_init_raycast(data, &mvnt);
+	ft_init_raycast(data, &mvnt, tex);
 	mlx_hook(data->window, 2, (1L << 0), ft_key_press, data);
 	mlx_hook(data->window, 3, (1L << 1), ft_key_release, data);
 	mlx_hook(data->window, 17, 0L,(int (*)())exit, 0);
-	ft_raycasting(data);
+	ft_raycasting(data, tex);
 	mlx_put_image_to_window(data->mlx_ptr, data->window, data->img.img, 0, 0);
 	mlx_loop_hook(data->mlx_ptr, &main_loop, data);
 	mlx_loop(data->mlx_ptr);
