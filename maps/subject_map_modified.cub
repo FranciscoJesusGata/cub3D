@@ -1,9 +1,9 @@
 R 1920 1080
-NO ./textures/eagle.png
-SO ./textures/greystone.png
-WE ./textures/redbrick.png
-EA ./textures/redbrick.png
-S ./textures/barrel.png
+NO ./textures/eagle.xpm
+SO ./textures/greystone.xpm
+WE ./textures/redbrick.xpm
+EA ./textures/redbrick.xpm
+S ./textures/greenlight.xpm
 F 220,100,0
 C 225,30,0
 

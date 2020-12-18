@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 16:08:27 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/12/17 11:58:54 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/12/18 10:44:28 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,8 +179,13 @@ void		ft_raycasting(t_map *data, t_tex *tex)
 	}
 }
 
-int		main_loop(t_map *data, t_tex *tex)
+int		main_loop(t_args *args)
 {
+	t_map	*data;
+	t_tex	*tex;
+
+	data = args->data;
+	tex = args->tex;
 	ft_move(data);
 	ft_rotate(data);
 	if (data->update)

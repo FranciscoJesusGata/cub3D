@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 16:20:34 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/12/17 13:27:37 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/12/18 12:48:16 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void		buffer_line(t_map *data, t_tex_img *texture, int x, int lineHeight)
 	{
 		texture->coords[1] = (int)texPos & (texture->height - 1);
 		texPos += step;
-		buffer_pixel(data->img.img, x, i, ft_get_pixel(&texture->img, x, i));
+		buffer_pixel(data->img.img, x, texture->coords[1], 0x00FFFFFF);
 		i++;
 	}
 }
@@ -56,21 +56,21 @@ void		buffer_floor(t_img *frame, int x, int end, int h, int color)
 	}
 }
 
-void	ft_get_tex(t_ray *ray, t_tex *tex, t_tex_img *texture)
+void	ft_get_tex(t_ray *ray, t_tex *tex, t_tex_img **texture)
 {
 	if (ray->side == 0)
 	{
-		if (ray->step < 0)
-			texture = &tex->textures[0];
+		if (ray->step[0] < 0)
+			*texture = &tex->textures[0];
 		else
-			texture = &tex->textures[1];
+			*texture = &tex->textures[1];
 	}
 	else
 	{
-		if (ray->step < 0)
-			texture = &tex->textures[3];
+		if (ray->step[1] < 0)
+			*texture = &tex->textures[3];
 		else
-			texture = &tex->textures[4];	
+			*texture = &tex->textures[4];	
 	}
 }
 
@@ -89,21 +89,19 @@ void		ft_tex_xcoord(t_tex_img *texture, t_ray *ray)
 void    ft_buffer(t_map *data, t_tex *tex, t_ray *ray, int x)
 {
     int			lineHeight;
-	int			start;
-	int			end;
 	t_tex_img	*texture;
-    
-    lineHeight = (int)(data->resolution[1] / ray->perpWallDist);
-    start = -lineHeight / 2 + data->resolution[1] / 2;
+
 	texture = NULL;
-    if (start < 0)
-        start = 0;
-    end = lineHeight / 2 + data->resolution[1] / 2;
-    if (end >= data->resolution[1])
-        end = data->resolution[1] - 1;
-	ft_get_tex(ray, tex, texture);
+    lineHeight = (int)(data->resolution[1] / ray->perpWallDist);
+    data->draw_start = -lineHeight / 2 + data->resolution[1] / 2;
+    if (data->draw_start < 0)
+        data->draw_start = 0;
+    data->draw_end = lineHeight / 2 + data->resolution[1] / 2;
+    if (data->draw_end >= data->resolution[1])
+        data->draw_end = data->resolution[1] - 1;
+	ft_get_tex(ray, tex, &texture);
 	ft_tex_xcoord(texture, ray);
-    buffer_ceiling(&data->img, x, start, rgb_to_hex(0, data->ceiling[0], data->ceiling[1], data->ceiling[2]));
+    buffer_ceiling(&data->img, x, data->draw_start, rgb_to_hex(0, data->ceiling[0], data->ceiling[1], data->ceiling[2]));
     buffer_line(data, texture, x, lineHeight);
-    buffer_floor(&data->img, x, end, data->resolution[1], rgb_to_hex(0, data->floor[0], data->floor[1], data->floor[2]));
+    buffer_floor(&data->img, x, data->draw_end, data->resolution[1], rgb_to_hex(0, data->floor[0], data->floor[1], data->floor[2]));
 }
