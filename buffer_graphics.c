@@ -6,11 +6,19 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 16:20:34 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/12/18 12:48:16 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/12/21 12:06:58 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+int		    get_pixel(t_img *frame, int x, int y)
+{
+    char	*dst;
+
+    dst = frame->addr + (y * frame->line_length + x * (frame->bpp / 8));
+    return(*(unsigned int*)dst);
+}
 
 void		buffer_line(t_map *data, t_tex_img *texture, int x, int lineHeight)
 {
@@ -25,9 +33,9 @@ void		buffer_line(t_map *data, t_tex_img *texture, int x, int lineHeight)
 	texPos = (data->draw_start - data->resolution[1] / 2 + lineHeight / 2) * step;
 	while (i < end)
 	{
-		texture->coords[1] = (int)texPos & (texture->height - 1);
+		texture->coords[1] = (int)texPos;
 		texPos += step;
-		buffer_pixel(data->img.img, x, texture->coords[1], 0x00FFFFFF);
+		buffer_pixel(&data->img, x, i, get_pixel(&texture->img, texture->coords[0], texture->coords[1]));
 		i++;
 	}
 }
@@ -68,9 +76,9 @@ void	ft_get_tex(t_ray *ray, t_tex *tex, t_tex_img **texture)
 	else
 	{
 		if (ray->step[1] < 0)
-			*texture = &tex->textures[3];
+			*texture = &tex->textures[2];
 		else
-			*texture = &tex->textures[4];	
+			*texture = &tex->textures[3];	
 	}
 }
 
