@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 11:26:26 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/12/01 09:58:10 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/12/23 11:44:00 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void		ft_check_texture(char *line, t_tex *tex, t_cflags *flags)
 	path = ft_strtrim(line, "\t\v\f\r NSWEAO");
 	if (!path || ((fd = open(path, O_RDONLY)) == -1) ||
 		(!ft_check_extension(path, ".xpm") &&
-		!ft_check_extension(path, ".png")))
+		!(ft_check_extension(path, ".png") && MAC_VERSION)))
 	{
 		ft_printf("Texture file doesn't exists or format not valid\n");
 		free(path);

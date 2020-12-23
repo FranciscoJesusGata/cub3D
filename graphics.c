@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 12:50:03 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/12/18 11:58:59 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/12/23 11:12:26 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,6 @@ int			ft_window_closed(void)
 {
 	exit(0);
 	return(0);
-}
-
-void		loadTexture(t_map *data, t_tex_img *texture, char *path)
-{
-	if (ft_check_extension(path, ".xpm"))
-		texture->img.img = mlx_xpm_file_to_image(data->mlx_ptr, path, &texture->width, &texture->height);
-	else
-		texture->img.img = mlx_png_file_to_image(data->mlx_ptr, path, &texture->width, &texture->height);
-	texture->img.addr = mlx_get_data_addr(texture->img.img, &texture->img.bpp, &texture->img.line_length, &texture->img.endian);
 }
 
 void		ft_init_raycast(t_map *data, t_moves *mvnt, t_tex *tex, t_args *args)

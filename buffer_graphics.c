@@ -106,7 +106,7 @@ void    ft_buffer(t_map *data, t_tex *tex, t_ray *ray, int x)
         data->draw_start = 0;
     data->draw_end = lineHeight / 2 + data->resolution[1] / 2;
     if (data->draw_end >= data->resolution[1])
-        data->draw_end = data->resolution[1] - 1;
+		data->draw_end = data->resolution[1] - 1;
 	ft_get_tex(ray, tex, &texture);
 	ft_tex_xcoord(texture, ray);
     buffer_ceiling(&data->img, x, data->draw_start, rgb_to_hex(0, data->ceiling[0], data->ceiling[1], data->ceiling[2]));

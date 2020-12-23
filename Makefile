@@ -28,9 +28,11 @@ UNAME := $(shell uname)
 
 ifeq ($(UNAME), Darwin)
   MLX := -L . -lmlx -framework OpenGL -framework Appkit
+  SRC += mac_functions.c
 endif
 ifeq ($(UNAME), Linux)
   MLX := -L lib/mlx_linux -lmlx -lXext -lX11
+  SRC += linux_functions.c
 endif
 
 all: $(NAME)

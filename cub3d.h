@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 10:13:53 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/12/18 12:23:56 by fgata-va         ###   ########.fr       */
+/*   Updated: 2020/12/23 11:13:07 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ void			buffer_pixel(t_img *frame, int x, int y, int color);
 void			buffer_line(t_map *data, t_tex_img *texture, int x, int lineHeight);
 int				rgb_to_hex(int t, int r, int g, int b);
 void			createImg(t_map *data, t_img *img);
-void			clearImg(t_map *data, t_img *img);
+void			loadTexture(t_map *data, t_tex_img *texture, char *path);
 void			ft_buffer(t_map *data, t_tex *tex, t_ray *ray, int x);
 int				ft_get_pixel(t_img *img, int x, int y);
 

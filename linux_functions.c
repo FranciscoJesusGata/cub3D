@@ -1,31 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   keys.h                                             :+:      :+:    :+:   */
+/*   linux_functions.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/10 11:27:01 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/12/23 11:43:44 by fgata-va         ###   ########.fr       */
+/*   Created: 2020/12/23 11:11:13 by fgata-va          #+#    #+#             */
+/*   Updated: 2020/12/23 11:39:54 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifdef __APPLE__
-# define MAC_VERSION 1
-# define W_KEY 13
-# define S_KEY 1
-# define A_KEY 0
-# define D_KEY 2
-# define ESC 53
-# define RIGHT_KEY 124
-# define LEFT_KEY 123
-#elif __linux__
-# define MAC_VERSION 0
-# define W_KEY 119
-# define S_KEY 115
-# define A_KEY 97
-# define D_KEY 100
-# define ESC 65307
-# define RIGHT_KEY 65363
-# define LEFT_KEY 65361
-#endif
+#include "cub3d.h"
+
+void		loadTexture(t_map *data, t_tex_img *texture, char *path)
+{
+	texture->img.img = mlx_xpm_file_to_image(data->mlx_ptr, path, &texture->width, &texture->height);
+	texture->img.addr = mlx_get_data_addr(texture->img.img, &texture->img.bpp, &texture->img.line_length, &texture->img.endian);
+}
