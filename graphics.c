@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 12:50:03 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/12/23 11:12:26 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/01/02 21:59:16 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,10 @@ void		ft_init_raycast(t_map *data, t_moves *mvnt, t_tex *tex, t_args *args)
 	loadTexture(data, &tex->textures[4], tex->sprite);
 	args->data = data;
 	args->tex = tex;
+	if (data->numSprites > 0)
+		data->sprites = (t_sprite *)malloc(sizeof(t_sprite) * data->numSprites);
+	else
+		data->sprites = NULL;
 }
 
 void		ft_start_screen(t_map *data, t_tex *tex)

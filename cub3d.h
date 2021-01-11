@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 10:13:53 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/12/23 11:13:07 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/01/02 20:25:19 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,27 +46,37 @@ typedef struct	s_img {
 	int		endian;
 }				t_img;
 
+typedef struct	s_sprite
+{
+	int			x;
+	int			y;
+	double		perpDist;
+}				t_sprite;
+
 typedef struct	s_map{
-	int		resolution[2];
-	int		max_r[2];
-	char	**map_matrix;
-	int		floor[3];
-	int		ceiling[3];
-	void	*mlx_ptr;
-	void	*window;
-	int		max_y;
-	double	player_x;
-	double	player_y;
-	double	dir[2];
-	double	plane[2];
-	int		save;
-	int		lines;
-	int		valid_map;
-	int		update;
-	int		draw_start;
-	int		draw_end;
-	t_moves	*movement;
-	t_img	img;
+	int			resolution[2];
+	int			max_r[2];
+	char		**map_matrix;
+	int			floor[3];
+	int			ceiling[3];
+	void		*mlx_ptr;
+	void		*window;
+	int			max_y;
+	double		player_x;
+	double		player_y;
+	double		dir[2];
+	double		plane[2];
+	int			save;
+	int			lines;
+	int			valid_map;
+	int			update;
+	int			draw_start;
+	int			draw_end;
+	int			numSprites;
+	t_moves		*movement;
+	t_img		img;
+	t_sprite	*sprites;
+	int			savedSprites;
 }				t_map;
 
 typedef struct	s_tex_img
@@ -115,9 +125,7 @@ typedef struct	s_args
 {
 	t_map		*data;
 	t_tex		*tex;
-
 }				t_args;
-
 
 int				cub3d(char *path, int save);
 void			ft_init_map(t_map *map);

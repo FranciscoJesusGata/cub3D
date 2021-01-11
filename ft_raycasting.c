@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 16:08:27 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/12/18 10:44:28 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/01/05 14:32:04 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,11 +124,32 @@ void		ft_init_sideDist(t_ray *ray, double deltaDist[])
 	}
 }
 
-void		ft_shoot_rays(t_ray *ray, double deltaDist[], char **map)
+void		ft_save_sprite(t_map *data, int coords[])
+{
+	int		i;
+
+	i = 0;
+	while (i < data->savedSprites)
+	{
+		if (data->sprites[i].x == coords[0] &&
+		data->sprites[i].y == coords[1])
+			return ;
+		i++;
+	}
+	data->savedSprites += 1;
+	data->sprites[data->savedSprites].x = coords[0];
+	data->sprites[data->savedSprites].y = coords[1];
+	data->sprites[data->savedSprites].perpDist =
+	pow((data->player_x - coords[0]), 2.0) + pow((data->player_y - coords[1]), 2.0);
+}
+
+void		ft_shoot_rays(t_ray *ray, double deltaDist[], t_map *data)
 {
 	int		hit;
+	char	**map;
 
 	hit = 0;
+	map = data->map_matrix;
 	while (hit == 0)
 	{
 		if (ray->sideDist[0] < ray->sideDist[1])
@@ -145,35 +166,67 @@ void		ft_shoot_rays(t_ray *ray, double deltaDist[], char **map)
 		}
 		if (map[ray->map[0]][ray->map[1]] == '1')
 			hit = 1;
+		else if (map[ray->map[0]][ray->map[1]] == '2')
+			ft_save_sprite(data, ray->map);
 	}
 	if (ray->side == 0)
 		ray->perpWallDist = (ray->map[0] - ray->pos[0] + (1 - ray->step[0]) / 2) / ray->dir[0];
 	else
 		ray->perpWallDist = (ray->map[1] - ray->pos[1] + (1 - ray->step[1]) / 2) / ray->dir[1];
 }
+void		ft_get_raydir(int x, int w, t_ray *ray, t_map *data)
+{
+	double 	cameraX;
+
+	cameraX = 2 * x / (double)w - 1;
+	ray->dir[0] = data->dir[0] + data->plane[0] * cameraX;
+	ray->dir[1] = data->dir[1] + data->plane[1] * cameraX;
+}
+
+void			ft_swap(void *ptr1, void *ptr2)
+{
+	void		*aux;
+
+	aux = ptr1;
+	ptr1 = ptr2;
+	ptr2 = aux;
+	aux = NULL;
+}
+
+void			ft_sort_sprites(t_map *data)
+{
+	int			i;
+
+	i = 0;
+	while (i < data->savedSprites)
+	{
+		if (data->sprites[i].perpDist < data->sprites[i + 1].perpDist)
+			ft_swap(data->sprites + i, data->sprites + i + 1);
+		i++;	
+	}
+}
 
 void		ft_raycasting(t_map *data, t_tex *tex)
 {
 	int		x;
 	int		w;
-	double 	cameraX;
 	double	deltaDist[2];
 	t_ray	ray;
 	
 	w = data->resolution[0];
+	x = 0;
 	ray.pos[0] = data->player_x;
 	ray.pos[1] = data->player_y;
-	x = 0;
 	while (x < w)
 	{
 		ray.map[0] = (int)data->player_x;
 		ray.map[1] = (int)data->player_y;
-		cameraX = 2 * x / (double)w - 1;
-		ray.dir[0] = data->dir[0] + data->plane[0] * cameraX;
-		ray.dir[1] = data->dir[1] + data->plane[1] * cameraX;
+		ft_get_raydir(x, w, &ray, data);
 		ft_get_delta(&ray, &deltaDist[0], &deltaDist[1]);
 		ft_init_sideDist(&ray, deltaDist);
-		ft_shoot_rays(&ray, deltaDist, data->map_matrix);
+		ft_shoot_rays(&ray, deltaDist, data);
+		if (data->sprites != NULL)
+			ft_sort_sprites(data);
 		ft_buffer(data, tex, &ray, x);
 		x++;
 	}
