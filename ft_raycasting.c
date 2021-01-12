@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 16:08:27 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/01/11 19:56:11 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/01/12 11:57:45 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,25 +183,30 @@ void		ft_get_raydir(int x, int w, t_ray *ray, t_map *data)
 	ray->dir[1] = data->dir[1] + data->plane[1] * cameraX;
 }
 
-void			ft_swap(void *ptr1, void *ptr2)
+void			ft_swap(t_sprite *ptr1, t_sprite *ptr2)
 {
-	void		*aux;
+	t_sprite	aux;
 
-	aux = ptr1;
-	ptr1 = ptr2;
-	ptr2 = aux;
-	aux = NULL;
+	aux = *ptr1;
+	*ptr1 = *ptr2;
+	*ptr2 = aux;
 }
 
 void			ft_sort_sprites(t_map *data)
 {
 	int			i;
-
+	int			j;
+	
 	i = 0;
+	j = 0;
 	while (i < data->savedSprites)
 	{
-		if (data->sprites[i].perpDist < data->sprites[i + 1].perpDist)
-			ft_swap(data->sprites + i, data->sprites + i + 1);
+		while (j < data->savedSprites - i - 1)
+		{
+			if (data->sprites[j].perpDist < data->sprites[j + 1].perpDist)
+				ft_swap(data->sprites + j, data->sprites + j + 1);
+			j++;
+		}
 		i++;	
 	}
 }
