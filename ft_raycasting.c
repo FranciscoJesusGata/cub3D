@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 16:08:27 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/01/05 14:32:04 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/01/11 19:56:11 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,11 +136,11 @@ void		ft_save_sprite(t_map *data, int coords[])
 			return ;
 		i++;
 	}
-	data->savedSprites += 1;
 	data->sprites[data->savedSprites].x = coords[0];
 	data->sprites[data->savedSprites].y = coords[1];
 	data->sprites[data->savedSprites].perpDist =
 	pow((data->player_x - coords[0]), 2.0) + pow((data->player_y - coords[1]), 2.0);
+	data->savedSprites += 1;
 }
 
 void		ft_shoot_rays(t_ray *ray, double deltaDist[], t_map *data)
@@ -225,7 +225,7 @@ void		ft_raycasting(t_map *data, t_tex *tex)
 		ft_get_delta(&ray, &deltaDist[0], &deltaDist[1]);
 		ft_init_sideDist(&ray, deltaDist);
 		ft_shoot_rays(&ray, deltaDist, data);
-		if (data->sprites != NULL)
+		if (data->savedSprites > 1)
 			ft_sort_sprites(data);
 		ft_buffer(data, tex, &ray, x);
 		x++;
@@ -245,7 +245,15 @@ int		main_loop(t_args *args)
 	{
 		mlx_destroy_image(data->mlx_ptr, data->img.img);
 		createImg(data, &data->img);
+		if (data->numSprites > 0)
+			data->sprites = (t_sprite *)malloc(sizeof(t_sprite) * data->numSprites);
 		ft_raycasting(data, tex);
+		if (data->savedSprites > 0)
+		{
+			free(data->sprites);
+			data->sprites = NULL;
+			data->savedSprites = 0;	
+		}
 		data->update = 0;
 		mlx_put_image_to_window(data->mlx_ptr, data->window, data->img.img, 0, 0);
 	}
