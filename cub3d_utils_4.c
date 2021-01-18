@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 16:10:41 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/12/18 12:34:12 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/01/14 17:57:01 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,14 +61,4 @@ void            ft_set_orientation(char player, t_map *data)
 	    data->plane[0] = 0.66;
 	    data->plane[1] = 0;
     }
-}
-
-int    ft_get_pixel(t_img *img, int x, int y)
-{
-    char        *dst;
-    int         color;
-
-    dst = img->addr + (y * 4) + (x * img->bpp);
-    color = rgb_to_hex(0, dst[0], dst[1], dst[2]);
-    return(color);
 }

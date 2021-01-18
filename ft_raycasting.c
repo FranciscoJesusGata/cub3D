@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 16:08:27 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/01/12 11:57:45 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/01/15 11:40:11 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,11 +230,14 @@ void		ft_raycasting(t_map *data, t_tex *tex)
 		ft_get_delta(&ray, &deltaDist[0], &deltaDist[1]);
 		ft_init_sideDist(&ray, deltaDist);
 		ft_shoot_rays(&ray, deltaDist, data);
+		data->rayBuffer[x] = ray.perpWallDist;
 		if (data->savedSprites > 1)
 			ft_sort_sprites(data);
 		ft_buffer(data, tex, &ray, x);
 		x++;
 	}
+	if (data->savedSprites > 1)
+		buffer_sprites(data, tex->textures[4]);
 }
 
 int		main_loop(t_args *args)

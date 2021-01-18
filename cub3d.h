@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 10:13:53 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/01/02 20:25:19 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/01/14 11:25:33 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,11 @@ typedef struct	s_sprite
 {
 	int			x;
 	int			y;
+	int			width;
+	int			height;
 	double		perpDist;
+	int			drawX[2];
+	int			drawY[2];
 }				t_sprite;
 
 typedef struct	s_map{
@@ -73,6 +77,7 @@ typedef struct	s_map{
 	int			draw_start;
 	int			draw_end;
 	int			numSprites;
+	int			*rayBuffer;
 	t_moves		*movement;
 	t_img		img;
 	t_sprite	*sprites;
@@ -160,5 +165,6 @@ void			createImg(t_map *data, t_img *img);
 void			loadTexture(t_map *data, t_tex_img *texture, char *path);
 void			ft_buffer(t_map *data, t_tex *tex, t_ray *ray, int x);
 int				ft_get_pixel(t_img *img, int x, int y);
+void			buffer_sprites(t_map *data, t_tex_img spriteTex);
 
 #endif
