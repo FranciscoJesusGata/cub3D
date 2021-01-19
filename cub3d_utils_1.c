@@ -61,7 +61,6 @@ void		ft_init_map(t_map *map)
 	map->valid_map = 1;
 	map->map_matrix = NULL;
 	map->numSprites = 0;
-	map->savedSprites = 0;
 }
 
 void		ft_init_flags(t_cflags *flags)

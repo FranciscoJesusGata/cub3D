@@ -177,9 +177,9 @@ void			ft_sort_sprites(t_map *data)
 	int			j;
 	
 	i = 0;
-	j = 0;
 	while (i < data->numSprites)
 	{
+		j = 0;
 		while (j < data->numSprites - i - 1)
 		{
 			if (data->sprites[j].perpDist < data->sprites[j + 1].perpDist)
@@ -244,6 +244,8 @@ int		main_loop(t_args *args)
 	{
 		mlx_destroy_image(data->mlx_ptr, data->img.img);
 		createImg(data, &data->img);
+		if (data->numSprites > 0)
+			ft_update_sprites(data);
 		ft_raycasting(data, tex);
 		data->update = 0;
 		mlx_put_image_to_window(data->mlx_ptr, data->window, data->img.img, 0, 0);
