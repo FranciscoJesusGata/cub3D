@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 10:13:53 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/01/14 11:25:33 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/01/18 18:53:24 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ typedef struct	s_map{
 	t_moves		*movement;
 	t_img		img;
 	t_sprite	*sprites;
-	int			savedSprites;
 }				t_map;
 
 typedef struct	s_tex_img

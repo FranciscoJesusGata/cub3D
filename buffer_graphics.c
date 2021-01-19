@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 16:20:34 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/01/15 11:10:13 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/01/18 19:18:04 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ void	buffer_sprites(t_map *data, t_tex_img texture)
 	int		spriteScreenX;
 
 	i = 0;
-	while (i < data->savedSprites)
+	while (i < data->numSprites)
 	{
 		spritePos[0] = data->sprites[i].x - data->player_x;
 		spritePos[1] = data->sprites[i].y - data->player_y;

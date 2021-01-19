@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 16:08:27 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/01/15 11:40:11 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/01/18 19:18:37 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,25 +124,6 @@ void		ft_init_sideDist(t_ray *ray, double deltaDist[])
 	}
 }
 
-void		ft_save_sprite(t_map *data, int coords[])
-{
-	int		i;
-
-	i = 0;
-	while (i < data->savedSprites)
-	{
-		if (data->sprites[i].x == coords[0] &&
-		data->sprites[i].y == coords[1])
-			return ;
-		i++;
-	}
-	data->sprites[data->savedSprites].x = coords[0];
-	data->sprites[data->savedSprites].y = coords[1];
-	data->sprites[data->savedSprites].perpDist =
-	pow((data->player_x - coords[0]), 2.0) + pow((data->player_y - coords[1]), 2.0);
-	data->savedSprites += 1;
-}
-
 void		ft_shoot_rays(t_ray *ray, double deltaDist[], t_map *data)
 {
 	int		hit;
@@ -166,8 +147,6 @@ void		ft_shoot_rays(t_ray *ray, double deltaDist[], t_map *data)
 		}
 		if (map[ray->map[0]][ray->map[1]] == '1')
 			hit = 1;
-		else if (map[ray->map[0]][ray->map[1]] == '2')
-			ft_save_sprite(data, ray->map);
 	}
 	if (ray->side == 0)
 		ray->perpWallDist = (ray->map[0] - ray->pos[0] + (1 - ray->step[0]) / 2) / ray->dir[0];
@@ -199,9 +178,9 @@ void			ft_sort_sprites(t_map *data)
 	
 	i = 0;
 	j = 0;
-	while (i < data->savedSprites)
+	while (i < data->numSprites)
 	{
-		while (j < data->savedSprites - i - 1)
+		while (j < data->numSprites - i - 1)
 		{
 			if (data->sprites[j].perpDist < data->sprites[j + 1].perpDist)
 				ft_swap(data->sprites + j, data->sprites + j + 1);
@@ -231,13 +210,25 @@ void		ft_raycasting(t_map *data, t_tex *tex)
 		ft_init_sideDist(&ray, deltaDist);
 		ft_shoot_rays(&ray, deltaDist, data);
 		data->rayBuffer[x] = ray.perpWallDist;
-		if (data->savedSprites > 1)
-			ft_sort_sprites(data);
 		ft_buffer(data, tex, &ray, x);
 		x++;
 	}
-	if (data->savedSprites > 1)
+	if (data->numSprites > 0)
 		buffer_sprites(data, tex->textures[4]);
+}
+
+void	ft_update_sprites(t_map *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->numSprites)
+	{
+		data->sprites[i].perpDist =
+		pow((data->player_x - data->sprites[i].x), 2.0) + pow((data->player_y - data->sprites[i].y), 2.0);
+		i++;
+	}
+	ft_sort_sprites(data);
 }
 
 int		main_loop(t_args *args)
@@ -253,15 +244,7 @@ int		main_loop(t_args *args)
 	{
 		mlx_destroy_image(data->mlx_ptr, data->img.img);
 		createImg(data, &data->img);
-		if (data->numSprites > 0)
-			data->sprites = (t_sprite *)malloc(sizeof(t_sprite) * data->numSprites);
 		ft_raycasting(data, tex);
-		if (data->savedSprites > 0)
-		{
-			free(data->sprites);
-			data->sprites = NULL;
-			data->savedSprites = 0;	
-		}
 		data->update = 0;
 		mlx_put_image_to_window(data->mlx_ptr, data->window, data->img.img, 0, 0);
 	}

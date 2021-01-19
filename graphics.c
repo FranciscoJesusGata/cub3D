@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 12:50:03 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/01/13 15:18:31 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/01/18 19:16:03 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,35 @@ int			ft_window_closed(void)
 	return(0);
 }
 
+void		ft_save_sprites(t_map *data)
+{
+	int		i;
+	int		j;
+	int		sprites;
+	char	**map;
+
+	map = data->map_matrix;
+	i = 0;
+	sprites = 0;
+	while (i < data->lines && sprites < data->numSprites)
+	{
+		j = 0;
+		while (map[i][j])
+		{
+			if (map[i][j] == '2')
+			{
+				data->sprites[sprites].x = i;
+				data->sprites[sprites].y = j;
+				data->sprites[sprites].perpDist =
+				pow((data->player_x - i), 2.0) + pow((data->player_y - j), 2.0);
+				sprites++;
+			}
+			j++;
+		}
+		i++;
+	}
+}
+
 void		ft_init_raycast(t_map *data, t_moves *mvnt, t_tex *tex, t_args *args)
 {
 	data->window = mlx_new_window(data->mlx_ptr, data->resolution[0],
@@ -81,21 +110,12 @@ void		ft_init_raycast(t_map *data, t_moves *mvnt, t_tex *tex, t_args *args)
 	args->data = data;
 	args->tex = tex;
 	if (data->numSprites > 0)
+	{
 		data->sprites = (t_sprite *)malloc(sizeof(t_sprite) * data->numSprites);
+		ft_save_sprites(data);
+	}
 	else
 		data->sprites = NULL;
-}
-
-void		ft_print_sprites(t_map *data)
-{
-	int		i;
-
-	i = 0;
-	while (i < data->savedSprites)
-	{
-		printf("coords x: %d, y: %d. Distance: %lf\n", data->sprites[i].x, data->sprites[i].y, data->sprites[i].perpDist);
-		i++;
-	}
 }
 
 void		ft_start_screen(t_map *data, t_tex *tex)
@@ -109,13 +129,6 @@ void		ft_start_screen(t_map *data, t_tex *tex)
 	mlx_hook(data->window, 3, (1L << 1), ft_key_release, data);
 	mlx_hook(data->window, 17, 0L,(int (*)())exit, 0);
 	ft_raycasting(data, tex);
-	//ft_print_sprites(data);
-	if (data->savedSprites > 0)
-	{
-		free(data->sprites);
-		data->sprites = NULL;
-		data->savedSprites = 0;	
-	}
 	mlx_put_image_to_window(data->mlx_ptr, data->window, data->img.img, 0, 0);
 	mlx_loop_hook(data->mlx_ptr, &main_loop, &args);
 	mlx_loop(data->mlx_ptr);
