@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 16:20:34 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/01/18 19:18:04 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/01/20 11:50:23 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,9 +114,12 @@ void	print_sprites(t_map *data, t_sprite sprite, double transform[], int spriteS
 			{
 				d = y * 256 - data->resolution[1] * 128 + sprite.height * 128;
 				tex_y = ((d * texture.height) / sprite.height) / 256;
-				color = get_pixel(&texture.img, tex_x, tex_y);
-				if ((color & 0x00FFFFFF) != 0)
-					buffer_pixel(&data->img, x, y, color);
+				if (tex_x <= texture.width && tex_y <= texture.height)
+				{
+					color = get_pixel(&texture.img, tex_x, tex_y);
+					if ((color & 0x00FFFFFF) != 0)
+						buffer_pixel(&data->img, x, y, color);
+				}
 				y++;
 			}
 		}
