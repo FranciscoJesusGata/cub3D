@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 10:13:53 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/01/21 10:37:41 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/01/21 13:05:41 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,8 @@
 # include <math.h>
 # ifdef LEAKS
 #  define LEAKS_CHECK 1
-#  define ABS abs
 # else
 #  define LEAKS_CHECK 0
-#  define ABS fabs
 # endif
 
 typedef	struct s_moves

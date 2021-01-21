@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 11:27:01 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/12/23 11:43:44 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/01/21 13:06:39 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # define ESC 53
 # define RIGHT_KEY 124
 # define LEFT_KEY 123
+# define ABS abs
 #elif __linux__
 # define MAC_VERSION 0
 # define W_KEY 119
@@ -28,4 +29,5 @@
 # define ESC 65307
 # define RIGHT_KEY 65363
 # define LEFT_KEY 65361
+# define ABS fabs
 #endif
