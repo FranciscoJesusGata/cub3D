@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 12:50:03 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/01/18 19:16:03 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/01/20 20:39:46 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ void		ft_save_sprites(t_map *data)
 		}
 		i++;
 	}
+	ft_sort_sprites(data);
 }
 
 void		ft_init_raycast(t_map *data, t_moves *mvnt, t_tex *tex, t_args *args)

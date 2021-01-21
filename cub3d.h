@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 10:13:53 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/01/18 18:53:24 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/01/21 10:37:41 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,10 @@
 # include <math.h>
 # ifdef LEAKS
 #  define LEAKS_CHECK 1
+#  define ABS abs
 # else
 #  define LEAKS_CHECK 0
+#  define ABS fabs
 # endif
 
 typedef	struct s_moves
@@ -165,5 +167,6 @@ void			loadTexture(t_map *data, t_tex_img *texture, char *path);
 void			ft_buffer(t_map *data, t_tex *tex, t_ray *ray, int x);
 int				ft_get_pixel(t_img *img, int x, int y);
 void			buffer_sprites(t_map *data, t_tex_img spriteTex);
+void			ft_sort_sprites(t_map *data);
 
 #endif

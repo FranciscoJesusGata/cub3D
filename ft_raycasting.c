@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 16:08:27 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/01/18 19:18:37 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/01/21 12:53:28 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void		ft_move(t_map *data)
 	double	moveX;
 	double	moveY;
 
-	moveSpeed = 0.1;
+	moveSpeed = 0.2;
 	moveX = data->dir[0] * moveSpeed;
 	moveY = data->dir[1] * moveSpeed;
 	if (data->movement->forward == 1)

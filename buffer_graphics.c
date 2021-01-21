@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 16:20:34 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/01/20 11:50:23 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/01/21 12:39:55 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,32 +94,28 @@ void		ft_tex_xcoord(t_tex_img *texture, t_ray *ray)
 	texture->coords[0] =  texture->width - (int)(wallX * (double)texture->width) - 1;
 }
 
-void	print_sprites(t_map *data, t_sprite sprite, double transform[], int spriteScreenX, t_tex_img texture)
+void	print_sprite(t_map *data, t_sprite *sprite, double transform[], t_tex_img texture, int spriteScreenX)
 {
 	int	x;
 	int	y;
-	int	tex_x;
-	int	tex_y;
-	int	d;
-	int	color;
+	int	tex[2];
+	int d;
+	int color;
 
-	x = sprite.drawX[0];
-	while (x < sprite.drawX[1])
+	x = sprite->drawX[0];
+	while (x < sprite->drawX[1])
 	{
-		tex_x = (int) (256 * (x - (-sprite.width / 2 + spriteScreenX)) * texture.width / sprite.width) / 256;
+		tex[0] = (int)(256 * (x - (-sprite->width / 2 + spriteScreenX)) * texture.width / sprite->width) / 256;
 		if (transform[1] > 0 && x > 0 && x < data->resolution[0] && transform[1] < data->rayBuffer[x])
 		{
-			y = sprite.drawY[0];
-			while (y < sprite.drawY[1])
+			y = sprite->drawY[0];
+			while (y < sprite->drawY[1])
 			{
-				d = y * 256 - data->resolution[1] * 128 + sprite.height * 128;
-				tex_y = ((d * texture.height) / sprite.height) / 256;
-				if (tex_x <= texture.width && tex_y <= texture.height)
-				{
-					color = get_pixel(&texture.img, tex_x, tex_y);
-					if ((color & 0x00FFFFFF) != 0)
-						buffer_pixel(&data->img, x, y, color);
-				}
+				d = y * 256 - (data->resolution[1] * 128) + (sprite->height * 128);
+				tex[1] = ((d * texture.height) / sprite->height) / 256;
+				color = get_pixel(&texture.img, tex[0], tex[1]);
+				if ((color & 0x00FFFFFF) != 0)
+					buffer_pixel(&data->img, x, y, color);
 				y++;
 			}
 		}
@@ -127,38 +123,44 @@ void	print_sprites(t_map *data, t_sprite sprite, double transform[], int spriteS
 	}
 }
 
+void	sprite_size(t_map *data, t_sprite sprite, double transform[], t_tex_img texture)
+{
+	int	spriteScreenX;
+
+	spriteScreenX = (int)((data->resolution[0] / 2) * (1 + transform[0] / transform[1]));
+	sprite.height = ABS((int)(data->resolution[1] / transform[1]));
+	sprite.drawY[0] = (-sprite.height / 2) + (data->resolution[1] / 2);
+	if (sprite.drawY[0] < 0)
+		sprite.drawY[0] = 0;
+	sprite.drawY[1] = (sprite.height / 2) + (data->resolution[1] / 2);
+	if (sprite.drawY[1] >= data->resolution[1])
+		sprite.drawY[1] = data->resolution[1] - 1;
+	sprite.width = sprite.height;
+	sprite.drawX[0] = (-sprite.width / 2) + spriteScreenX;
+	if (sprite.drawX[0] < 0)
+		sprite.drawX[0] = 0;
+	sprite.drawX[1] = (sprite.width / 2) + spriteScreenX;
+	if (sprite.drawX[1] >= data->resolution[0])
+		sprite.drawX[1] = data->resolution[0] - 1;
+	print_sprite(data, &sprite, transform, texture, spriteScreenX);
+}
+
 void	buffer_sprites(t_map *data, t_tex_img texture)
 {
-	int	i;
-	double	spritePos[2];
+	int		i;
+	double	spriteCoords[2];
 	double	invCamMatrix;
 	double	transform[2];
-	int		spriteScreenX;
 
 	i = 0;
 	while (i < data->numSprites)
 	{
-		spritePos[0] = data->sprites[i].x - data->player_x;
-		spritePos[1] = data->sprites[i].y - data->player_y;
-		invCamMatrix = 1.0 / (data->plane[0] * data->dir[1] - data->dir[0] * data->plane[1]);
-		transform[0] = invCamMatrix * (data->dir[1] * spritePos[0] - data->dir[0] * spritePos[1]);
-		transform[1] = invCamMatrix * (-data->plane[1] * spritePos[0] - data->plane[0] * spritePos[1]);
-		spriteScreenX = (int)((data->resolution[0] / 2) * (1 + transform[0] / transform[1]));
-		data->sprites[i].width = fabs((int)(data->resolution[1] / transform[1]));
-		data->sprites[i].drawX[0] = (-1 * data->sprites[i].width) / 2 + spriteScreenX;
-		if (data->sprites[i].drawX[0] < 0)
-			data->sprites[i].drawX[0] = 0;
-		data->sprites[i].drawX[1] = data->sprites[i].width / 2 + spriteScreenX;
-		if (data->sprites[i].drawX[1] >= data->resolution[0])
-			data->sprites[i].drawX[1] = data->resolution[0] - 1;
-		data->sprites[i].height = fabs((int)(data->resolution[1] / transform[1]));
-		data->sprites[i].drawY[0] = (-1 * data->sprites[i].height) / 2 + data->resolution[1] / 2;
-		if (data->sprites[i].drawY[0] < 0)
-			data->sprites[i].drawY[0] = 0;
-		data->sprites[i].drawY[1] = data->sprites[i].height / 2 + spriteScreenX;
-		if (data->sprites[i].drawY[1] >= data->resolution[1])
-			data->sprites[i].drawY[1] = data->resolution[1] - 1;
-		print_sprites(data, data->sprites[i], transform, spriteScreenX, texture);
+		spriteCoords[0] = data->sprites[i].x - data->player_x;
+		spriteCoords[1] = data->sprites[i].y - data->player_y;
+		invCamMatrix = 1.0 / ((data->plane[0] * data->dir[1]) - (data->dir[0] * data->plane[1]));
+		transform[0] = invCamMatrix * ((data->dir[1] * spriteCoords[0]) - (data->dir[0] * spriteCoords[1]));
+		transform[1] = invCamMatrix * (-(data->plane[1] * spriteCoords[0]) + (data->plane[0] * spriteCoords[1]));
+		sprite_size(data, data->sprites[i], transform, texture);
 		i++;
 	}
 }
@@ -170,6 +172,8 @@ void    ft_buffer(t_map *data, t_tex *tex, t_ray *ray, int x)
 
 	texture = NULL;
     lineHeight = (int)(data->resolution[1] / ray->perpWallDist);
+	if ((data->resolution[1] / ray->perpWallDist) > 2147483647)
+		lineHeight = 2147483647;
     data->draw_start = -lineHeight / 2 + data->resolution[1] / 2;
     if (data->draw_start < 0)
         data->draw_start = 0;
