@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 11:27:01 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/01/21 13:06:39 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/01/21 19:27:27 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@
 # define A_KEY 0
 # define D_KEY 2
 # define ESC 53
+# define SHIFT 57
+# define DOWN_KEY 125
+# define UP_KEY 126
 # define RIGHT_KEY 124
 # define LEFT_KEY 123
 # define ABS abs
@@ -27,7 +30,10 @@
 # define A_KEY 97
 # define D_KEY 100
 # define ESC 65307
-# define RIGHT_KEY 65363
+# define SHIFT 57
+# define DOWN_KEY 65364
+# define UP_KEY 65362
+# define RIGHT_KEY 65505
 # define LEFT_KEY 65361
 # define ABS fabs
 #endif
