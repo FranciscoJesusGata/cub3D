@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 11:27:01 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/01/21 19:27:27 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/01/24 19:55:09 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 # define SHIFT 57
 # define DOWN_KEY 65364
 # define UP_KEY 65362
-# define RIGHT_KEY 65505
+# define RIGHT_KEY 65363
 # define LEFT_KEY 65361
 # define ABS fabs
 #endif

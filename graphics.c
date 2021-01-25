@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 12:50:03 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/01/21 19:28:52 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/01/25 00:53:13 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,11 @@ void		ft_save_sprites(t_map *data)
 
 void		ft_init_raycast(t_map *data, t_moves *mvnt, t_tex *tex, t_args *args)
 {
-	data->window = mlx_new_window(data->mlx_ptr, data->resolution[0],
-								data->resolution[1], "Cub3D");
+	if (data->save == 0)
+	{
+		data->window = mlx_new_window(data->mlx_ptr, data->resolution[0],
+									data->resolution[1], "Cub3D");
+	}
 	data->player_x += 0.5;
 	data->player_y += 0.5;
 	mvnt->forward = 0;
@@ -126,11 +129,16 @@ void		ft_start_screen(t_map *data, t_tex *tex)
 
 	ft_print_data(data, tex);
 	ft_init_raycast(data, &mvnt, tex, &args);
-	mlx_hook(data->window, 2, (1L << 0), ft_key_press, data);
-	mlx_hook(data->window, 3, (1L << 1), ft_key_release, data);
-	mlx_hook(data->window, 17, 0L,(int (*)())exit, 0);
 	ft_raycasting(data, tex);
-	mlx_put_image_to_window(data->mlx_ptr, data->window, data->img.img, 0, 0);
-	mlx_loop_hook(data->mlx_ptr, &main_loop, &args);
-	mlx_loop(data->mlx_ptr);
+	if (data->save == 0)
+	{
+		mlx_hook(data->window, 2, (1L << 0), ft_key_press, data);
+		mlx_hook(data->window, 3, (1L << 1), ft_key_release, data);
+		mlx_hook(data->window, 17, 0L,(int (*)())exit, 0);
+		mlx_put_image_to_window(data->mlx_ptr, data->window, data->img.img, 0, 0);
+		mlx_loop_hook(data->mlx_ptr, &main_loop, &args);
+		mlx_loop(data->mlx_ptr);
+	}
+	else
+		createbmp(data);	
 }
