@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/27 10:20:10 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/12/01 09:59:06 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/01/25 21:06:05 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,11 @@ void		ft_free_matrix(void **matrix, int lines)
 		i++;
 	}
 	free(matrix);
+}
+
+void		ft_free_all(t_map *data, t_tex *textures, void **file)
+{
+	ft_free_data(data);
+	ft_free_textures(textures);
+	ft_free_matrix(file, data->lines);
 }

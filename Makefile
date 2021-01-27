@@ -14,11 +14,14 @@ CC = gcc
 
 CFLAGS += -Wall -Werror -Wextra -I . -g
 
+NORMI = norminette
+
 GNL = lib/GNL/get_next_line.c lib/GNL/get_next_line_utils.c
 
 SRC = cub3d.c main.c cub3d_utils_1.c cub3d_utils_2.c cub3d_utils_3.c \
 	cub3d_utils_4.c validate_args.c validate_args_2.c validate_map.c \
-	ft_save_map.c graphics.c ft_raycasting.c buffer_graphics.c bmp.c
+	ft_save_map.c graphics.c raycasting.c buffer_img.c bmp.c \
+	init_raycast.c sprites.c movement.c raycast_utils.c print_sprites.c
 
 NAME = cub3D
 
@@ -33,6 +36,7 @@ endif
 ifeq ($(UNAME), Linux)
   MLX := -L lib/mlx_linux -lmlx -lXext -lX11
   SRC += linux_functions.c
+  NORMI := ~/.norminette/norminette.rb
 endif
 
 all: git_submodules $(NAME)
@@ -61,7 +65,7 @@ test: libft
 	$(CC) $(CFLAGS) $(SRC) $(GNL) $(LIBFT)
 
 norm:
-	norminette $(SRC) cub3d.h keys.h
+	@$(NORMI) $(SRC) cub3d.h keys.h
 
 clean:
 	@make -C lib/libftprintf fclean

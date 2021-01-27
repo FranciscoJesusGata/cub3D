@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 10:13:53 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/01/25 00:32:16 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/01/27 19:18:17 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 #  define LEAKS_CHECK 0
 # endif
 
-typedef	struct s_moves
+typedef	struct	s_moves
 {
 	int		forward;
 	int		backward;
@@ -52,9 +52,11 @@ typedef struct	s_sprite
 	int			y;
 	int			width;
 	int			height;
-	double		perpDist;
-	int			drawX[2];
-	int			drawY[2];
+	double		perpdist;
+	int			draw_x[2];
+	int			draw_y[2];
+	int			print_x;
+	int			tex[2];
 }				t_sprite;
 
 typedef struct	s_map{
@@ -76,8 +78,8 @@ typedef struct	s_map{
 	int			update;
 	int			draw_start;
 	int			draw_end;
-	int			numSprites;
-	int			*rayBuffer;
+	int			num_sprites;
+	int			*ray_buffer;
 	t_moves		*movement;
 	t_img		img;
 	t_sprite	*sprites;
@@ -88,9 +90,8 @@ typedef struct	s_tex_img
 	t_img		img;
 	int			height;
 	int			width;
-	int		 	coords[2];
+	int			coords[2];
 }				t_tex_img;
-
 
 typedef struct	s_tex
 {
@@ -120,21 +121,24 @@ typedef struct	s_ray
 	int		map[2];
 	double	dir[2];
 	int		step[2];
-	double	sideDist[2];
+	double	side_dist[2];
 	int		side;
-	double	perpWallDist;
+	double	perpwalldist;
 }				t_ray;
 
 typedef struct	s_args
 {
 	t_map		*data;
 	t_tex		*tex;
+	void		*file;
 }				t_args;
 
 int				cub3d(char *path, int save);
 void			ft_init_map(t_map *map);
 void			ft_init_tex(t_tex *tex);
 void			ft_init_flags(t_cflags *flags);
+void			ft_init_raycast(t_map *data, t_moves *mvnt,\
+						t_tex *tex, t_args *args);
 int				ft_save_resol(char *line, t_map *map);
 void			ft_error(const char *msg);
 void			ft_check_texture(char *line, t_tex *tex, t_cflags *flags);
@@ -150,22 +154,35 @@ void			ft_save_map(t_map *data, char **file, int *i);
 void			ft_set_orientation(char player, t_map *data);
 int				ft_ismap(char *line);
 int				ft_valid_map(t_map *data);
-void			ft_print_map(char **map, int lines);
-void			ft_destroy_everything(t_map *map, t_tex *tex, void **file);
-void			ft_print_data(t_map *data, t_tex *tex);
+void			ft_free_textures(t_tex *tex);
+void			ft_free_data(t_map *data);
+void			ft_free_all(t_map *data, t_tex *textures, void **file);
+void			end_program(t_args *game_data);
 int				ft_count_chars(const char *s, char c);
-void			ft_start_screen(t_map *data, t_tex *tex);
+void			ft_start_screen(t_map *data, t_tex *tex, char **file);
 int				main_loop(t_args *args);
 void			ft_raycasting(t_map *data, t_tex *tex);
+void			ft_get_raydir(int x, int w, t_ray *ray, t_map *data);
+void			ft_shoot_rays(t_ray *ray, double deltadist[], t_map *data);
+void			ft_init_sidedist(t_ray *ray, double deltadist[]);
+void			ft_init_sidedist(t_ray *ray, double deltadist[]);
+void			ft_get_delta(t_ray *ray, double *deltadist_x, \
+							double *deltadist_y);
 void			buffer_pixel(t_img *frame, int x, int y, int color);
-void			buffer_line(t_map *data, t_tex_img *texture, int x, int lineHeight);
+void			buffer_line(t_map *data, t_tex_img *texture, int x,\
+							int lineheight);
 int				rgb_to_hex(int t, int r, int g, int b);
-void			createImg(t_map *data, t_img *img);
-void			loadTexture(t_map *data, t_tex_img *texture, char *path);
+void			create_img(t_map *data, t_img *img);
+void			load_texture(t_map *data, t_tex_img *texture, char *path);
 void			ft_buffer(t_map *data, t_tex *tex, t_ray *ray, int x);
-int		    	get_pixel(t_img *frame, int x, int y);
-void			buffer_sprites(t_map *data, t_tex_img spriteTex);
-void			ft_sort_sprites(t_map *data);
-void     		createbmp(t_map *data);
+int				get_pixel(t_img *frame, int x, int y);
+void			ft_move(t_map *data);
+void			ft_rotate(t_map *data);
+void			sprite_size(t_map *data, t_sprite sprite, \
+							double transform[], t_tex_img texture);
+void			buffer_sprites(t_map *data, t_tex_img spritetex);
+void			ft_save_sprites(t_map *data);
+void			ft_update_sprites(t_map *data);
+void			createbmp(t_map *data);
 
 #endif

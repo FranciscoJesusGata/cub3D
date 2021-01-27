@@ -6,59 +6,65 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 16:10:41 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/01/14 17:57:01 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/01/26 01:29:20 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void		    buffer_pixel(t_img *frame, int x, int y, int color)
+void		buffer_pixel(t_img *frame, int x, int y, int color)
 {
-    char    *dst;
+	char	*dst;
 
-    dst = frame->addr + (y * frame->line_length + x * (frame->bpp / 8));
-    *(unsigned int*)dst = color;
+	dst = frame->addr + (y * frame->line_length + x * (frame->bpp / 8));
+	*(unsigned int*)dst = color;
 }
 
-int			    rgb_to_hex(int t, int r, int g, int b)
+int			get_pixel(t_img *frame, int x, int y)
 {
-	return(t << 24 |r << 16 | g << 8 | b);
+	char	*dst;
+
+	dst = frame->addr + (y * frame->line_length + x * (frame->bpp / 8));
+	return (*(unsigned int*)dst);
 }
 
-void		    createImg(t_map *data, t_img *img)
+int			rgb_to_hex(int t, int r, int g, int b)
 {
-	img->img = mlx_new_image(data->mlx_ptr, data->resolution[0], data->resolution[1]);
-	img->addr = mlx_get_data_addr(img->img, &img->bpp, &img->line_length, &img->endian);
+	return (t << 24 | r << 16 | g << 8 | b);
 }
 
-void            ft_set_orientation(char player, t_map *data)
+void		create_img(t_map *data, t_img *img)
 {
-    if (player == 'N')
-    {
-        data->dir[0] = -1;
-	    data->dir[1] = 0;
-	    data->plane[0] = 0;
-	    data->plane[1] = 0.66;
-    }
-    else if (player == 'S')
-    {
-        data->dir[0] = 1;
-	    data->dir[1] = 0;
-	    data->plane[0] = 0;
-	    data->plane[1] = -0.66;
-    }
-    else if (player == 'W')
-    {
-        data->dir[0] = 0;
-	    data->dir[1] = -1;
-	    data->plane[0] = -0.66;
-	    data->plane[1] = 0;
-    }
-    else if (player == 'E')
-    {
-        data->dir[0] = 0;
-	    data->dir[1] = 1;
-	    data->plane[0] = 0.66;
-	    data->plane[1] = 0;
-    }
+	img->img = mlx_new_image(data->mlx_ptr, data->resolution[0], \
+							data->resolution[1]);
+	img->addr = mlx_get_data_addr(img->img, &img->bpp, \
+								&img->line_length, &img->endian);
+}
+
+void		ft_set_orientation(char player, t_map *data)
+{
+	if (player == 'N' || player == 'S')
+	{
+		data->dir[0] = -1;
+		data->dir[1] = 0;
+		data->plane[0] = 0;
+		data->plane[1] = 0.66;
+		if (player == 'S')
+		{
+			data->dir[0] *= -1;
+			data->plane[1] *= -1;
+		}
+	}
+	else if (player == 'W' || player == 'E')
+	{
+		data->dir[0] = 0;
+		data->dir[1] = -1;
+		data->plane[0] = -0.66;
+		data->plane[1] = 0;
+		if (player == 'E')
+		{
+			data->dir[1] *= -1;
+			data->plane[0] *= -1;
+		}
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 11:34:02 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/12/01 11:36:23 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/01/27 19:15:24 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,47 +45,62 @@ int		ft_isnumber(char *s)
 	return (1);
 }
 
-void	ft_print_map(char **map, int lines)
+void	ft_free_textures(t_tex *tex)
 {
-	int	i;
-
-	i = 0;
-	while (i < lines)
+	if (tex->n_texture)
 	{
-		ft_printf("%s\n", map[i]);
-		i++;
+		free(tex->n_texture);
+		tex->n_texture = NULL;
+	}
+	if (tex->s_texture)
+	{
+		free(tex->s_texture);
+		tex->s_texture = NULL;
+	}
+	if (tex->w_texture)
+	{
+		free(tex->w_texture);
+		tex->w_texture = NULL;
+	}
+	if (tex->e_texture)
+	{
+		free(tex->e_texture);
+		tex->e_texture = NULL;
+	}
+	if (tex->sprite)
+	{
+		free(tex->sprite);
+		tex->sprite = NULL;
 	}
 }
 
-void	ft_destroy_everything(t_map *map, t_tex *tex, void **file)
+void	ft_free_data(t_map *data)
 {
-	ft_free_matrix(file, map->lines);
-	free(map->mlx_ptr);
-	if (map->map_matrix != NULL)
-		free(map->map_matrix);
-	if (tex->n_texture)
-		free(tex->n_texture);
-	if (tex->s_texture)
-		free(tex->s_texture);
-	if (tex->w_texture)
-		free(tex->w_texture);
-	if (tex->e_texture)
-		free(tex->e_texture);
-	if (tex->sprite)
-		free(tex->sprite);
+	if (data->img.img)
+	{
+		mlx_destroy_image(data->mlx_ptr, data->img.img);
+		data->window = NULL;
+	}
+	if (data->mlx_ptr)
+	{
+		free(data->mlx_ptr);
+		data->mlx_ptr = NULL;
+	}
+	if (data->map_matrix)
+	{
+		free(data->map_matrix);
+		data->map_matrix = NULL;
+	}
+	if (data->num_sprites > 0)
+	{
+		free(data->sprites);
+		data->sprites = NULL;
+	}
 }
 
-void	ft_print_data(t_map *data, t_tex *tex)
+void	end_program(t_args *game_data)
 {
-	ft_printf("R  %d, %d\n", data->resolution[0], data->resolution[1]);
-	ft_printf("F  %d, %d, %d\n", data->floor[0], data->floor[1],
-				data->floor[2]);
-	ft_printf("C  %d, %d, %d\n", data->ceiling[0], data->ceiling[1],
-				data->ceiling[2]);
-	ft_printf("NO %s\n", tex->n_texture);
-	ft_printf("SO %s\n", tex->s_texture);
-	ft_printf("WE %s\n", tex->w_texture);
-	ft_printf("EA %s\n", tex->e_texture);
-	ft_printf("S  %s\n\n", tex->sprite);
-	ft_print_map(data->map_matrix, data->max_y);
+	ft_free_all(game_data->data, game_data->tex, game_data->file);
+	ft_printf("See you, space cowboy\n");
+	exit(0);
 }

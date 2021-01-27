@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/28 10:55:24 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/01/02 20:22:17 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/01/27 19:15:24 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void		ft_init_map(t_map *map)
 	map->lines = 0;
 	map->valid_map = 1;
 	map->map_matrix = NULL;
-	map->numSprites = 0;
+	map->num_sprites = 0;
 }
 
 void		ft_init_flags(t_cflags *flags)
