@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 14:28:51 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/01/13 18:48:19 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/01/27 20:54:48 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,6 @@ size_t		ft_strlen(const char *s);
 char		*ft_substr(char const *s, unsigned int start, size_t len);
 char		*ft_strjoin(char const *s1, char const *s2);
 char		*ft_strdup(const char *s1);
-char        *ft_strchr(const char *s, int c);
+char		*ft_strchr(const char *s, int c);
 
 #endif
