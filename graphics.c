@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 12:50:03 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/01/28 01:04:08 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/01/29 00:20:25 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,10 @@ int			ft_key_press(int key, t_args *args)
 		data->movement->look_up = 1;
 	if (key == DOWN_KEY)
 		data->movement->look_down = 1;
+	if (key == LEFT_CTRL)
+		data->movement->crouch = 1;
+	if (key == SPACE && data->movement->jump == 0 && data->movement->crouch == 0)
+		data->movement->jump = 1;
 	return (0);
 }
 
@@ -59,6 +63,8 @@ int			ft_key_release(int key, t_map *data)
 		data->movement->look_up = 0;
 	if (key == DOWN_KEY)
 		data->movement->look_down = 0;
+	if (key == LEFT_CTRL)
+		data->movement->crouch = 0;
 	return (0);
 }
 
@@ -74,7 +80,7 @@ void		ft_start_screen(t_map *data, t_tex *tex, char **file)
 	{
 		mlx_hook(data->window, 2, (1L << 0), ft_key_press, &args);
 		mlx_hook(data->window, 3, (1L << 1), ft_key_release, data);
-		mlx_hook(data->window, 17, 0L, (int (*)())end_program, &args);
+		mlx_hook(data->window, 17, 0L, end_program, &args);
 		mlx_put_image_to_window(data->mlx_ptr, data->window,\
 							data->img.img, 0, 0);
 		mlx_loop_hook(data->mlx_ptr, &main_loop, &args);
@@ -94,6 +100,8 @@ int			main_loop(t_args *args)
 	ft_move(data);
 	ft_rotate(data);
 	verticalrot_bonus(data);
+	crouch_bonus(data);
+	jump_bonus(data);
 	if (data->update)
 	{
 		mlx_destroy_image(data->mlx_ptr, data->img.img);

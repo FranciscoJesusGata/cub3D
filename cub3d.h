@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 10:13:53 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/01/28 01:19:55 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/01/29 00:16:21 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,9 @@ typedef	struct	s_moves
 	int		look_up;
 	int		look_down;
 	int		crouch;
+	int		jump;
+	int		ascend;
+	int		fall;
 }				t_moves;
 
 typedef struct	s_img {
@@ -88,6 +91,7 @@ typedef struct	s_map{
 	t_sprite	*sprites;
 	double		vertical_angle;
 	double		vertical_pos;
+	double		vertical_total;
 }				t_map;
 
 typedef struct	s_tex_img
@@ -164,7 +168,7 @@ int				ft_valid_map(t_map *data);
 void			ft_free_textures(t_tex *tex);
 void			ft_free_data(t_map *data);
 void			ft_free_all(t_map *data, t_tex *textures, void **file);
-void			end_program(t_args *game_data);
+int				end_program(t_args *game_data);
 int				ft_count_chars(const char *s, char c);
 void			ft_start_screen(t_map *data, t_tex *tex, char **file);
 int				main_loop(t_args *args);

@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/26 00:24:03 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/01/28 00:48:13 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/01/28 18:05:54 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ void			ft_move(t_map *data)
 	double		move_y;
 
 	move_speed = 0.2;
+	if (data->movement->crouch == 1)
+		move_speed -= 0.1;
 	move_x = data->dir[0] * move_speed;
 	move_y = data->dir[1] * move_speed;
 	vertical_move(data, move_x, move_y);
