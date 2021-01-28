@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/26 01:28:15 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/01/27 19:15:44 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/01/28 01:36:54 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void			print_spriteline(t_map *data, t_sprite *sprite, \
 	y = sprite->draw_y[0];
 	while (y < sprite->draw_y[1])
 	{
-		d = y * 256 - (data->resolution[1] * 128) \
+		d = (y - data->vertical_angle) * 256 - (data->resolution[1] * 128) \
 						+ (sprite->height * 128);
 		sprite->tex[1] = ((d * tex.height) / sprite->height) / 256;
 		color = get_pixel(&tex.img, sprite->tex[0], sprite->tex[1]);
@@ -55,10 +55,10 @@ void			sprite_size(t_map *data, t_sprite sprite, \
 	sprite.print_x = (int)((data->resolution[0] / 2) \
 						* (1 + transform[0] / transform[1]));
 	sprite.height = ABS((int)(data->resolution[1] / transform[1]));
-	sprite.draw_y[0] = (-sprite.height / 2) + (data->resolution[1] / 2);
+	sprite.draw_y[0] = (-sprite.height / 2) + (data->resolution[1] / 2) + data->vertical_angle;
 	if (sprite.draw_y[0] < 0)
 		sprite.draw_y[0] = 0;
-	sprite.draw_y[1] = (sprite.height / 2) + (data->resolution[1] / 2);
+	sprite.draw_y[1] = (sprite.height / 2) + (data->resolution[1] / 2) + data->vertical_angle;
 	if (sprite.draw_y[1] >= data->resolution[1])
 		sprite.draw_y[1] = data->resolution[1] - 1;
 	sprite.width = sprite.height;

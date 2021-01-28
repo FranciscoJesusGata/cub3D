@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 10:13:53 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/01/27 19:18:17 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/01/28 01:19:55 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,9 @@ typedef	struct	s_moves
 	int		left;
 	int		r_rotation;
 	int		l_rotation;
+	int		look_up;
+	int		look_down;
+	int		crouch;
 }				t_moves;
 
 typedef struct	s_img {
@@ -83,6 +86,8 @@ typedef struct	s_map{
 	t_moves		*movement;
 	t_img		img;
 	t_sprite	*sprites;
+	double		vertical_angle;
+	double		vertical_pos;
 }				t_map;
 
 typedef struct	s_tex_img
@@ -132,6 +137,8 @@ typedef struct	s_args
 	t_tex		*tex;
 	void		*file;
 }				t_args;
+
+# include "cub3d_bonus.h"
 
 int				cub3d(char *path, int save);
 void			ft_init_map(t_map *map);

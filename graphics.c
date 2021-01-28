@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 12:50:03 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/01/27 20:38:07 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/01/28 01:04:08 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,10 @@ int			ft_key_press(int key, t_args *args)
 		data->movement->r_rotation = 1;
 	if (key == LEFT_KEY)
 		data->movement->l_rotation = 1;
+	if (key == UP_KEY)
+		data->movement->look_up = 1;
+	if (key == DOWN_KEY)
+		data->movement->look_down = 1;
 	return (0);
 }
 
@@ -51,6 +55,10 @@ int			ft_key_release(int key, t_map *data)
 		data->movement->r_rotation = 0;
 	if (key == LEFT_KEY)
 		data->movement->l_rotation = 0;
+	if (key == UP_KEY)
+		data->movement->look_up = 0;
+	if (key == DOWN_KEY)
+		data->movement->look_down = 0;
 	return (0);
 }
 
@@ -85,6 +93,7 @@ int			main_loop(t_args *args)
 	tex = args->tex;
 	ft_move(data);
 	ft_rotate(data);
+	verticalrot_bonus(data);
 	if (data->update)
 	{
 		mlx_destroy_image(data->mlx_ptr, data->img.img);

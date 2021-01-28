@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 16:20:34 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/01/27 19:16:39 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/01/28 01:08:59 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void			buffer_line(t_map *data, t_tex_img *tex, \
 
 	i = 0;
 	step = 1.0 * tex->height / line_height;
-	tex_pos = (data->draw_start - data->resolution[1] / 2 + line_height / 2) \
+	tex_pos = (data->draw_start - data->vertical_angle - data->resolution[1] / 2 + line_height / 2) \
 				* step;
 	while (i < data->resolution[1])
 	{
@@ -105,10 +105,12 @@ void			ft_buffer(t_map *data, t_tex *tex, t_ray *ray, int x)
 	line_height = (int)(data->resolution[1] / ray->perpwalldist);
 	if ((data->resolution[1] / ray->perpwalldist) > 2147483647)
 		line_height = 2147483647;
-	data->draw_start = -line_height / 2 + data->resolution[1] / 2;
+	data->draw_start = -line_height / 2 + data->resolution[1] / 2 \
+					+ data->vertical_angle;
 	if (data->draw_start < 0)
 		data->draw_start = 0;
-	data->draw_end = line_height / 2 + data->resolution[1] / 2;
+	data->draw_end = line_height / 2 + data->resolution[1] / 2 \
+					+ data->vertical_angle;
 	if (data->draw_end >= data->resolution[1])
 		data->draw_end = data->resolution[1] - 1;
 	ft_get_tex(ray, tex, &texture);
