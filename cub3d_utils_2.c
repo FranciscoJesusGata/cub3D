@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 11:34:02 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/01/29 19:41:57 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/01/30 19:17:04 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,9 @@ void	ft_free_data(t_map *data)
 int		end_program(t_args *game_data)
 {
 	ft_free_all(game_data->data, game_data->tex, game_data->file);
-	kill(game_data->data->music_process, 9);
+	if (BONUS)
+		kill(game_data->data->music_process, 9);
 	ft_printf("See you, space cowboy\n");
 	exit(0);
-	return(0);
+	return (0);
 }

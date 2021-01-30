@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/26 01:28:15 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/01/28 18:02:04 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/01/30 23:16:22 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,17 @@ void			print_sprite(t_map *data, t_sprite *sprite, \
 void			sprite_size(t_map *data, t_sprite sprite, \
 							double transform[], t_tex_img texture)
 {
-	data->vertical_total = data->vertical_angle + (data->vertical_pos / transform[1]);
+	data->vertical_total = data->vertical_angle + \
+	(data->vertical_pos / transform[1]);
 	sprite.print_x = (int)((data->resolution[0] / 2) \
 						* (1 + transform[0] / transform[1]));
 	sprite.height = ABS((int)(data->resolution[1] / transform[1]));
-	sprite.draw_y[0] = (-sprite.height / 2) + (data->resolution[1] / 2) + data->vertical_total;
+	sprite.draw_y[0] = (-sprite.height / 2) + (data->resolution[1] / 2) + \
+						data->vertical_total;
 	if (sprite.draw_y[0] < 0)
 		sprite.draw_y[0] = 0;
-	sprite.draw_y[1] = (sprite.height / 2) + (data->resolution[1] / 2) + data->vertical_total;
+	sprite.draw_y[1] = (sprite.height / 2) + (data->resolution[1] / 2) + \
+						data->vertical_total;
 	if (sprite.draw_y[1] >= data->resolution[1])
 		sprite.draw_y[1] = data->resolution[1] - 1;
 	sprite.width = sprite.height;
@@ -72,4 +75,27 @@ void			sprite_size(t_map *data, t_sprite sprite, \
 	if (sprite.draw_x[1] >= data->resolution[0])
 		sprite.draw_x[1] = data->resolution[0] - 1;
 	print_sprite(data, &sprite, transform, texture);
+}
+
+void			buffer_sprites(t_map *data, t_tex_img texture)
+{
+	int			i;
+	double		sprite_coords[2];
+	double		inv_cam;
+	double		transform[2];
+
+	i = 0;
+	while (i < data->num_sprites)
+	{
+		sprite_coords[0] = data->sprites[i].x - data->player_x;
+		sprite_coords[1] = data->sprites[i].y - data->player_y;
+		inv_cam = 1.0 / ((data->plane[0] * data->dir[1]) \
+						- (data->dir[0] * data->plane[1]));
+		transform[0] = inv_cam * ((data->dir[1] * sprite_coords[0]) \
+						- (data->dir[0] * sprite_coords[1]));
+		transform[1] = inv_cam * (-(data->plane[1] * sprite_coords[0]) \
+						+ (data->plane[0] * sprite_coords[1]));
+		sprite_size(data, data->sprites[i], transform, texture);
+		i++;
+	}
 }

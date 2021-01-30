@@ -22,7 +22,8 @@ SRC = cub3d.c main.c cub3d_utils_1.c cub3d_utils_2.c cub3d_utils_3.c \
 	cub3d_utils_4.c validate_args.c validate_args_2.c validate_map.c \
 	ft_save_map.c graphics.c raycasting.c buffer_img.c bmp.c \
 	sprites.c movement.c raycast_utils.c print_sprites.c \
-	movement_bonus.c play_music.c
+
+BONUS = movement_bonus.c play_music_bonus.c
 
 NAME = cub3D
 
@@ -41,6 +42,9 @@ ifeq ($(UNAME), Linux)
 endif
 
 all: git_submodules $(NAME)
+
+bonus: git_submodules libft mlx
+	$(CC) $(CFLAGS) -D BONUS $(SRC) $(BONUS) $(GNL) -lm $(LIBFT) $(MLX) -o $(NAME)
 
 libft:
 	@$(MAKE) -C lib/libftprintf all
@@ -62,11 +66,8 @@ git_submodules:
 $(NAME): libft mlx
 	$(CC) $(CFLAGS) $(SRC) $(GNL) -lm $(LIBFT) $(MLX) -o $(NAME)
 
-test: libft
-	$(CC) $(CFLAGS) $(SRC) $(GNL) $(LIBFT)
-
 norm:
-	@$(NORMI) $(SRC) cub3d.h keys.h
+	@$(NORMI) $(SRC) $(BONUS) cub3d_bonus.h cub3d.h keys.h
 
 clean:
 	@make -C lib/libftprintf fclean

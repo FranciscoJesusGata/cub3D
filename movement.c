@@ -6,57 +6,66 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/26 00:24:03 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/01/29 00:31:38 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/01/30 23:39:36 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+#include "cub3d_bonus.h"
 
 void			vertical_move(t_map *data, double move_x, double move_y)
 {
+	int			pos[2];
+
 	if (data->movement->forward == 1)
 	{
-		if (data->map_matrix[(int)(data->player_x + move_x)]\
-			[(int)data->player_y] != '1')
+		pos[0] = data->map_matrix[(int)(data->player_x + move_x)]\
+			[(int)data->player_y];
+		pos[1] = data->map_matrix[(int)data->player_x]\
+			[(int)(data->player_y + move_y)];
+		if (pos[0] != '1')
 			data->player_x += move_x;
-		if (data->map_matrix[(int)data->player_x]\
-			[(int)(data->player_y + move_y)] != '1')
+		if (pos[1] != '1')
 			data->player_y += move_y;
-		data->update = 1;
 	}
 	if (data->movement->backward == 1)
 	{
-		if (data->map_matrix[(int)(data->player_x - move_x)]\
-			[(int)data->player_y] != '1')
+		pos[0] = data->map_matrix[(int)(data->player_x - move_x)]\
+			[(int)data->player_y];
+		pos[1] = data->map_matrix[(int)data->player_x][\
+			(int)(data->player_y - move_y)];
+		if (pos[0] != '1')
 			data->player_x -= move_x;
-		if (data->map_matrix[(int)data->player_x][\
-			(int)(data->player_y - move_y)] != '1')
+		if (pos[1] != '1')
 			data->player_y -= move_y;
-		data->update = 1;
 	}
 }
 
 void			horizontal_move(t_map *data, double move_x, double move_y)
 {
+	int			pos[2];
+
 	if (data->movement->left == 1)
 	{
-		if (data->map_matrix[(int)(data->player_x - move_y)]\
-			[(int)data->player_y] != '1')
+		pos[0] = data->map_matrix[(int)(data->player_x - move_y)]\
+			[(int)data->player_y];
+		pos[1] = data->map_matrix[(int)data->player_x]\
+			[(int)(data->player_y + move_x)];
+		if (pos[0] != '1')
 			data->player_x -= move_y;
-		if (data->map_matrix[(int)data->player_x]\
-			[(int)(data->player_y + move_x)] != '1')
+		if (pos[1] != '1')
 			data->player_y += move_x;
-		data->update = 1;
 	}
 	if (data->movement->right == 1)
 	{
-		if (data->map_matrix[(int)(data->player_x + move_y)]\
-			[(int)data->player_y] != '1')
+		pos[0] = data->map_matrix[(int)(data->player_x + move_y)]\
+			[(int)data->player_y];
+		pos[1] = data->map_matrix[(int)data->player_x]\
+			[(int)(data->player_y - move_x)];
+		if (pos[0] != '1')
 			data->player_x += move_y;
-		if (data->map_matrix[(int)data->player_x]\
-			[(int)(data->player_y - move_x)] != '1')
+		if (pos[1] != '1')
 			data->player_y -= move_x;
-		data->update = 1;
 	}
 }
 
@@ -71,8 +80,13 @@ void			ft_move(t_map *data)
 		move_speed -= 0.1;
 	move_x = data->dir[0] * move_speed;
 	move_y = data->dir[1] * move_speed;
-	vertical_move(data, move_x, move_y);
-	horizontal_move(data, move_x, move_y);
+	if (data->movement->forward || data->movement->backward ||
+		data->movement->right || data->movement->left)
+	{
+		vertical_move(data, move_x, move_y);
+		horizontal_move(data, move_x, move_y);
+		data->update = 1;
+	}
 }
 
 void			ft_rotate(t_map *data)

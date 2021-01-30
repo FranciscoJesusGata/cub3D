@@ -6,11 +6,12 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 16:08:27 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/01/29 00:03:43 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/01/30 23:39:47 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+#include "cub3d_bonus.h"
 
 void			ft_init_move(t_moves *mvnt)
 {
@@ -52,9 +53,6 @@ void			ft_init_raycast(t_map *data, t_moves *mvnt,\
 	data->update = 0;
 	create_img(data, &data->img);
 	data->ray_buffer = malloc(sizeof(int) * data->resolution[0]);
-	data->vertical_angle = 0;
-	data->vertical_pos = 0;
-	data->vertical_total = 0;
 	load_alltextures(data, tex);
 	args->data = data;
 	args->tex = tex;
@@ -86,9 +84,10 @@ void			ft_raycasting(t_map *data, t_tex *tex)
 		ft_get_raydir(x, w, &ray, data);
 		ft_get_delta(&ray, &deltadist[0], &deltadist[1]);
 		ft_init_sidedist(&ray, deltadist);
-		ft_shoot_rays(&ray, deltadist, data);
-		data->ray_buffer[x] = ray.perpwalldist;
-		data->vertical_total = data->vertical_angle + (data->vertical_pos / ray.perpwalldist);
+		ft_shoot_rays(&ray, deltadist, data, x);
+		if (BONUS)
+			data->vertical_total = data->vertical_angle + \
+					(data->vertical_pos / ray.perpwalldist);
 		ft_buffer(data, tex, &ray, x);
 		x++;
 	}

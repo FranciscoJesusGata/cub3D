@@ -6,11 +6,26 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 12:50:03 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/01/29 19:41:39 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/01/30 23:39:00 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+#include "cub3d_bonus.h"
+
+int			ft_key_bonus(int key, t_map *data)
+{
+	if (key == UP_KEY)
+		data->movement->look_up = 1;
+	if (key == DOWN_KEY)
+		data->movement->look_down = 1;
+	if (key == LEFT_CTRL)
+		data->movement->crouch = 1;
+	if (key == SPACE && data->movement->jump == 0 \
+		&& data->movement->crouch == 0)
+		data->movement->jump = 1;
+	return (0);
+}
 
 int			ft_key_press(int key, t_args *args)
 {
@@ -34,14 +49,8 @@ int			ft_key_press(int key, t_args *args)
 		data->movement->r_rotation = 1;
 	if (key == LEFT_KEY)
 		data->movement->l_rotation = 1;
-	if (key == UP_KEY)
-		data->movement->look_up = 1;
-	if (key == DOWN_KEY)
-		data->movement->look_down = 1;
-	if (key == LEFT_CTRL)
-		data->movement->crouch = 1;
-	if (key == SPACE && data->movement->jump == 0 && data->movement->crouch == 0)
-		data->movement->jump = 1;
+	if (BONUS)
+		ft_key_bonus(key, data);
 	return (0);
 }
 
@@ -74,11 +83,15 @@ void		ft_start_screen(t_map *data, t_tex *tex, char **file)
 	t_args	args;
 
 	ft_init_raycast(data, &mvnt, tex, &args);
+	data->vertical_angle = 0;
+	data->vertical_pos = 0;
+	data->vertical_total = 0;
 	args.file = file;
 	ft_raycasting(data, tex);
 	if (data->save == 0)
 	{
-		data->music_process = start_music();
+		if (BONUS)
+			data->music_process = start_music();
 		mlx_hook(data->window, 2, (1L << 0), ft_key_press, &args);
 		mlx_hook(data->window, 3, (1L << 1), ft_key_release, data);
 		mlx_hook(data->window, 17, 0L, end_program, &args);
@@ -100,9 +113,8 @@ int			main_loop(t_args *args)
 	tex = args->tex;
 	ft_move(data);
 	ft_rotate(data);
-	verticalrot_bonus(data);
-	crouch_bonus(data);
-	jump_bonus(data);
+	if (BONUS)
+		movement_bonus(data);
 	if (data->update)
 	{
 		mlx_destroy_image(data->mlx_ptr, data->img.img);

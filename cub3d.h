@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 10:13:53 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/01/29 19:41:02 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/01/30 23:43:04 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,8 @@
 # include <errno.h>
 # include <math.h>
 # include <signal.h>
-# ifdef LEAKS
-#  define LEAKS_CHECK 1
-# else
-#  define LEAKS_CHECK 0
+# ifndef BONUS
+#  define BONUS 0
 # endif
 
 typedef	struct	s_moves
@@ -144,8 +142,6 @@ typedef struct	s_args
 	void		*file;
 }				t_args;
 
-# include "cub3d_bonus.h"
-
 int				cub3d(char *path, int save);
 void			ft_init_map(t_map *map);
 void			ft_init_tex(t_tex *tex);
@@ -176,7 +172,8 @@ void			ft_start_screen(t_map *data, t_tex *tex, char **file);
 int				main_loop(t_args *args);
 void			ft_raycasting(t_map *data, t_tex *tex);
 void			ft_get_raydir(int x, int w, t_ray *ray, t_map *data);
-void			ft_shoot_rays(t_ray *ray, double deltadist[], t_map *data);
+void			ft_shoot_rays(t_ray *ray, double deltadist[], \
+								t_map *data, int x);
 void			ft_init_sidedist(t_ray *ray, double deltadist[]);
 void			ft_init_sidedist(t_ray *ray, double deltadist[]);
 void			ft_get_delta(t_ray *ray, double *deltadist_x, \

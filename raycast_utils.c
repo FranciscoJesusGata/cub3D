@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/26 00:39:42 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/01/27 19:42:58 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/01/30 23:14:50 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,8 @@ void			get_perpwalldist(t_ray *ray)
 							(1 - ray->step[1]) / 2) / ray->dir[1];
 }
 
-void			ft_shoot_rays(t_ray *ray, double deltadist[], t_map *data)
+void			ft_shoot_rays(t_ray *ray, double deltadist[],\
+								t_map *data, int x)
 {
 	int			hit;
 
@@ -87,6 +88,7 @@ void			ft_shoot_rays(t_ray *ray, double deltadist[], t_map *data)
 			hit = 1;
 	}
 	get_perpwalldist(ray);
+	data->ray_buffer[x] = ray->perpwalldist;
 }
 
 void			ft_get_raydir(int x, int w, t_ray *ray, t_map *data)

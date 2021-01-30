@@ -6,11 +6,17 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 16:20:34 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/01/29 12:45:47 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/01/30 23:39:13 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+#include "cub3d_bonus.h"
+
+void			buffer_floor_ceiling(t_img *img, int x, int y, int rgb[])
+{
+	buffer_pixel(img, x, y, rgb_to_hex(0, rgb[0], rgb[1], rgb[2]));
+}
 
 void			buffer_line(t_map *data, t_tex_img *tex, \
 							int x, int line_height)
@@ -21,20 +27,17 @@ void			buffer_line(t_map *data, t_tex_img *tex, \
 
 	i = 0;
 	step = 1.0 * tex->height / line_height;
-	tex_pos = (data->draw_start - data->vertical_total - data->resolution[1] / 2 + line_height / 2) \
-				* step;
+	tex_pos = (data->draw_start - data->vertical_total - \
+			data->resolution[1] / 2 + line_height / 2) * step;
 	while (i < data->resolution[1])
 	{
 		if (i < data->draw_start)
-			buffer_pixel(&data->img, x, i, rgb_to_hex(0, \
-						data->ceiling[0], data->ceiling[1], data->ceiling[2]));
+			buffer_floor_ceiling(&data->img, x, i, data->ceiling);
 		else if (i >= data->draw_end)
-			buffer_pixel(&data->img, x, i, rgb_to_hex(0, \
-						data->floor[0], data->floor[1], data->floor[2]));
+			buffer_floor_ceiling(&data->img, x, i, data->floor);
 		else if (i > data->draw_start && i < data->draw_end)
 		{
-			tex->coords[1] = (int)tex_pos;
-			if (tex->coords[1] < 0)
+			if ((tex->coords[1] = (int)tex_pos) < 0)
 				tex->coords[1] = 0;
 			tex_pos += step;
 			buffer_pixel(&data->img, x, i, get_pixel(&tex->img, \
@@ -73,29 +76,6 @@ void			ft_tex_xcoord(t_tex_img *texture, t_ray *ray)
 	wall_x -= (int)wall_x;
 	texture->coords[0] = texture->width - \
 							(int)(wall_x * (double)texture->width) - 1;
-}
-
-void			buffer_sprites(t_map *data, t_tex_img texture)
-{
-	int			i;
-	double		sprite_coords[2];
-	double		inv_cam;
-	double		transform[2];
-
-	i = 0;
-	while (i < data->num_sprites)
-	{
-		sprite_coords[0] = data->sprites[i].x - data->player_x;
-		sprite_coords[1] = data->sprites[i].y - data->player_y;
-		inv_cam = 1.0 / ((data->plane[0] * data->dir[1]) \
-						- (data->dir[0] * data->plane[1]));
-		transform[0] = inv_cam * ((data->dir[1] * sprite_coords[0]) \
-						- (data->dir[0] * sprite_coords[1]));
-		transform[1] = inv_cam * (-(data->plane[1] * sprite_coords[0]) \
-						+ (data->plane[0] * sprite_coords[1]));
-		sprite_size(data, data->sprites[i], transform, texture);
-		i++;
-	}
 }
 
 void			ft_buffer(t_map *data, t_tex *tex, t_ray *ray, int x)
