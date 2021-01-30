@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 10:13:53 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/01/29 00:16:21 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/01/29 19:41:02 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <stdio.h>
 # include <errno.h>
 # include <math.h>
+# include <signal.h>
 # ifdef LEAKS
 #  define LEAKS_CHECK 1
 # else
@@ -92,6 +93,7 @@ typedef struct	s_map{
 	double		vertical_angle;
 	double		vertical_pos;
 	double		vertical_total;
+	pid_t		music_process;
 }				t_map;
 
 typedef struct	s_tex_img

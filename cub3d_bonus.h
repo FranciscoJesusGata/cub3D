@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 00:32:36 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/01/28 23:30:32 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/01/29 19:40:33 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,6 @@
 void		verticalrot_bonus(t_map *data);
 void		crouch_bonus(t_map *data);
 void		jump_bonus(t_map *data);
+pid_t		start_music();
 
 #endif

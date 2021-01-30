@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 12:50:03 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/01/29 00:20:25 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/01/29 19:41:39 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void		ft_start_screen(t_map *data, t_tex *tex, char **file)
 	ft_raycasting(data, tex);
 	if (data->save == 0)
 	{
+		data->music_process = start_music();
 		mlx_hook(data->window, 2, (1L << 0), ft_key_press, &args);
 		mlx_hook(data->window, 3, (1L << 1), ft_key_release, data);
 		mlx_hook(data->window, 17, 0L, end_program, &args);
