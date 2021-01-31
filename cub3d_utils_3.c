@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/27 10:20:10 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/01/25 21:06:05 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/01/31 23:33:01 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,22 +52,9 @@ int			ft_count_chars(const char *s, char c)
 	return (fnd);
 }
 
-void		ft_free_matrix(void **matrix, int lines)
-{
-	int		i;
-
-	i = 0;
-	while (i < lines)
-	{
-		free(matrix[i]);
-		i++;
-	}
-	free(matrix);
-}
-
 void		ft_free_all(t_map *data, t_tex *textures, void **file)
 {
+	ft_free_textures(textures, data);
 	ft_free_data(data);
-	ft_free_textures(textures);
 	ft_free_matrix(file, data->lines);
 }

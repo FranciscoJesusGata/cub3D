@@ -1,11 +1,11 @@
-                WE                                                                                                 ./wolftex_1/wood.png
+                WE                                                                                                 ./textures/wood.png
 
-             SO                                                  ./wolftex_1/redbrick.png
+             SO                                                  ./textures/redbrick.png
                       F                 122,122,122
-                                 NO                                                                             ./wolftex_1/greystone.png
-                                         S          ./wolftex_1/barrel.png
+                                 NO                                                                             ./textures/greystone.png
+                                         S          ./textures/barrel.png
                                                                     R                                         1080                  720
-                                                      EA                                                                                           ./wolftex_1/wood.png
+                                                      EA                                                                                           ./textures/wood.png
 
                           C                      255                                                                                            ,200,160
 11111111111111111

@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 09:40:14 by fgata-va          #+#    #+#             */
-/*   Updated: 2020/12/01 11:02:56 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/01/31 20:40:17 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,11 @@ int			ft_check_resol(t_map *map, int j)
 	{
 		if (map->resolution[j] > map->max_r[j])
 			map->resolution[j] = map->max_r[j];
-		else if (map->resolution[j] <= 0)
+		else if (map->resolution[j] <= 500)
+		{
+			ft_error("Resolution too small, minimum should be 500x500");
 			return (0);
+		}
 		j++;
 	}
 	return (1);
@@ -45,15 +48,17 @@ int			ft_save_resol(char *line, t_map *map)
 			i--;
 			j++;
 		}
-		else if ((ft_isdigit(line[i]) && j >= 2) ||
-				!(ft_strchr("\t\v\f\r ", line[i])))
+		else if (!(ft_strchr("\t\v\f\r ", line[i])))
+		{
+			ft_error("Resolution negative or not enought values");
 			return (0);
+		}
 		i++;
 	}
 	return (ft_check_resol(map, j));
 }
 
-int			ft_check_rgb(int *nums)
+int			ft_check_rgb(int *nums, int id)
 {
 	int		i;
 
@@ -61,13 +66,19 @@ int			ft_check_rgb(int *nums)
 	while (i < 3)
 	{
 		if (nums[i] > 255 || nums[i] < 0)
+		{
+			if (id == 'C')
+				ft_error("The ceiling values are invalid");
+			else
+				ft_error("The floor values are invalid");
 			return (0);
+		}
 		i++;
 	}
 	return (1);
 }
 
-int			*ft_save_rgb(char **args)
+int			*ft_save_rgb(char **args, int id)
 {
 	int		i;
 	char	*nbr;
@@ -78,7 +89,7 @@ int			*ft_save_rgb(char **args)
 		return (NULL);
 	while (args[i])
 	{
-		if (!(nbr = ft_strtrim(args[i], "\t\v\f\r ")) || !(ft_isnumber(nbr)))
+		if (!(nbr = ft_strtrim(args[i], "\t\v\f\r ")) || !(ft_isnumber(nbr, id)))
 			return (NULL);
 		nums[i] = ft_atoi(nbr);
 		free(nbr);
@@ -86,7 +97,7 @@ int			*ft_save_rgb(char **args)
 		i++;
 	}
 	free(args);
-	if (i != 3 || !(ft_check_rgb(nums)))
+	if (i != 3 || !(ft_check_rgb(nums, id)))
 	{
 		free(nums);
 		return (NULL);

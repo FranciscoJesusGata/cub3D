@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 11:34:02 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/01/30 19:17:04 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/01/31 23:11:17 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	**ft_mtxdup(char **input, int lines)
 	return (cpy);
 }
 
-int		ft_isnumber(char *s)
+int		ft_isnumber(char *s, int id)
 {
 	int	i;
 
@@ -37,65 +37,16 @@ int		ft_isnumber(char *s)
 	{
 		if (ft_isdigit(s[i]) == 0)
 		{
+			if (id == 'C')
+				ft_error("The ceiling values are invalid");
+			else
+				ft_error("The floor values are invalid");
 			free(s);
 			return (0);
 		}
 		i++;
 	}
 	return (1);
-}
-
-void	ft_free_textures(t_tex *tex)
-{
-	if (tex->n_texture)
-	{
-		free(tex->n_texture);
-		tex->n_texture = NULL;
-	}
-	if (tex->s_texture)
-	{
-		free(tex->s_texture);
-		tex->s_texture = NULL;
-	}
-	if (tex->w_texture)
-	{
-		free(tex->w_texture);
-		tex->w_texture = NULL;
-	}
-	if (tex->e_texture)
-	{
-		free(tex->e_texture);
-		tex->e_texture = NULL;
-	}
-	if (tex->sprite)
-	{
-		free(tex->sprite);
-		tex->sprite = NULL;
-	}
-}
-
-void	ft_free_data(t_map *data)
-{
-	if (data->img.img)
-	{
-		mlx_destroy_image(data->mlx_ptr, data->img.img);
-		data->window = NULL;
-	}
-	if (data->mlx_ptr)
-	{
-		free(data->mlx_ptr);
-		data->mlx_ptr = NULL;
-	}
-	if (data->map_matrix)
-	{
-		free(data->map_matrix);
-		data->map_matrix = NULL;
-	}
-	if (data->num_sprites > 0)
-	{
-		free(data->sprites);
-		data->sprites = NULL;
-	}
 }
 
 int		end_program(t_args *game_data)

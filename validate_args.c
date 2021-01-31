@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 11:26:26 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/01/25 20:33:27 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/01/31 22:51:20 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,17 +49,17 @@ void		ft_check_texture(char *line, t_tex *tex, t_cflags *flags)
 		(!ft_check_extension(path, ".xpm") &&
 		!(ft_check_extension(path, ".png") && MAC_VERSION)))
 	{
-		ft_error("Texture file doesn't exists or format not valid");
+		if (MAC_VERSION)
+			ft_printf("Error\nTexture \"%s\" doesn't \
+exists or isn't XPM or PNG format\n", path);
+		else
+			ft_printf("Error\nTexture \"%s\" doesn't \
+exists or isn't XPM format\n", path);
 		free(path);
-		exit(1);
 	}
 	close(fd);
 	if (ft_tex_flag(line, flags, tex, path) == 0)
-	{
-		ft_error("Texture file doesn't exists or format not valid");
-		free(path);
-		exit(1);
-	}
+		ft_error("Texture identificator invalid");
 }
 
 void		ft_check_floor_ceiling(char *line, t_map *map, t_cflags *flags)
@@ -68,9 +68,10 @@ void		ft_check_floor_ceiling(char *line, t_map *map, t_cflags *flags)
 	int		*nums;
 	int		i;
 
-	if ((ft_count_chars(line, ',') != 2) ||
-	!(args = ft_split((line + 1), ',')) ||
-	!(nums = ft_save_rgb(args)))
+	if (!(args = ft_split((line + 1), ',')) ||
+		ft_count_chars(line, ',') != 2)
+		ft_error("Not enought numbers in floor/ceiling");
+	if (!(nums = ft_save_rgb(args, line[0])))
 		return ;
 	i = 0;
 	while (i < 3)

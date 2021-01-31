@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 12:50:03 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/01/31 01:06:12 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/01/31 23:04:18 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int			ft_key_press(int key, t_args *args)
 	if (key == ESC)
 	{
 		mlx_destroy_window(data->mlx_ptr, data->window);
+		data->window = NULL;
 		end_program(args);
 	}
 	if (key == W_KEY)

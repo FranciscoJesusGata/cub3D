@@ -6,16 +6,20 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 10:13:53 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/01/31 01:03:04 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/01/31 23:19:56 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
-# include "lib/mlx/mlx.h"
 # include "lib/GNL/get_next_line.h"
 # include "lib/libftprintf/ft_printf.h"
 # include "keys.h"
+# if MAC_VERSION
+#  include "lib/mlx/mlx.h"
+# else
+#  include "lib/mlx_linux/mlx.h"
+# endif
 # include <unistd.h>
 # include <stdlib.h>
 # include <fcntl.h>
@@ -152,18 +156,19 @@ void			ft_error(const char *msg);
 void			ft_check_texture(char *line, t_tex *tex, t_cflags *flags);
 int				ft_check_extension(char *check, char *expected);
 void			ft_check_floor_ceiling(char *line, t_map *map, t_cflags *flags);
-int				*ft_save_rgb(char **args);
+int				*ft_save_rgb(char **args, int id);
 int				ft_check_flags(t_cflags flags);
 void			ft_free_matrix(void **matrix, int lines);
-int				ft_isnumber(char *s);
+int				ft_isnumber(char *s, int id);
 char			**ft_mtxdup(char **input, int lines);
 char			**ft_newline(char **file, char *line, size_t size);
 void			ft_save_map(t_map *data, char **file, int *i);
 void			ft_set_orientation(char player, t_map *data);
 int				ft_ismap(char *line);
 int				ft_valid_map(t_map *data);
-void			ft_free_textures(t_tex *tex);
+void			ft_free_textures(t_tex *tex, t_map *data);
 void			ft_free_data(t_map *data);
+void			free_mlx(t_map *data);
 void			ft_free_all(t_map *data, t_tex *textures, void **file);
 int				end_program(t_args *game_data);
 int				ft_count_chars(const char *s, char c);
