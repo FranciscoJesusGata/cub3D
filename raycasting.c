@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 16:08:27 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/01/30 23:39:47 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/01/31 01:06:37 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ void			ft_init_raycast(t_map *data, t_moves *mvnt,\
 	data->player_y += 0.5;
 	ft_init_move(mvnt);
 	data->movement = mvnt;
-	data->update = 0;
 	create_img(data, &data->img);
 	data->ray_buffer = malloc(sizeof(int) * data->resolution[0]);
 	load_alltextures(data, tex);

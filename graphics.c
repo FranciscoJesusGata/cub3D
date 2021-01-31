@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 12:50:03 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/01/30 23:39:00 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/01/31 01:06:12 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,17 +115,13 @@ int			main_loop(t_args *args)
 	ft_rotate(data);
 	if (BONUS)
 		movement_bonus(data);
-	if (data->update)
-	{
-		mlx_destroy_image(data->mlx_ptr, data->img.img);
-		data->img.img = NULL;
-		create_img(data, &data->img);
-		if (data->num_sprites > 0)
-			ft_update_sprites(data);
-		ft_raycasting(data, tex);
-		data->update = 0;
-		mlx_put_image_to_window(data->mlx_ptr, data->window, \
-								data->img.img, 0, 0);
-	}
+	mlx_destroy_image(data->mlx_ptr, data->img.img);
+	data->img.img = NULL;
+	create_img(data, &data->img);
+	if (data->num_sprites > 0)
+		ft_update_sprites(data);
+	ft_raycasting(data, tex);
+	mlx_put_image_to_window(data->mlx_ptr, data->window, \
+							data->img.img, 0, 0);
 	return (0);
 }

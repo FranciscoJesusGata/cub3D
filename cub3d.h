@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 10:13:53 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/01/30 23:43:04 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/01/31 01:03:04 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ typedef struct	s_map{
 	int			save;
 	int			lines;
 	int			valid_map;
-	int			update;
 	int			draw_start;
 	int			draw_end;
 	int			num_sprites;

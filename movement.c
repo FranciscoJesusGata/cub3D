@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/26 00:24:03 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/01/30 23:39:36 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/01/31 01:10:19 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ void			ft_move(t_map *data)
 	{
 		vertical_move(data, move_x, move_y);
 		horizontal_move(data, move_x, move_y);
-		data->update = 1;
 	}
 }
 
@@ -111,6 +110,5 @@ void			ft_rotate(t_map *data)
 					- data->plane[1] * sin(rotspeed);
 		data->plane[1] = oldplane_x * sin(rotspeed) \
 					+ data->plane[1] * cos(rotspeed);
-		data->update = 1;
 	}
 }
