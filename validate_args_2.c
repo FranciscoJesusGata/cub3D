@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 09:40:14 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/01/31 20:40:17 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/02/01 01:04:33 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,10 @@
 int			ft_check_resol(t_map *map, int j)
 {
 	if (j < 2)
+	{
+		ft_error("Only one resolution value");
 		return (0);
+	}
 	j = 0;
 	while (j < 2)
 	{
@@ -50,7 +53,7 @@ int			ft_save_resol(char *line, t_map *map)
 		}
 		else if (!(ft_strchr("\t\v\f\r ", line[i])))
 		{
-			ft_error("Resolution negative or not enought values");
+			ft_error("Resolution negative");
 			return (0);
 		}
 		i++;

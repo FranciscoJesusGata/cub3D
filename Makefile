@@ -21,7 +21,7 @@ GNL = lib/GNL/get_next_line.c lib/GNL/get_next_line_utils.c
 SRC = cub3d.c main.c cub3d_utils_1.c cub3d_utils_2.c cub3d_utils_3.c \
 	cub3d_utils_4.c validate_args.c validate_args_2.c validate_map.c \
 	ft_save_map.c graphics.c raycasting.c buffer_img.c bmp.c \
-	sprites.c movement.c raycast_utils.c print_sprites.c free_data.c\
+	sprites.c movement.c raycast_utils.c print_sprites.c free_data.c
 
 BONUS = movement_bonus.c play_music_bonus.c
 

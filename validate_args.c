@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 11:26:26 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/01/31 22:51:20 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/02/01 01:41:11 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,7 @@ int			ft_tex_flag(char *line, t_cflags *flags, t_tex *tex, char *path)
 	else if (ft_strncmp(line, "S ", 2) == 0)
 		ft_save_tex(&(flags->has_sprite), &(tex->sprite), path);
 	else
-	{
-		free(path);
 		return (0);
-	}
 	return (1);
 }
 
@@ -56,6 +53,8 @@ exists or isn't XPM or PNG format\n", path);
 			ft_printf("Error\nTexture \"%s\" doesn't \
 exists or isn't XPM format\n", path);
 		free(path);
+		path = NULL;
+		return ;
 	}
 	close(fd);
 	if (ft_tex_flag(line, flags, tex, path) == 0)
@@ -70,7 +69,10 @@ void		ft_check_floor_ceiling(char *line, t_map *map, t_cflags *flags)
 
 	if (!(args = ft_split((line + 1), ',')) ||
 		ft_count_chars(line, ',') != 2)
+	{
 		ft_error("Not enought numbers in floor/ceiling");
+		return ;
+	}
 	if (!(nums = ft_save_rgb(args, line[0])))
 		return ;
 	i = 0;
