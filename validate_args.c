@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 11:26:26 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/02/01 01:41:11 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/02/01 11:24:52 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,9 @@ int			ft_check_flags(t_cflags flags)
 	if (flags.has_resol != 1 || flags.has_n_tex != 1 || flags.has_w_tex != 1 ||
 		flags.has_e_tex != 1 || flags.has_s_tex != 1 || flags.has_sprite != 1 ||
 		flags.has_floor != 1 || flags.has_clng != 1)
-		return (0);
+		{
+			ft_error("Invalid number of arguments");
+			return (0);
+		}
 	return (1);
 }

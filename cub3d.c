@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 11:40:34 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/01/31 20:22:14 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/02/01 11:49:29 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,10 @@ int				ft_save_elements(t_map *map, t_tex *tex, char **file,
 			else if (ft_ismap(line))
 				ft_save_map(map, file, &i);
 			else
+			{
 				valid = 0;
+				ft_printf("Error\nInvalid identifier in line: %s", line);
+			}
 		}
 		free(line);
 		i++;

@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 11:26:02 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/01/27 19:15:24 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/02/01 11:11:53 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,5 +131,7 @@ int			ft_valid_map(t_map *data)
 		map_validator(&map_cpy, data->player_y, data->player_x, data);
 	}
 	ft_free_matrix((void **)map_cpy, data->max_y);
+	if (!data->valid_map)
+		ft_error("Map is not valid");
 	return (data->valid_map);
 }
