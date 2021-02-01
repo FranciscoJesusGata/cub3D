@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 18:34:47 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/01/30 23:37:51 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/02/01 11:54:35 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ pid_t		start_music(void)
 	{
 		if (MAC_VERSION)
 		{
-			args = ft_split("afplay -q audio/music.wav", ' ');
+			args = ft_split("afplay audio/music.wav", ' ');
 			execv("/usr/bin/afplay", args);
 		}
 		else
