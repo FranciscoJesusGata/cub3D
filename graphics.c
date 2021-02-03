@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 12:50:03 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/01/31 23:04:18 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/02/03 12:23:49 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,7 @@ int			ft_key_press(int key, t_args *args)
 
 	data = args->data;
 	if (key == ESC)
-	{
-		mlx_destroy_window(data->mlx_ptr, data->window);
-		data->window = NULL;
-		end_program(args);
-	}
+		data->exit = 1;
 	if (key == W_KEY)
 		data->movement->forward = 1;
 	if (key == S_KEY)
@@ -88,21 +84,13 @@ void		ft_start_screen(t_map *data, t_tex *tex, char **file)
 	data->vertical_pos = 0;
 	data->vertical_total = 0;
 	args.file = file;
-	ft_raycasting(data, tex);
-	if (data->save == 0)
-	{
-		if (BONUS)
-			data->music_process = start_music();
-		mlx_hook(data->window, 2, (1L << 0), ft_key_press, &args);
-		mlx_hook(data->window, 3, (1L << 1), ft_key_release, data);
-		mlx_hook(data->window, 17, 0L, end_program, &args);
-		mlx_put_image_to_window(data->mlx_ptr, data->window,\
-							data->img.img, 0, 0);
-		mlx_loop_hook(data->mlx_ptr, &main_loop, &args);
-		mlx_loop(data->mlx_ptr);
-	}
-	else
-		createbmp(data);
+	if (BONUS)
+		data->music_process = start_music();
+	mlx_hook(data->window, 2, (1L << 0), ft_key_press, &args);
+	mlx_hook(data->window, 3, (1L << 1), ft_key_release, data);
+	mlx_hook(data->window, 17, 0L, end_program, &args);
+	mlx_loop_hook(data->mlx_ptr, &main_loop, &args);
+	mlx_loop(data->mlx_ptr);
 }
 
 int			main_loop(t_args *args)
@@ -116,13 +104,14 @@ int			main_loop(t_args *args)
 	ft_rotate(data);
 	if (BONUS)
 		movement_bonus(data);
-	mlx_destroy_image(data->mlx_ptr, data->img.img);
-	data->img.img = NULL;
-	create_img(data, &data->img);
 	if (data->num_sprites > 0)
 		ft_update_sprites(data);
-	ft_raycasting(data, tex);
-	mlx_put_image_to_window(data->mlx_ptr, data->window, \
-							data->img.img, 0, 0);
+	ft_raycasting(data, tex, args->file);
+	if (data->exit)
+	{
+		mlx_destroy_window(data->mlx_ptr, data->window);
+		data->window = NULL;
+		end_program(args);
+	}
 	return (0);
 }

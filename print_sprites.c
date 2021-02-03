@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/26 01:28:15 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/01/30 23:16:22 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/02/03 10:26:32 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void			print_spriteline(t_map *data, t_sprite *sprite, \
 			sprite->tex[1] = 0;
 		color = get_pixel(&tex.img, sprite->tex[0], sprite->tex[1]);
 		if ((color & 0x00FFFFFF) != 0)
-			buffer_pixel(&data->img, x, y, color);
+			buffer_pixel(data->img, x, y, color);
 		y++;
 	}
 }

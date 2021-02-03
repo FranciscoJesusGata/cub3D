@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 16:10:41 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/01/28 17:41:45 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/02/03 11:13:12 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,7 @@
 
 void		buffer_pixel(t_img *frame, int x, int y, int color)
 {
-	char	*dst;
-
-	dst = frame->addr + (y * frame->line_length + x * (frame->bpp / 8));
-	*(unsigned int*)dst = color;
+	*(int*)(frame->addr + (y * frame->line_length + x * (frame->bpp / 8))) = color;
 }
 
 int			get_pixel(t_img *frame, int x, int y)

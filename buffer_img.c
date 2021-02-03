@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 16:20:34 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/01/30 23:39:13 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/02/03 10:25:02 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,15 @@ void			buffer_line(t_map *data, t_tex_img *tex, \
 	while (i < data->resolution[1])
 	{
 		if (i < data->draw_start)
-			buffer_floor_ceiling(&data->img, x, i, data->ceiling);
+			buffer_floor_ceiling(data->img, x, i, data->ceiling);
 		else if (i >= data->draw_end)
-			buffer_floor_ceiling(&data->img, x, i, data->floor);
+			buffer_floor_ceiling(data->img, x, i, data->floor);
 		else if (i > data->draw_start && i < data->draw_end)
 		{
 			if ((tex->coords[1] = (int)tex_pos) < 0)
 				tex->coords[1] = 0;
 			tex_pos += step;
-			buffer_pixel(&data->img, x, i, get_pixel(&tex->img, \
+			buffer_pixel(data->img, x, i, get_pixel(&tex->img, \
 						tex->coords[0], tex->coords[1]));
 		}
 		i++;

@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 20:17:40 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/01/26 01:41:48 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/02/03 10:26:13 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void				write_bits(t_map *data, int padding, int fd)
 		j = 0;
 		while (j < data->resolution[0])
 		{
-			color = get_pixel(&data->img, j, i);
+			color = get_pixel(data->img, j, i);
 			write(fd, &color, 3);
 			j++;
 		}

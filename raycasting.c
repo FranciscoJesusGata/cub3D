@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 16:08:27 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/01/31 01:06:37 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/02/03 13:32:32 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,12 @@ void			ft_init_raycast(t_map *data, t_moves *mvnt,\
 		data->window = mlx_new_window(data->mlx_ptr, data->resolution[0],
 									data->resolution[1], "Cub3D");
 	}
+	create_img(data, data->img);
 	data->player_x += 0.5;
 	data->player_y += 0.5;
 	ft_init_move(mvnt);
 	data->movement = mvnt;
-	create_img(data, &data->img);
+	data->exit = 0;
 	data->ray_buffer = malloc(sizeof(int) * data->resolution[0]);
 	load_alltextures(data, tex);
 	args->data = data;
@@ -65,7 +66,7 @@ void			ft_init_raycast(t_map *data, t_moves *mvnt,\
 		data->sprites = NULL;
 }
 
-void			ft_raycasting(t_map *data, t_tex *tex)
+void			ft_raycasting(t_map *data, t_tex *tex, void **file)
 {
 	int			x;
 	int			w;
@@ -76,6 +77,7 @@ void			ft_raycasting(t_map *data, t_tex *tex)
 	x = 0;
 	ray.pos[0] = data->player_x;
 	ray.pos[1] = data->player_y;
+	mlx_sync(MLX_SYNC_IMAGE_WRITABLE, data->img->img);
 	while (x < w)
 	{
 		ray.map[0] = (int)data->player_x;
@@ -92,4 +94,16 @@ void			ft_raycasting(t_map *data, t_tex *tex)
 	}
 	if (data->num_sprites > 0)
 		buffer_sprites(data, tex->textures[4]);
+	if (data->save)
+	{
+		createbmp(data);
+		mlx_destroy_window(data->mlx_ptr, data->window);
+		mlx_destroy_image(data->mlx_ptr, data->img->img);
+		ft_free_all(data, tex, file);
+		system("leaks cub3D");
+		exit(0);
+	}
+	mlx_put_image_to_window(data->mlx_ptr, data->window, \
+						data->img->img, 0, 0);
+	mlx_sync(MLX_SYNC_WIN_FLUSH_CMD, data->window);
 }

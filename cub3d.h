@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 10:13:53 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/02/01 11:01:53 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/02/03 11:39:04 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,16 +85,17 @@ typedef struct	s_map{
 	int			lines;
 	int			valid_map;
 	int			draw_start;
-int			draw_end;
+	int			draw_end;
 	int			num_sprites;
 	int			*ray_buffer;
 	t_moves		*movement;
-	t_img		img;
+	t_img		*img;
 	t_sprite	*sprites;
 	double		vertical_angle;
 	double		vertical_pos;
 	double		vertical_total;
 	pid_t		music_process;
+	int			exit;
 }				t_map;
 
 typedef struct	s_tex_img
@@ -174,7 +175,7 @@ int				end_program(t_args *game_data);
 int				ft_count_chars(const char *s, char c);
 void			ft_start_screen(t_map *data, t_tex *tex, char **file);
 int				main_loop(t_args *args);
-void			ft_raycasting(t_map *data, t_tex *tex);
+void			ft_raycasting(t_map *data, t_tex *tex, void **file);
 void			ft_get_raydir(int x, int w, t_ray *ray, t_map *data);
 void			ft_shoot_rays(t_ray *ray, double deltadist[], \
 								t_map *data, int x);

@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 23:09:36 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/01/31 23:32:44 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/02/03 13:13:18 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,9 @@ void	free_tex_imgs(t_map *data, t_tex_img textures[])
 	i = 0;
 	while (i < 5)
 	{
-		mlx_destroy_image(data->mlx_ptr, textures[i].img.img);
+		mlx_destroy_image(data->mlx_ptr, textures->img.img);
 		i++;
+		textures++;
 	}
 }
 
@@ -57,28 +58,16 @@ void	ft_free_textures(t_tex *tex, t_map *data)
 
 void	ft_free_data(t_map *data)
 {
-	if (data->img.img)
-	{
-		mlx_destroy_image(data->mlx_ptr, data->img.img);
-		data->window = NULL;
-	}
-	if (data->mlx_ptr)
-		free_mlx(data);
-	if (data->map_matrix)
-	{
-		free(data->map_matrix);
-		data->map_matrix = NULL;
-	}
+	free_mlx(data);
+	free(data->map_matrix);
+	data->map_matrix = NULL;
 	if (data->num_sprites > 0)
 	{
 		free(data->sprites);
 		data->sprites = NULL;
 	}
-	if (data->ray_buffer)
-	{
-		free(data->ray_buffer);
-		data->ray_buffer = NULL;
-	}
+	free(data->ray_buffer);
+	data->ray_buffer = NULL;
 }
 
 void		ft_free_matrix(void **matrix, int lines)
