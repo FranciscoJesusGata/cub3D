@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 12:50:03 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/02/03 12:23:49 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/02/04 18:08:31 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,22 +95,15 @@ void		ft_start_screen(t_map *data, t_tex *tex, char **file)
 
 int			main_loop(t_args *args)
 {
-	t_map	*data;
-	t_tex	*tex;
-
-	data = args->data;
-	tex = args->tex;
-	ft_move(data);
-	ft_rotate(data);
+	ft_move(args->data);
+	ft_rotate(args->data);
 	if (BONUS)
-		movement_bonus(data);
-	if (data->num_sprites > 0)
-		ft_update_sprites(data);
-	ft_raycasting(data, tex, args->file);
-	if (data->exit)
+		movement_bonus(args->data);
+	update_img(args);
+	if (args->data->exit)
 	{
-		mlx_destroy_window(data->mlx_ptr, data->window);
-		data->window = NULL;
+		mlx_destroy_window(args->data->mlx_ptr, args->data->window);
+		args->data->window = NULL;
 		end_program(args);
 	}
 	return (0);

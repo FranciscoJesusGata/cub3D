@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 10:13:53 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/02/04 12:25:17 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/02/04 18:07:32 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,7 +177,7 @@ int				end_program(t_args *game_data);
 int				ft_count_chars(const char *s, char c);
 void			ft_start_screen(t_map *data, t_tex *tex, char **file);
 int				main_loop(t_args *args);
-void			ft_raycasting(t_map *data, t_tex *tex, void **file);
+void			update_img(t_args *args);
 void			ft_get_raydir(int x, int w, t_ray *ray, t_map *data);
 void			ft_shoot_rays(t_ray *ray, double deltadist[], \
 								t_map *data, int x);

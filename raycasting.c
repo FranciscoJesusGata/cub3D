@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 16:08:27 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/02/03 13:32:32 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/02/04 19:18:29 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void			ft_init_raycast(t_map *data, t_moves *mvnt,\
 		data->sprites = NULL;
 }
 
-void			ft_raycasting(t_map *data, t_tex *tex, void **file)
+void			raycasting(t_map *data, t_tex *tex)
 {
 	int			x;
 	int			w;
@@ -92,16 +92,26 @@ void			ft_raycasting(t_map *data, t_tex *tex, void **file)
 		ft_buffer(data, tex, &ray, x);
 		x++;
 	}
-	if (data->num_sprites > 0)
-		buffer_sprites(data, tex->textures[4]);
+}
+
+void			update_img(t_args *args)
+{
+	t_map		*data;
+	t_tex		*tex;
+
+	data = args->data;
+	tex = args->tex;
+	mlx_sync(MLX_SYNC_IMAGE_WRITABLE, args->data->img->img);
+	raycasting(data, tex);
 	if (data->save)
 	{
 		createbmp(data);
-		mlx_destroy_window(data->mlx_ptr, data->window);
-		mlx_destroy_image(data->mlx_ptr, data->img->img);
-		ft_free_all(data, tex, file);
-		system("leaks cub3D");
-		exit(0);
+		end_program(args);
+	}
+	if (args->data->num_sprites > 0)
+	{
+		ft_update_sprites(args->data);
+		buffer_sprites(args->data, args->tex->textures[4]);
 	}
 	mlx_put_image_to_window(data->mlx_ptr, data->window, \
 						data->img->img, 0, 0);

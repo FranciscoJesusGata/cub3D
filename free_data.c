@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 23:09:36 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/02/04 11:51:21 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/02/04 17:49:02 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,30 +28,15 @@ void	free_tex_imgs(t_map *data, t_tex_img textures[])
 void	ft_free_textures(t_tex *tex, t_map *data)
 {
 	if (tex->n_texture)
-	{
 		free(tex->n_texture);
-		tex->n_texture = NULL;
-	}
 	if (tex->s_texture)
-	{
 		free(tex->s_texture);
-		tex->s_texture = NULL;
-	}
 	if (tex->w_texture)
-	{
 		free(tex->w_texture);
-		tex->w_texture = NULL;
-	}
 	if (tex->e_texture)
-	{
 		free(tex->e_texture);
-		tex->e_texture = NULL;
-	}
 	if (tex->sprite)
-	{
 		free(tex->sprite);
-		tex->sprite = NULL;
-	}
 	if (tex->textures[0].img.img)
 		free_tex_imgs(data, tex->textures);
 }
@@ -71,9 +56,9 @@ void	ft_free_data(t_map *data)
 	data->ray_buffer = NULL;
 }
 
-void		ft_free_matrix(void **matrix, int lines)
+void	ft_free_matrix(void **matrix, int lines)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	while (i < lines)
