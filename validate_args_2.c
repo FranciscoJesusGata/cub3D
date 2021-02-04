@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 09:40:14 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/02/01 01:04:33 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/02/04 12:27:12 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,8 @@ int			*ft_save_rgb(char **args, int id)
 		return (NULL);
 	while (args[i])
 	{
-		if (!(nbr = ft_strtrim(args[i], "\t\v\f\r ")) || !(ft_isnumber(nbr, id)))
+		if (!(nbr = ft_strtrim(args[i], "\t\v\f\r ")) ||
+			!(ft_isnumber(nbr, id)))
 			return (NULL);
 		nums[i] = ft_atoi(nbr);
 		free(nbr);
@@ -106,4 +107,25 @@ int			*ft_save_rgb(char **args, int id)
 		return (NULL);
 	}
 	return (nums);
+}
+
+void		ft_save_floor_ceil(t_map *map, t_cflags *flags, \
+							int nums[], char id)
+{
+	int		i;
+
+	i = 0;
+	while (i < 3)
+	{
+		if (id == 'F')
+			map->floor[i] = nums[i];
+		else
+			map->ceiling[i] = nums[i];
+		i++;
+	}
+	if (id == 'F')
+		flags->has_floor += 1;
+	else
+		flags->has_clng += 1;
+	free(nums);
 }

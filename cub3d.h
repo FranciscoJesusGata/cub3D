@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 10:13:53 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/02/03 11:39:04 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/02/04 12:25:17 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,6 +157,8 @@ void			ft_error(const char *msg);
 void			ft_check_texture(char *line, t_tex *tex, t_cflags *flags);
 int				ft_check_extension(char *check, char *expected);
 void			ft_check_floor_ceiling(char *line, t_map *map, t_cflags *flags);
+void			ft_save_floor_ceil(t_map *map, t_cflags *flags, \
+									int nums[], char id);
 int				*ft_save_rgb(char **args, int id);
 int				ft_check_flags(t_cflags flags);
 void			ft_free_matrix(void **matrix, int lines);

@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 11:26:26 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/02/01 11:24:52 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/02/04 12:23:51 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,30 +65,16 @@ void		ft_check_floor_ceiling(char *line, t_map *map, t_cflags *flags)
 {
 	char	**args;
 	int		*nums;
-	int		i;
 
 	if (!(args = ft_split((line + 1), ',')) ||
 		ft_count_chars(line, ',') != 2)
 	{
-		ft_error("Not enought numbers in floor/ceiling");
+		ft_error("Not enought values in floor/ceiling");
 		return ;
 	}
 	if (!(nums = ft_save_rgb(args, line[0])))
 		return ;
-	i = 0;
-	while (i < 3)
-	{
-		if (line[0] == 'F')
-			map->floor[i] = nums[i];
-		else
-			map->ceiling[i] = nums[i];
-		i++;
-	}
-	if (line[0] == 'F')
-		flags->has_floor += 1;
-	else
-		flags->has_clng += 1;
-	free(nums);
+	ft_save_floor_ceil(map, flags, nums, line[0]);
 }
 
 int			ft_check_flags(t_cflags flags)
@@ -96,9 +82,9 @@ int			ft_check_flags(t_cflags flags)
 	if (flags.has_resol != 1 || flags.has_n_tex != 1 || flags.has_w_tex != 1 ||
 		flags.has_e_tex != 1 || flags.has_s_tex != 1 || flags.has_sprite != 1 ||
 		flags.has_floor != 1 || flags.has_clng != 1)
-		{
-			ft_error("Invalid number of arguments");
-			return (0);
-		}
+	{
+		ft_error("Invalid number of arguments");
+		return (0);
+	}
 	return (1);
 }

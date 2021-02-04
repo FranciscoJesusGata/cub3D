@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 23:09:36 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/02/03 13:13:18 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/02/04 11:51:21 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ void	ft_free_textures(t_tex *tex, t_map *data)
 
 void	ft_free_data(t_map *data)
 {
-	free_mlx(data);
+	if (!MAC_VERSION)
+		free_mlx(data);
 	free(data->map_matrix);
 	data->map_matrix = NULL;
 	if (data->num_sprites > 0)
