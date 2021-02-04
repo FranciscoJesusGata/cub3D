@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 09:49:20 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/02/02 11:45:04 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/02/04 19:20:41 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,5 @@ int		main(int argc, char **argv)
 	}
 	else
 		valid = 1;
-	system("leaks cub3D");
 	return (valid);
 }
