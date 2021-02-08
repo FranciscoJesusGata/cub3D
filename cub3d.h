@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 10:13:53 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/02/08 09:57:57 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/02/08 13:38:48 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ typedef struct	s_map{
 	double		vertical_pos;
 	double		vertical_total;
 	pid_t		music_process;
+	int			exit;
 }				t_map;
 
 typedef struct	s_tex_img
@@ -156,6 +157,8 @@ void			ft_error(const char *msg);
 void			ft_check_texture(char *line, t_tex *tex, t_cflags *flags);
 int				ft_check_extension(char *check, char *expected);
 void			ft_check_floor_ceiling(char *line, t_map *map, t_cflags *flags);
+void			ft_save_floor_ceil(t_map *map, t_cflags *flags, \
+									int nums[], char id);
 int				*ft_save_rgb(char **args, int id);
 int				ft_check_flags(t_cflags flags);
 void			ft_free_matrix(void **matrix, int lines);
@@ -174,11 +177,9 @@ int				end_program(t_args *game_data);
 int				ft_count_chars(const char *s, char c);
 void			ft_start_screen(t_map *data, t_tex *tex, char **file);
 int				main_loop(t_args *args);
-void			ft_raycasting(t_map *data, t_tex *tex);
 void			ft_get_raydir(int x, int w, t_ray *ray, t_map *data);
 void			ft_shoot_rays(t_ray *ray, double deltadist[], \
 								t_map *data, int x);
-void			ft_init_sidedist(t_ray *ray, double deltadist[]);
 void			ft_init_sidedist(t_ray *ray, double deltadist[]);
 void			ft_get_delta(t_ray *ray, double *deltadist_x, \
 							double *deltadist_y);
@@ -197,6 +198,7 @@ void			sprite_size(t_map *data, t_sprite sprite, \
 void			buffer_sprites(t_map *data, t_tex_img spritetex);
 void			ft_save_sprites(t_map *data);
 void			ft_update_sprites(t_map *data);
-void			createbmp(t_args *data);
+void			ft_raycasting(t_map *data, t_tex *tex);
+void			createbmp(t_args *args);
 
 #endif
