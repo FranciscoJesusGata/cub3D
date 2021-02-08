@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 10:13:53 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/02/01 11:01:53 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/02/08 09:57:57 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ typedef struct	s_map{
 	int			lines;
 	int			valid_map;
 	int			draw_start;
-int			draw_end;
+	int			draw_end;
 	int			num_sprites;
 	int			*ray_buffer;
 	t_moves		*movement;
@@ -197,6 +197,6 @@ void			sprite_size(t_map *data, t_sprite sprite, \
 void			buffer_sprites(t_map *data, t_tex_img spritetex);
 void			ft_save_sprites(t_map *data);
 void			ft_update_sprites(t_map *data);
-void			createbmp(t_map *data);
+void			createbmp(t_args *data);
 
 #endif
