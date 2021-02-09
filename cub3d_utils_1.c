@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/28 10:55:24 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/02/08 10:51:35 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/02/08 15:21:55 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void		ft_error(const char *msg)
 	ft_printf("Error\n");
 	if (msg)
 		ft_printf("%s\n", msg);
+	exit(0);
 }
 
 void		ft_init_map(t_map *map)

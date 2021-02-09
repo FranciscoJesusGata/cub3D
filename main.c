@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/07 09:49:20 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/02/08 11:40:38 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/02/09 10:28:19 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ Cub3d takes 1 or 2 arguments: \"/path/to/map.cub\" and --save\n");
 
 int		ft_check_save(char **argv, int *save)
 {
-	if ((ft_strncmp(argv[2], "--save", 6)) != 0)
+	if ((ft_strncmp(argv[2], "--save", 6)) ||
+		(ft_strlen(argv[2]) != 6))
 	{
 		ft_error("You can only use the \"--save\" flag");
 		exit(1);
