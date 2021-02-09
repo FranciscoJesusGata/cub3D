@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 10:13:53 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/02/04 18:07:32 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/02/08 13:38:48 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ typedef struct	s_map{
 	int			num_sprites;
 	int			*ray_buffer;
 	t_moves		*movement;
-	t_img		*img;
+	t_img		img;
 	t_sprite	*sprites;
 	double		vertical_angle;
 	double		vertical_pos;
@@ -177,11 +177,9 @@ int				end_program(t_args *game_data);
 int				ft_count_chars(const char *s, char c);
 void			ft_start_screen(t_map *data, t_tex *tex, char **file);
 int				main_loop(t_args *args);
-void			update_img(t_args *args);
 void			ft_get_raydir(int x, int w, t_ray *ray, t_map *data);
 void			ft_shoot_rays(t_ray *ray, double deltadist[], \
 								t_map *data, int x);
-void			ft_init_sidedist(t_ray *ray, double deltadist[]);
 void			ft_init_sidedist(t_ray *ray, double deltadist[]);
 void			ft_get_delta(t_ray *ray, double *deltadist_x, \
 							double *deltadist_y);
@@ -200,6 +198,7 @@ void			sprite_size(t_map *data, t_sprite sprite, \
 void			buffer_sprites(t_map *data, t_tex_img spritetex);
 void			ft_save_sprites(t_map *data);
 void			ft_update_sprites(t_map *data);
-void			createbmp(t_map *data);
+void			ft_raycasting(t_map *data, t_tex *tex);
+void			createbmp(t_args *args);
 
 #endif

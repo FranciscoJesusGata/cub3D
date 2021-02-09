@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/24 20:17:40 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/02/04 17:57:53 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/02/08 10:03:15 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void				write_bits(t_map *data, int padding, int fd)
 		j = 0;
 		while (j < data->resolution[0])
 		{
-			color = get_pixel(data->img, j, i);
+			color = get_pixel(&data->img, j, i);
 			write(fd, &color, 3);
 			j++;
 		}
@@ -59,7 +59,7 @@ void				write_bits(t_map *data, int padding, int fd)
 	}
 }
 
-void				createbmp(t_map *data)
+void				createbmp(t_args *args)
 {
 	int				fd;
 	unsigned char	fileheader[14];
@@ -72,14 +72,16 @@ void				createbmp(t_map *data)
 		ft_error("Couldn't create de bmp file");
 		return ;
 	}
+	ft_raycasting(args->data, args->tex);
 	ft_bzero(fileheader, 14);
 	ft_bzero(infoheader, 40);
-	padding = (4 - (3 * data->resolution[0]) % 4) % 4;
-	filesize = 40 + 14 + (3 * data->resolution[0] + padding) \
-				* data->resolution[1];
-	create_header(data, fileheader, infoheader, filesize);
+	padding = (4 - (3 * args->data->resolution[0]) % 4) % 4;
+	filesize = 40 + 14 + (3 * args->data->resolution[0] + padding) \
+				* args->data->resolution[1];
+	create_header(args->data, fileheader, infoheader, filesize);
 	write(fd, &fileheader, 14);
 	write(fd, &infoheader, 40);
-	write_bits(data, padding, fd);
+	write_bits(args->data, padding, fd);
 	ft_printf("Screenshot saved as screenshot.bmp in this directory\n");
+	end_program(args);
 }

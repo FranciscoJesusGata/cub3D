@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 23:09:36 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/02/04 17:49:02 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/02/08 13:28:53 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,8 @@ void	free_tex_imgs(t_map *data, t_tex_img textures[])
 	i = 0;
 	while (i < 5)
 	{
-		mlx_destroy_image(data->mlx_ptr, textures->img.img);
+		mlx_destroy_image(data->mlx_ptr, textures[i].img.img);
 		i++;
-		textures++;
 	}
 }
 
@@ -43,17 +42,16 @@ void	ft_free_textures(t_tex *tex, t_map *data)
 
 void	ft_free_data(t_map *data)
 {
+	if (data->img.img)
+		mlx_destroy_image(data->mlx_ptr, data->img.img);
+	if (data->map_matrix)
+		free(data->map_matrix);
+	if (data->num_sprites > 0)
+		free(data->sprites);
+	if (data->ray_buffer)
+		free(data->ray_buffer);
 	if (!MAC_VERSION)
 		free_mlx(data);
-	free(data->map_matrix);
-	data->map_matrix = NULL;
-	if (data->num_sprites > 0)
-	{
-		free(data->sprites);
-		data->sprites = NULL;
-	}
-	free(data->ray_buffer);
-	data->ray_buffer = NULL;
 }
 
 void	ft_free_matrix(void **matrix, int lines)

@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 09:40:14 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/02/04 12:27:12 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/02/08 15:33:46 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,16 @@
 int			ft_check_resol(t_map *map, int j)
 {
 	if (j < 2)
-	{
 		ft_error("Only one resolution value");
-		return (0);
-	}
 	j = 0;
 	while (j < 2)
 	{
 		if (map->resolution[j] > map->max_r[j])
 			map->resolution[j] = map->max_r[j];
-		else if (map->resolution[j] <= 500)
-		{
-			ft_error("Resolution too small, minimum should be 500x500");
-			return (0);
-		}
+		else if (map->resolution[j] == 0)
+			ft_error("Resolution can't be 0");
+		else if (map->resolution[j] < 500)
+			map->resolution[j] = 500;
 		j++;
 	}
 	return (1);
@@ -52,10 +48,7 @@ int			ft_save_resol(char *line, t_map *map)
 			j++;
 		}
 		else if (!(ft_strchr("\t\v\f\r ", line[i])))
-		{
 			ft_error("Resolution negative");
-			return (0);
-		}
 		i++;
 	}
 	return (ft_check_resol(map, j));
@@ -74,7 +67,6 @@ int			ft_check_rgb(int *nums, int id)
 				ft_error("The ceiling values are invalid");
 			else
 				ft_error("The floor values are invalid");
-			return (0);
 		}
 		i++;
 	}

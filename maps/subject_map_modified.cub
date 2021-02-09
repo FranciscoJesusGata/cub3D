@@ -1,11 +1,11 @@
-R 1920 1080
+R 1280 720
 NO ./textures/eagle.xpm
 SO ./textures/greystone.xpm
 WE ./textures/redbrick.xpm
 EA ./textures/redbrick.xpm
 S ./textures/greenlight.xpm
-F 220,100,0
-C 225,30,0
+F 43,46,74
+C 233,69,69
 
         1111111111111111111111111
         1000000000110000000000001

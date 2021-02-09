@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 11:27:01 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/02/02 11:41:16 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/01/28 11:51:35 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 #  define UP_KEY 126
 #  define RIGHT_KEY 124
 #  define LEFT_KEY 123
-#  define LEFT_CTRL 8
+#  define LEFT_CTRL 59
 #  define SPACE 49
 #  define ABS abs
 # elif __linux__

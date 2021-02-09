@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 16:08:27 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/02/04 19:18:29 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/02/08 09:53:36 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,11 @@ void			ft_init_raycast(t_map *data, t_moves *mvnt,\
 		data->window = mlx_new_window(data->mlx_ptr, data->resolution[0],
 									data->resolution[1], "Cub3D");
 	}
-	create_img(data, data->img);
 	data->player_x += 0.5;
 	data->player_y += 0.5;
 	ft_init_move(mvnt);
 	data->movement = mvnt;
-	data->exit = 0;
+	create_img(data, &data->img);
 	data->ray_buffer = malloc(sizeof(int) * data->resolution[0]);
 	load_alltextures(data, tex);
 	args->data = data;
@@ -66,7 +65,7 @@ void			ft_init_raycast(t_map *data, t_moves *mvnt,\
 		data->sprites = NULL;
 }
 
-void			raycasting(t_map *data, t_tex *tex)
+void			ft_raycasting(t_map *data, t_tex *tex)
 {
 	int			x;
 	int			w;
@@ -77,7 +76,6 @@ void			raycasting(t_map *data, t_tex *tex)
 	x = 0;
 	ray.pos[0] = data->player_x;
 	ray.pos[1] = data->player_y;
-	mlx_sync(MLX_SYNC_IMAGE_WRITABLE, data->img->img);
 	while (x < w)
 	{
 		ray.map[0] = (int)data->player_x;
@@ -92,28 +90,6 @@ void			raycasting(t_map *data, t_tex *tex)
 		ft_buffer(data, tex, &ray, x);
 		x++;
 	}
-}
-
-void			update_img(t_args *args)
-{
-	t_map		*data;
-	t_tex		*tex;
-
-	data = args->data;
-	tex = args->tex;
-	mlx_sync(MLX_SYNC_IMAGE_WRITABLE, args->data->img->img);
-	raycasting(data, tex);
-	if (data->save)
-	{
-		createbmp(data);
-		end_program(args);
-	}
-	if (args->data->num_sprites > 0)
-	{
-		ft_update_sprites(args->data);
-		buffer_sprites(args->data, args->tex->textures[4]);
-	}
-	mlx_put_image_to_window(data->mlx_ptr, data->window, \
-						data->img->img, 0, 0);
-	mlx_sync(MLX_SYNC_WIN_FLUSH_CMD, data->window);
+	if (data->num_sprites > 0)
+		buffer_sprites(data, tex->textures[4]);
 }
