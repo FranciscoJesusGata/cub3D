@@ -47,27 +47,39 @@ bonus: git_submodules libft mlx
 	$(CC) $(CFLAGS) -D BONUS $(SRC) $(BONUS) $(GNL) -lm $(LIBFT) $(MLX) -o $(NAME)
 
 libft:
-	@$(MAKE) -C lib/libftprintf all
+	@echo "							[        COMPILING LIBFT        ]"
+	$(MAKE) -C lib/libftprintf all
 
 ifeq ($(UNAME), Darwin)
 mlx:
-	@$(MAKE) -C lib/mlx
+	@echo "							[    COMPILING MLX_BETA_2020    ]"
+	$(MAKE) -C lib/mlx
 	cp lib/mlx/libmlx.dylib .
 endif
 ifeq ($(UNAME), Linux)
 mlx:
+	@echo "							[      COMPILING LINUX_MLX      ]"
 	@$(MAKE) -C lib/mlx_linux
 endif
 
 git_submodules:
+	@echo "							[    DOWNLOADING DEPENDENCIES   ]"
 	git submodule init
 	git submodule update
 
 $(NAME): libft mlx
+	@echo "							[        COMPILING CUB3D        ]"
 	$(CC) $(CFLAGS) $(SRC) $(GNL) -lm $(LIBFT) $(MLX) -o $(NAME)
 
 norm:
+	@echo "							************** CUB3D FILES **************"
 	@$(NORMI) $(SRC) $(BONUS) cub3d_bonus.h cub3d.h keys.h
+	@echo "							************* PRINTF FILES **************"
+	@$(NORMI) lib/libftprintf/*.c lib/libftprintf/*.h
+	@echo "							************** LIBFT FILES **************"
+	@$(NORMI) lib/libftprintf/Libft/*.c lib/libftprintf/Libft/*.h
+	@echo "							*************** GNL FILES ***************"
+	@$(NORMI) lib/GNL/*.c lib/GNL/*.h
 
 clean:
 	@make -C lib/libftprintf fclean
@@ -75,5 +87,6 @@ clean:
 	@make -C lib/mlx_linux clean
 	@rm -rf libmlx.dylib*
 	@rm -rf $(NAME) $(NAME).dSYM
+	@rm -f screenshot.bmp
 
 re: clean all

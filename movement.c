@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/26 00:24:03 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/01/31 01:10:19 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/02/11 16:38:09 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ void			vertical_move(t_map *data, double move_x, double move_y)
 			[(int)data->player_y];
 		pos[1] = data->map_matrix[(int)data->player_x]\
 			[(int)(data->player_y + move_y)];
-		if (pos[0] != '1')
+		if (pos[0] == '0')
 			data->player_x += move_x;
-		if (pos[1] != '1')
+		if (pos[1] == '0')
 			data->player_y += move_y;
 	}
 	if (data->movement->backward == 1)
@@ -34,9 +34,9 @@ void			vertical_move(t_map *data, double move_x, double move_y)
 			[(int)data->player_y];
 		pos[1] = data->map_matrix[(int)data->player_x][\
 			(int)(data->player_y - move_y)];
-		if (pos[0] != '1')
+		if (pos[0] == '0')
 			data->player_x -= move_x;
-		if (pos[1] != '1')
+		if (pos[1] == '0')
 			data->player_y -= move_y;
 	}
 }
@@ -51,9 +51,9 @@ void			horizontal_move(t_map *data, double move_x, double move_y)
 			[(int)data->player_y];
 		pos[1] = data->map_matrix[(int)data->player_x]\
 			[(int)(data->player_y + move_x)];
-		if (pos[0] != '1')
+		if (pos[0] == '0')
 			data->player_x -= move_y;
-		if (pos[1] != '1')
+		if (pos[1] == '0')
 			data->player_y += move_x;
 	}
 	if (data->movement->right == 1)
@@ -62,9 +62,9 @@ void			horizontal_move(t_map *data, double move_x, double move_y)
 			[(int)data->player_y];
 		pos[1] = data->map_matrix[(int)data->player_x]\
 			[(int)(data->player_y - move_x)];
-		if (pos[0] != '1')
+		if (pos[0] == '0')
 			data->player_x += move_y;
-		if (pos[1] != '1')
+		if (pos[1] == '0')
 			data->player_y -= move_x;
 	}
 }
@@ -80,12 +80,8 @@ void			ft_move(t_map *data)
 		move_speed -= 0.1;
 	move_x = data->dir[0] * move_speed;
 	move_y = data->dir[1] * move_speed;
-	if (data->movement->forward || data->movement->backward ||
-		data->movement->right || data->movement->left)
-	{
-		vertical_move(data, move_x, move_y);
-		horizontal_move(data, move_x, move_y);
-	}
+	vertical_move(data, move_x, move_y);
+	horizontal_move(data, move_x, move_y);
 }
 
 void			ft_rotate(t_map *data)

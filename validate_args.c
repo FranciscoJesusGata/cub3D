@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 11:26:26 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/02/04 12:23:51 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/02/11 11:40:19 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ exists or isn't XPM or PNG format\n", path);
 exists or isn't XPM format\n", path);
 		free(path);
 		path = NULL;
-		return ;
+		exit(1);
 	}
 	close(fd);
 	if (ft_tex_flag(line, flags, tex, path) == 0)

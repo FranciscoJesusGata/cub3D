@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 10:13:53 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/02/08 13:38:48 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/02/12 11:01:38 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ typedef struct	s_sprite
 typedef struct	s_map{
 	int			resolution[2];
 	int			max_r[2];
+	double		dir[2];
+	double		plane[2];
 	char		**map_matrix;
 	int			floor[3];
 	int			ceiling[3];
@@ -79,15 +81,13 @@ typedef struct	s_map{
 	int			max_y;
 	double		player_x;
 	double		player_y;
-	double		dir[2];
-	double		plane[2];
 	int			save;
 	int			lines;
 	int			valid_map;
-	int			draw_start;
-	int			draw_end;
+	long		draw_start;
+	long		draw_end;
 	int			num_sprites;
-	int			*ray_buffer;
+	double		*ray_buffer;
 	t_moves		*movement;
 	t_img		img;
 	t_sprite	*sprites;
@@ -95,7 +95,6 @@ typedef struct	s_map{
 	double		vertical_pos;
 	double		vertical_total;
 	pid_t		music_process;
-	int			exit;
 }				t_map;
 
 typedef struct	s_tex_img

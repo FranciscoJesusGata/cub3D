@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/26 01:28:15 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/01/30 23:16:22 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/02/13 17:48:01 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,9 @@ void			print_sprite(t_map *data, t_sprite *sprite, \
 void			sprite_size(t_map *data, t_sprite sprite, \
 							double transform[], t_tex_img texture)
 {
-	data->vertical_total = data->vertical_angle + \
-	(data->vertical_pos / transform[1]);
+	if (BONUS)
+		data->vertical_total = data->vertical_angle + \
+		(data->vertical_pos / transform[1]);
 	sprite.print_x = (int)((data->resolution[0] / 2) \
 						* (1 + transform[0] / transform[1]));
 	sprite.height = ABS((int)(data->resolution[1] / transform[1]));
@@ -87,8 +88,8 @@ void			buffer_sprites(t_map *data, t_tex_img texture)
 	i = 0;
 	while (i < data->num_sprites)
 	{
-		sprite_coords[0] = data->sprites[i].x - data->player_x;
-		sprite_coords[1] = data->sprites[i].y - data->player_y;
+		sprite_coords[0] = data->sprites[i].x - (data->player_x - 0.5);
+		sprite_coords[1] = data->sprites[i].y - (data->player_y - 0.5);
 		inv_cam = 1.0 / ((data->plane[0] * data->dir[1]) \
 						- (data->dir[0] * data->plane[1]));
 		transform[0] = inv_cam * ((data->dir[1] * sprite_coords[0]) \

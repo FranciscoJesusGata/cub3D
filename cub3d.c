@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/22 11:40:34 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/02/09 10:32:52 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/02/11 13:51:35 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,7 @@ int				ft_save_elements(t_map *map, t_tex *tex, char **file,
 	i = 0;
 	while (i < map->lines && valid == 1)
 	{
-		if (ft_strlen(file[i]) > 1)
-			line = ft_strtrim(file[i], "\r\v\f\t ");
-		else
-			line = ft_strdup(file[i]);
+		line = ft_strtrim(file[i], "\r\v\f\t ");
 		if (strlen(line) > 0)
 		{
 			if ((ft_strchr("RNSWEFC", line[0])))
@@ -75,15 +72,13 @@ int				ft_save_elements(t_map *map, t_tex *tex, char **file,
 int				ft_validate(char **file, t_map *map, t_tex *tex)
 {
 	t_cflags	flags;
-	int			valid;
 
-	valid = 1;
 	ft_init_flags(&flags);
-	if (!(valid = ft_save_elements(map, tex, file, &flags)))
+	if (!(ft_save_elements(map, tex, file, &flags)))
 		ft_error("Invalid identifier");
-	if (!(ft_check_flags(flags)) || !(ft_valid_map(map)))
-		valid = 0;
-	return (valid);
+	ft_check_flags(flags);
+	ft_valid_map(map);
+	return (1);
 }
 
 int				cub3d(char *path, int save)

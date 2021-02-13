@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 16:08:27 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/02/08 09:53:36 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/02/12 09:55:42 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ void			ft_init_raycast(t_map *data, t_moves *mvnt,\
 	ft_init_move(mvnt);
 	data->movement = mvnt;
 	create_img(data, &data->img);
-	data->ray_buffer = malloc(sizeof(int) * data->resolution[0]);
+	data->ray_buffer = malloc(sizeof(double) * data->resolution[0]);
+	data->map_matrix[(int)data->player_x][(int)data->player_y] = '0';
 	load_alltextures(data, tex);
 	args->data = data;
 	args->tex = tex;

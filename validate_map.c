@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 11:26:02 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/02/01 11:11:53 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/02/11 17:08:27 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void		ft_check_elements(t_map *data)
 		{
 			if (!(ft_strchr("012NSWE ", map[i][j])))
 				data->valid_map = 0;
-			else if (map[i][j] == '2')
+			if (map[i][j] == '2')
 				data->num_sprites += 1;
 			j++;
 		}
