@@ -73,7 +73,7 @@ $(NAME): libft mlx
 
 norm:
 	@echo "							************** CUB3D FILES **************"
-	@$(NORMI) $(SRC) $(BONUS) cub3d_bonus.h cub3d.h keys.h
+	@$(NORMI) *.c *.h
 	@echo "							************* PRINTF FILES **************"
 	@$(NORMI) lib/libftprintf/*.c lib/libftprintf/*.h
 	@echo "							************** LIBFT FILES **************"
