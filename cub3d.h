@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 10:13:53 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/02/12 11:01:38 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/02/17 00:00:01 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ typedef struct	s_sprite
 }				t_sprite;
 
 typedef struct	s_map{
-	int			resolution[2];
+	long		resolution[2];
 	int			max_r[2];
 	double		dir[2];
 	double		plane[2];

@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 09:40:14 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/02/11 10:45:47 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/02/16 23:59:14 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int			ft_save_resol(char *line, t_map *map)
 	{
 		if (ft_isdigit(line[i]) && j < 2)
 		{
-			map->resolution[j] = ft_atoi(line + i);
+			map->resolution[j] = ft_atol(line + i);
 			while (ft_isdigit(line[i]))
 				i++;
 			i--;
