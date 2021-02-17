@@ -1,0 +1,8 @@
+R 3000 500
+NO ./textures/eagle.xpm
+SO ./textures/greystone.xpm
+WE ./textures/redbrick.xpm
+EA ./textures/redbrick.xpm
+S ./textures/greenlight.xpm
+F 43,46,74
+C 233,69,69

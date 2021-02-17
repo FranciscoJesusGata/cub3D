@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 09:40:14 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/02/16 23:59:14 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/02/17 20:05:41 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ int			ft_check_resol(t_map *map, int j)
 	j = 0;
 	while (j < 2)
 	{
-		if (map->resolution[j] > map->max_r[j])
+		if (map->resolution[j] > map->max_r[j] ||
+			map->resolution[j] < 0)
 			map->resolution[j] = map->max_r[j];
 		else if (map->resolution[j] == 0)
 			ft_error("Resolution can't be 0");
@@ -86,7 +87,7 @@ int			*ft_save_rgb(char **args, int id)
 	{
 		if (!(nbr = ft_strtrim(args[i], "\t\v\f\r ")) ||
 			!(ft_isnumber(nbr, id)))
-			return (NULL);
+			ft_error("Invalid or not enought values for Floor or Ceiling");
 		nums[i] = ft_atoi(nbr);
 		free(nbr);
 		free(args[i]);
@@ -96,7 +97,7 @@ int			*ft_save_rgb(char **args, int id)
 	if (i != 3 || !(ft_check_rgb(nums, id)))
 	{
 		free(nums);
-		return (NULL);
+		ft_error("Invalid or not enought values for Floor or Ceiling");
 	}
 	return (nums);
 }
