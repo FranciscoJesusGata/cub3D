@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 11:26:02 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/02/17 18:19:23 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/02/17 20:14:15 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,8 @@ void		map_validator(char ***mapa, int x, int y, t_map *data)
 	map = *mapa;
 	if (data->valid_map == 0 || map[y][x] == '1' || map[y][x] == '3')
 		return ;
-	if (y == data->max_y - 1 || y == 0 || x == (int)(ft_strlen(map[y]) - 1) || x == 0)
+	if (y == data->max_y - 1 || y == 0 ||
+		x == (int)(ft_strlen(map[y]) - 1) || x == 0)
 	{
 		data->valid_map = 0;
 		return ;
