@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/26 11:26:02 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/02/11 17:08:27 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/02/17 18:19:23 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,21 +93,15 @@ void		ft_check_elements(t_map *data)
 void		map_validator(char ***mapa, int x, int y, t_map *data)
 {
 	char	**map;
-	int		max_x;
 
 	map = *mapa;
-	max_x = 0;
-	if (y < data->max_y && y >= 0)
-		max_x = (int)(ft_strlen(map[y]) - 1);
-	if (data->valid_map == 0 || x < 0 || y < 0 || y > data->max_y ||
-		x > max_x || map[y][x] == '1' || map[y][x] == '3')
+	if (data->valid_map == 0 || map[y][x] == '1' || map[y][x] == '3')
+		return ;
+	if (y == data->max_y - 1 || y == 0 || x == (int)(ft_strlen(map[y]) - 1) || x == 0)
 	{
-		if ((y >= 0 && y < data->max_y) && x > max_x && map[y][max_x] == '1')
-			data->valid_map = 0;
+		data->valid_map = 0;
 		return ;
 	}
-	if (x == 0 || y == 0 || y == (data->max_y - 1) || x == max_x)
-		data->valid_map = 0;
 	map[y][x] = '3';
 	map_validator(mapa, x - 1, y, data);
 	map_validator(mapa, x + 1, y, data);
