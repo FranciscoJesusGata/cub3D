@@ -6,7 +6,7 @@
 #    By: fgata-va <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/09/29 12:43:45 by fgata-va          #+#    #+#              #
-#    Updated: 2020/11/30 10:44:17 by fgata-va         ###   ########.fr        #
+#    Updated: 2021/02/18 10:00:46 by fgata-va         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -82,11 +82,14 @@ norm:
 	@$(NORMI) lib/GNL/*.c lib/GNL/*.h
 
 clean:
-	@make -C lib/libftprintf fclean
+	@make -C lib/libftprintf clean
 	@make -C lib/mlx clean
+
+fclean: clean
+	@make -C lib/libftprintf fclean
 	@make -C lib/mlx_linux clean
 	@rm -rf libmlx.dylib*
 	@rm -rf $(NAME) $(NAME).dSYM
 	@rm -f screenshot.bmp
 
-re: clean all
+re: fclean all
