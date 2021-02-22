@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 11:34:02 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/02/11 10:53:38 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/02/22 13:09:35 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ int		end_program(t_args *game_data)
 	if (BONUS && game_data->data->music_process >= 0)
 		kill(game_data->data->music_process, 9);
 	ft_printf("See you, space cowboy\n");
-	system("leaks --fullContent cub3D");
 	exit(0);
 	return (0);
 }

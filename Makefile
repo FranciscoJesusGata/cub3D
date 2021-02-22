@@ -25,6 +25,10 @@ SRC = cub3d.c main.c cub3d_utils_1.c cub3d_utils_2.c cub3d_utils_3.c \
 
 BONUS = movement_bonus.c play_music_bonus.c
 
+OBJS = $(SRC:.c=.o)
+
+BONUSOBJS = $(BONUS:.c=.o)
+
 NAME = cub3D
 
 LIBFT = -L lib/libftprintf -lftprintf
@@ -41,10 +45,16 @@ ifeq ($(UNAME), Linux)
   NORMI := ~/.norminette/norminette.rb
 endif
 
-all: git_submodules $(NAME)
+all: git_submodules libft mlx $(NAME)
+
+$(NAME):
+	@echo "							[        COMPILING CUB3D        ]"
+	$(CC) $(CFLAGS) -c $(SRC)
+	$(CC) $(CFLAGS) $(OBJS) $(GNL) -lm $(LIBFT) $(MLX) -o $(NAME)
 
 bonus: git_submodules libft mlx
-	$(CC) $(CFLAGS) -D BONUS $(SRC) $(BONUS) $(GNL) -lm $(LIBFT) $(MLX) -o $(NAME)
+	$(CC) $(CFLAGS) -c $(SRC)
+	$(CC) $(CFLAGS) -D BONUS $(OBJS) $(BONUSOBJS) $(GNL) -lm $(LIBFT) $(MLX) -o $(NAME)
 
 libft:
 	@echo "							[        COMPILING LIBFT        ]"
@@ -62,28 +72,10 @@ mlx:
 	@$(MAKE) -C lib/mlx_linux
 endif
 
-git_submodules:
-	@echo "							[    DOWNLOADING DEPENDENCIES   ]"
-	git submodule init
-	git submodule update
-
-$(NAME): libft mlx
-	@echo "							[        COMPILING CUB3D        ]"
-	$(CC) $(CFLAGS) $(SRC) $(GNL) -lm $(LIBFT) $(MLX) -o $(NAME)
-
-norm:
-	@echo "							************** CUB3D FILES **************"
-	@$(NORMI) *.c *.h
-	@echo "							************* PRINTF FILES **************"
-	@$(NORMI) lib/libftprintf/*.c lib/libftprintf/*.h
-	@echo "							************** LIBFT FILES **************"
-	@$(NORMI) lib/libftprintf/Libft/*.c lib/libftprintf/Libft/*.h
-	@echo "							*************** GNL FILES ***************"
-	@$(NORMI) lib/GNL/*.c lib/GNL/*.h
-
 clean:
 	@make -C lib/libftprintf clean
 	@make -C lib/mlx clean
+	@rm -rf $(OBJS)
 
 fclean: clean
 	@make -C lib/libftprintf fclean
@@ -91,5 +83,20 @@ fclean: clean
 	@rm -rf libmlx.dylib*
 	@rm -rf $(NAME) $(NAME).dSYM
 	@rm -f screenshot.bmp
+
+git_submodules:
+	@echo "							[    DOWNLOADING DEPENDENCIES   ]"
+	git submodule init
+	git submodule update
+
+norm:
+	@echo "							************** CUB3D FILES **************"
+	@$(NORMI) $(SRC) cub3d.h keys.h
+	@echo "							************* PRINTF FILES **************"
+	@$(NORMI) lib/libftprintf/
+	@echo "							************** LIBFT FILES **************"
+	@$(NORMI) lib/libftprintf/Libft/
+	@echo "							*************** GNL FILES ***************"
+	@$(NORMI) lib/GNL/
 
 re: fclean all

@@ -1,5 +1,5 @@
 R 1920 1080
-NO ./textures/eagle.xpm
+NO		./textures/eagle.xpm
 SO ./textures/greystone.xpm
 WE ./textures/redbrick.xpm
 EA ./textures/redbrick.xpm

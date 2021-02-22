@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 16:20:34 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/02/11 16:23:52 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/02/22 10:14:29 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,16 +52,16 @@ void			ft_get_tex(t_ray *ray, t_tex *tex, t_tex_img **texture)
 	if (ray->side == 0)
 	{
 		if (ray->step[0] < 0)
-			*texture = &tex->textures[0];
-		else
 			*texture = &tex->textures[1];
+		else
+			*texture = &tex->textures[0];
 	}
 	else
 	{
 		if (ray->step[1] < 0)
-			*texture = &tex->textures[2];
-		else
 			*texture = &tex->textures[3];
+		else
+			*texture = &tex->textures[2];
 	}
 }
 
