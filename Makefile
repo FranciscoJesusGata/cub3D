@@ -6,7 +6,7 @@
 #    By: fgata-va <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/09/29 12:43:45 by fgata-va          #+#    #+#              #
-#    Updated: 2021/02/18 10:00:46 by fgata-va         ###   ########.fr        #
+#    Updated: 2021/02/23 17:04:07 by fgata-va         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,8 +53,8 @@ $(NAME):
 	$(CC) $(CFLAGS) $(OBJS) $(GNL) -lm $(LIBFT) $(MLX) -o $(NAME)
 
 bonus: git_submodules libft mlx
-	$(CC) $(CFLAGS) -c $(SRC)
-	$(CC) $(CFLAGS) -D BONUS $(OBJS) $(BONUSOBJS) $(GNL) -lm $(LIBFT) $(MLX) -o $(NAME)
+	$(CC) $(CFLAGS) -c -D BONUS $(SRC) $(BONUS)
+	$(CC) $(CFLAGS) $(OBJS) $(BONUSOBJS) $(GNL) -lm $(LIBFT) $(MLX) -o $(NAME)
 
 libft:
 	@echo "							[        COMPILING LIBFT        ]"
