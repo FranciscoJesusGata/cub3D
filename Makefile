@@ -6,7 +6,7 @@
 #    By: fgata-va <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/09/29 12:43:45 by fgata-va          #+#    #+#              #
-#    Updated: 2021/02/23 17:04:07 by fgata-va         ###   ########.fr        #
+#    Updated: 2021/02/24 12:26:48 by fgata-va         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,8 @@ BONUSOBJS = $(BONUS:.c=.o)
 
 NAME = cub3D
 
+BONUS_NAME = cub3D_bonus
+
 LIBFT = -L lib/libftprintf -lftprintf
 
 UNAME := $(shell uname)
@@ -47,24 +49,32 @@ endif
 
 all: git_submodules libft mlx $(NAME)
 
+bonus: git_submodules libft mlx $(BONUS_NAME)
+
+$(BONUS_NAME):
+	@echo "							[        COMPILING BONUS        ]"
+	$(CC) $(CFLAGS) -c -D BONUS=1 $(SRC) $(BONUS)
+	$(CC) $(CFLAGS) -o $(BONUS_NAME) $(OBJS) $(BONUSOBJS) $(GNL) -lm $(LIBFT) $(MLX)
+
 $(NAME):
 	@echo "							[        COMPILING CUB3D        ]"
 	$(CC) $(CFLAGS) -c $(SRC)
 	$(CC) $(CFLAGS) $(OBJS) $(GNL) -lm $(LIBFT) $(MLX) -o $(NAME)
 
-bonus: git_submodules libft mlx
-	$(CC) $(CFLAGS) -c -D BONUS $(SRC) $(BONUS)
-	$(CC) $(CFLAGS) $(OBJS) $(BONUSOBJS) $(GNL) -lm $(LIBFT) $(MLX) -o $(NAME)
-
 libft:
 	@echo "							[        COMPILING LIBFT        ]"
 	$(MAKE) -C lib/libftprintf all
+
+git_submodules:
+	@echo "							[    DOWNLOADING DEPENDENCIES   ]"
+	git submodule init
+	git submodule update
 
 ifeq ($(UNAME), Darwin)
 mlx:
 	@echo "							[    COMPILING MLX_BETA_2020    ]"
 	$(MAKE) -C lib/mlx
-	cp lib/mlx/libmlx.dylib .
+	@cp lib/mlx/libmlx.dylib .
 endif
 ifeq ($(UNAME), Linux)
 mlx:
@@ -76,18 +86,15 @@ clean:
 	@make -C lib/libftprintf clean
 	@make -C lib/mlx clean
 	@rm -rf $(OBJS)
+	@rm -rf $(BONUSOBJS)
 
 fclean: clean
 	@make -C lib/libftprintf fclean
 	@make -C lib/mlx_linux clean
 	@rm -rf libmlx.dylib*
 	@rm -rf $(NAME) $(NAME).dSYM
+	@rm -rf $(BONUS_NAME) $(BONUS_NAME).dSYM
 	@rm -f screenshot.bmp
-
-git_submodules:
-	@echo "							[    DOWNLOADING DEPENDENCIES   ]"
-	git submodule init
-	git submodule update
 
 norm:
 	@echo "							************** CUB3D FILES **************"
