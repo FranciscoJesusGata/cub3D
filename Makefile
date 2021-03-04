@@ -14,7 +14,7 @@ CC = gcc
 
 CFLAGS += -Wall -Werror -Wextra -I . -g
 
-NORMI = norminette
+NORMI = old_norminette
 
 GNL = lib/GNL/get_next_line.c lib/GNL/get_next_line_utils.c
 
