@@ -6,7 +6,7 @@
 /*   By: fgata-va <fgata-va@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 12:50:03 by fgata-va          #+#    #+#             */
-/*   Updated: 2021/02/08 11:49:45 by fgata-va         ###   ########.fr       */
+/*   Updated: 2021/03/10 17:27:02 by fgata-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,24 +102,3 @@ void		ft_start_screen(t_map *data, t_tex *tex, char **file)
 		createbmp(&args);
 }
 
-int			main_loop(t_args *args)
-{
-	t_map	*data;
-	t_tex	*tex;
-
-	data = args->data;
-	tex = args->tex;
-	mlx_sync(MLX_SYNC_IMAGE_WRITABLE, data->img.img);
-	ft_move(data);
-	ft_rotate(data);
-	if (BONUS)
-		movement_bonus(data);
-	if (data->num_sprites > 0)
-		ft_update_sprites(data);
-	mlx_do_sync(data->mlx_ptr);
-	ft_raycasting(data, tex);
-	mlx_put_image_to_window(data->mlx_ptr, data->window, \
-							data->img.img, 0, 0);
-	mlx_sync(MLX_SYNC_WIN_FLUSH_CMD, data->window);
-	return (0);
-}

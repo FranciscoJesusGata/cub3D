@@ -6,7 +6,7 @@
 #    By: fgata-va <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/09/29 12:43:45 by fgata-va          #+#    #+#              #
-#    Updated: 2021/02/24 12:26:48 by fgata-va         ###   ########.fr        #
+#    Updated: 2021/03/10 19:35:23 by fgata-va         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ NAME = cub3D
 
 BONUS_NAME = cub3D_bonus
 
-LIBFT = -L lib/libftprintf -lftprintf
+LIBFT = -L lib/Libft -lft
 
 UNAME := $(shell uname)
 
@@ -53,17 +53,17 @@ bonus: git_submodules libft mlx $(BONUS_NAME)
 
 $(BONUS_NAME):
 	@echo "							[        COMPILING BONUS        ]"
-	$(CC) $(CFLAGS) -c -D BONUS=1 $(SRC) $(BONUS)
+	$(CC) $(CFLAGS) -c -I. -D BONUS=1 $(SRC) $(BONUS)
 	$(CC) $(CFLAGS) -o $(BONUS_NAME) $(OBJS) $(BONUSOBJS) $(GNL) -lm $(LIBFT) $(MLX)
 
 $(NAME):
 	@echo "							[        COMPILING CUB3D        ]"
-	$(CC) $(CFLAGS) -c $(SRC)
+	$(CC) $(CFLAGS) -c -I. $(SRC)
 	$(CC) $(CFLAGS) $(OBJS) $(GNL) -lm $(LIBFT) $(MLX) -o $(NAME)
 
 libft:
 	@echo "							[        COMPILING LIBFT        ]"
-	$(MAKE) -C lib/libftprintf all
+	$(MAKE) -C lib/Libft all
 
 git_submodules:
 	@echo "							[    DOWNLOADING DEPENDENCIES   ]"
